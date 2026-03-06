@@ -8,9 +8,9 @@
 ## 현재 상태 ← 여기를 매번 갱신!
 
 ```
-마지막 완료: Phase 3 — Vercel 배포 + 도메인 연결 완료
-완료 시각: 2026-03-07 00:55
-다음 할 일: OG 이미지 생성, Google Search Console 등록
+마지막 완료: Phase 3 완료 — 블로그 2편 작성
+완료 시각: 2026-03-07 02:30
+다음 할 일: Vercel 환경변수 설정 (AdSense ID) — 선택사항
 막힌 것: 없음
 마지막 빌드: 성공 (Vercel Production 배포 완료)
 ```
@@ -21,21 +21,26 @@
 - **GitHub**: https://github.com/seokcess-kk/floor05
 
 ### 마지막에 만들거나 수정한 파일
-- `.npmrc` — legacy-peer-deps 설정 (ESLint 충돌 해결)
-- `vercel.json` — Vercel 배포 설정
+- `public/favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png` — 파비콘
+- `public/apple-touch-icon.png` — iOS 홈화면 아이콘
+- `public/og-image.png` — SNS 공유 이미지
+- `public/images/logo-*.svg` — 로고 (dark, light, accent)
+- `src/app/layout.tsx` — 파비콘 메타데이터 추가
+- `src/components/common/Header.tsx` — 로고 이미지 적용
 
-### 배포 완료 항목
-- ✅ Vercel 배포 성공
-- ✅ 커스텀 도메인 연결 (floor05.com, www.floor05.com)
-- ✅ SSL 인증서 자동 발급
-- ✅ GitHub 자동 배포 연동
+### 완료 항목
+- ✅ Vercel 배포 + 커스텀 도메인 (floor05.com, www.floor05.com)
+- ✅ SSL 인증서 + GitHub 자동 배포
+- ✅ 파비콘 (ico, 16x16, 32x32, apple-touch-icon)
+- ✅ 로고 이미지 (dark, light, accent SVG)
+- ✅ OG 이미지 (정적 png)
+- ✅ Header 로고 이미지 적용
 
 ### 남은 수동 작업
-- [ ] OG 이미지 (`public/og-image.png`) 생성 (1200x630)
-- [ ] Vercel 환경변수 설정 (AdSense ID 등)
-- [ ] Google Search Console 등록 + sitemap 제출
-- [ ] 블로그 1: '이미지 용량 줄이기 방법 총정리'
-- [ ] 블로그 2: '아이폰 HEIC 사진 JPG 변환 방법'
+- [ ] Vercel 환경변수 설정 (AdSense ID 등) — 선택사항
+- [x] Google Search Console 등록 + sitemap 제출
+- [x] 블로그 1: '이미지 용량 줄이기 방법 총정리'
+- [x] 블로그 2: '아이폰 HEIC 사진 JPG 변환 방법'
 
 ---
 
@@ -80,9 +85,9 @@
 - [x] AdSense / Adfit 코드 삽입 (환경변수 설정 필요)
 
 ### Phase 3 수동 작업 (배포 후)
-- [ ] Vercel 배포 + 도메인 연결
-- [ ] `.env.local` 환경변수 설정
-- [ ] OG 이미지 생성 (`public/og-image.png`, 1200x630)
-- [ ] Google Search Console 등록
-- [ ] 블로그 1: '이미지 용량 줄이기 방법 총정리'
-- [ ] 블로그 2: '아이폰 HEIC 사진 JPG 변환 방법'
+- [x] Vercel 배포 + 도메인 연결
+- [x] 브랜드 에셋 (파비콘, 로고, OG 이미지)
+- [ ] Vercel 환경변수 설정 (AdSense ID) — 선택사항
+- [x] Google Search Console 등록
+- [x] 블로그 1: '이미지 용량 줄이기 방법 총정리'
+- [x] 블로그 2: '아이폰 HEIC 사진 JPG 변환 방법'

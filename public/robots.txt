@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://floor05.com
+Host: https://www.floor05.com
 
 # Sitemaps
-Sitemap: https://floor05.com/sitemap.xml
+Sitemap: https://www.floor05.com/sitemap.xml
