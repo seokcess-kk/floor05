@@ -69,6 +69,22 @@ export default function Footer() {
                   블로그
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                >
+                  개인정보처리방침
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms"
+                  className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                >
+                  이용약관
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
