@@ -1,0 +1,77 @@
+{
+  "colors": {
+    "base": {
+      "black": "#0A0A0A",
+      "darkGray": "#1A1A1A",
+      "midGray": "#4A4A4A",
+      "lightGray": "#B0B0B0",
+      "offWhite": "#F2F0ED",
+      "white": "#FAFAFA"
+    },
+    "accent": {
+      "primary": "#C45C2C",
+      "light": "#E8734A",
+      "muted": "rgba(196, 92, 44, 0.12)"
+    },
+    "ratio": {
+      "offWhite": "50%",
+      "black": "35%",
+      "gray": "10%",
+      "accent": "5%"
+    },
+    "alternativeOptions": {
+      "slateTeal": { "accent": "#4A7C7E", "light": "#5E9EA0", "mood": "차분한 건축" },
+      "mutedOlive": { "accent": "#6B7D5E", "light": "#8A9E78", "mood": "빈티지 내추럴" },
+      "dustyRose": { "accent": "#B5706A", "light": "#D08E88", "mood": "웨스 앤더슨" },
+      "warmMustard": { "accent": "#C4993C", "light": "#DEB45A", "mood": "아날로그 레코드" },
+      "deepIndigo": { "accent": "#4A5580", "light": "#6270A0", "mood": "미드나잇 스튜디오" }
+    }
+  },
+  "typography": {
+    "mono": "'IBM Plex Mono', 'SF Mono', 'Fira Code', 'JetBrains Mono', 'Courier New', monospace",
+    "sans": "'Pretendard', 'Apple SD Gothic Neo', -apple-system, sans-serif",
+    "usage": {
+      "logo": { "font": "mono", "floor": { "size": "48px", "weight": 500 }, "05": { "size": "32px", "weight": 700, "color": "accent.primary", "position": "superscript" } },
+      "logoKorean": { "font": "sans", "플로어": { "size": "32px", "weight": 300, "letterSpacing": "2px" }, "공오": { "font": "mono", "size": "28px", "weight": 700, "color": "accent.primary" } },
+      "heading": { "font": "sans", "weight": 600 },
+      "body": { "font": "sans", "weight": 400 },
+      "code": { "font": "mono", "weight": 400 },
+      "label": { "font": "mono", "weight": 600, "letterSpacing": "2px", "textTransform": "uppercase" }
+    }
+  },
+  "logo": {
+    "wordmark": {
+      "structure": "floor(mono, 500) + 05(mono, 700, accent, superscript)",
+      "korean": "플로어(sans, 300) + 공오(mono, 700, accent, superscript)"
+    },
+    "symbol": {
+      "shape": "rounded square (border-radius: 12%)",
+      "elements": [
+        "1층 라인: bottom 25%, left 0, width 35%, opacity 0.2",
+        "수직 연결: bottom 25%, left 35%, height 25%, opacity 0.2",
+        "0.5층 계단참: bottom 50%, left 35%, width 65%, opacity 0.2",
+        "05 텍스트: 계단참 위에 안착, mono, bold, 45% of symbol size"
+      ],
+      "variants": {
+        "dark": { "bg": "#0A0A0A", "fg": "#F2F0ED" },
+        "light": { "bg": "#F2F0ED", "fg": "#0A0A0A" },
+        "accent": { "bg": "#C45C2C", "fg": "#F2F0ED" }
+      }
+    },
+    "header": {
+      "floor": { "size": "15px", "weight": 500 },
+      "05": { "size": "12px", "weight": 700, "color": "accent.primary", "top": "-4px" }
+    }
+  },
+  "voice": {
+    "taglineEN": "The floor that doesn't exist.",
+    "taglineKR": "존재하지 않는 층에서 만듭니다.",
+    "bio": [
+      "존재하지 않는 층에서 만듭니다.",
+      "나만의 속도, 나만의 층.",
+      "floor05.com"
+    ],
+    "handle": "@floor05",
+    "tone": "비주류, 절제된, 건축적, 레트로"
+  }
+}
