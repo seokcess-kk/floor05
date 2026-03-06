@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "",
+    google: "YmJ_D1dCRNV5n1DXivuYlBZt-TQuW-XPmwWXeSgKJnU",
   },
   alternates: {
     canonical: SITE_URL,
