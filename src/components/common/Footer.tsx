@@ -1,15 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import { TOOLS } from "@/lib/common/tools";
 
 function FooterLogo() {
   return (
-    <Link href="/" className="flex items-end gap-0.5">
-      <span className="font-mono text-xl font-medium text-brand-paper">
-        floor
-      </span>
-      <span className="font-mono text-sm font-bold text-brand-accent relative -top-2">
-        05
-      </span>
+    <Link href="/" className="block">
+      <Image
+        src="/images/logo-wordmark.png"
+        alt="floor05"
+        width={120}
+        height={40}
+        className="h-8 w-auto"
+      />
     </Link>
   );
 }

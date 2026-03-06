@@ -7,17 +7,15 @@ import { TOOLS } from "@/lib/common/tools";
 
 function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2 group">
+    <Link href="/" className="block">
       <Image
-        src="/images/logo-dark.svg"
+        src="/images/logo-wordmark.png"
         alt="floor05"
-        width={28}
-        height={28}
-        className="rounded-md"
+        width={120}
+        height={40}
+        className="h-8 w-auto"
+        priority
       />
-      <span className="font-mono text-sm font-medium text-brand-black group-hover:text-brand-mid transition-colors hidden sm:inline">
-        floor05
-      </span>
     </Link>
   );
 }
