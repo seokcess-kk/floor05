@@ -5,7 +5,7 @@ import "./globals.css";
 
 const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://floor05.com";
+const SITE_URL = "https://www.floor05.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
