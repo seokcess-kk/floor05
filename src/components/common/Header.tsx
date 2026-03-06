@@ -9,7 +9,7 @@ function Logo() {
   return (
     <Link href="/" className="block">
       <Image
-        src="/images/logo-wordmark.png"
+        src="/images/logo-wordmark-dark-bg.png"
         alt="floor05"
         width={120}
         height={40}
