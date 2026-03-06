@@ -73,6 +73,8 @@ floor05/
 │   │   ├── page.tsx                    # 메인 페이지
 │   │   ├── layout.tsx                  # 루트 레이아웃
 │   │   ├── blog/                       # 블로그
+│   │   ├── privacy/                    # 개인정보처리방침
+│   │   ├── terms/                      # 이용약관
 │   │   └── tools/
 │   │       └── image/
 │   │           ├── compress/page.tsx   # 이미지 압축
@@ -230,14 +232,15 @@ floor05/
 - [x] 워크플로우 연결 (압축→리사이즈 등)
 - [x] 모바일 반응형 + 에러 처리
 
-### Phase 3: SEO/블로그/배포 (Day 7)
-- [ ] SEO 메타태그 + Schema Markup
-- [ ] next-sitemap + sitemap.xml
-- [ ] Vercel Analytics 연동
-- [ ] AdSense / Adfit 코드 삽입
-- [ ] Vercel 배포 + 도메인 연결
-- [ ] 블로그 2편 작성
-- [ ] Google Search Console 등록
+### Phase 3: SEO/블로그/배포 (Day 7) ✅ 완료
+- [x] SEO 메타태그 + Schema Markup
+- [x] next-sitemap + sitemap.xml
+- [x] Vercel Analytics 연동
+- [x] AdSense 코드 삽입
+- [x] Vercel 배포 + 도메인 연결
+- [x] 블로그 2편 작성
+- [x] Google Search Console 등록
+- [x] 개인정보처리방침 + 이용약관 페이지
 
 ---
 

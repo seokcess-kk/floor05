@@ -8,9 +8,9 @@
 ## 현재 상태 ← 여기를 매번 갱신!
 
 ```
-마지막 완료: Phase 3 완료 — 블로그 2편 작성
-완료 시각: 2026-03-07 02:30
-다음 할 일: Vercel 환경변수 설정 (AdSense ID) — 선택사항
+마지막 완료: Phase 3 완료 — 모든 필수 작업 완료
+완료 시각: 2026-03-07 03:00
+다음 할 일: 출시 후 모니터링, 추가 블로그 작성
 막힌 것: 없음
 마지막 빌드: 성공 (Vercel Production 배포 완료)
 ```
@@ -21,26 +21,28 @@
 - **GitHub**: https://github.com/seokcess-kk/floor05
 
 ### 마지막에 만들거나 수정한 파일
-- `public/favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png` — 파비콘
-- `public/apple-touch-icon.png` — iOS 홈화면 아이콘
-- `public/og-image.png` — SNS 공유 이미지
-- `public/images/logo-*.svg` — 로고 (dark, light, accent)
-- `src/app/layout.tsx` — 파비콘 메타데이터 추가
-- `src/components/common/Header.tsx` — 로고 이미지 적용
+- `src/app/privacy/page.tsx` — 개인정보처리방침
+- `src/app/terms/page.tsx` — 이용약관
+- `src/components/common/Footer.tsx` — 법적 페이지 링크 추가
+- `src/app/layout.tsx` — AdSense 메타태그/스크립트
+- `public/ads.txt` — AdSense 인증 파일
+- `public/images/logo-wordmark*.png` — 워드마크 로고
 
 ### 완료 항목
 - ✅ Vercel 배포 + 커스텀 도메인 (floor05.com, www.floor05.com)
 - ✅ SSL 인증서 + GitHub 자동 배포
-- ✅ 파비콘 (ico, 16x16, 32x32, apple-touch-icon)
-- ✅ 로고 이미지 (dark, light, accent SVG)
+- ✅ 파비콘 (accent 테마)
+- ✅ 로고 이미지 (워드마크 PNG)
 - ✅ OG 이미지 (정적 png)
-- ✅ Header 로고 이미지 적용
+- ✅ Header/Footer 로고 적용
+- ✅ Google Search Console 등록 + sitemap 제출
+- ✅ 블로그 2편 작성
+- ✅ AdSense 설정 (메타태그, 스크립트, ads.txt)
+- ✅ 개인정보처리방침 + 이용약관 페이지
 
-### 남은 수동 작업
-- [ ] Vercel 환경변수 설정 (AdSense ID 등) — 선택사항
-- [x] Google Search Console 등록 + sitemap 제출
-- [x] 블로그 1: '이미지 용량 줄이기 방법 총정리'
-- [x] 블로그 2: '아이폰 HEIC 사진 JPG 변환 방법'
+### 남은 작업 (선택/후속)
+- [ ] AdSense 승인 대기 (Google 심사)
+- [ ] 추가 블로그 작성 (SEO 트래픽 확보)
 
 ---
 
@@ -77,17 +79,16 @@
 - `resize.ts:resizeWithPreset()` — 프리셋 리사이즈 헬퍼 (미사용)
 - `fileUtils.ts:isImageFile()` — isSupportedFormat과 중복 (통합 가능)
 
-## Phase 3: SEO/블로그/배포 ✅ 코드 완료
+## Phase 3: SEO/블로그/배포 ✅ 완료
 - [x] SEO 메타태그 (title, description, keywords, OG, Twitter)
 - [x] Schema Markup (SoftwareApplication, HowTo, FAQPage)
 - [x] next-sitemap + sitemap.xml + robots.txt
 - [x] Vercel Analytics 연동
-- [x] AdSense / Adfit 코드 삽입 (환경변수 설정 필요)
-
-### Phase 3 수동 작업 (배포 후)
+- [x] AdSense 코드 삽입 (메타태그, 스크립트, ads.txt)
 - [x] Vercel 배포 + 도메인 연결
 - [x] 브랜드 에셋 (파비콘, 로고, OG 이미지)
-- [ ] Vercel 환경변수 설정 (AdSense ID) — 선택사항
-- [x] Google Search Console 등록
+- [x] Google Search Console 등록 + sitemap 제출
 - [x] 블로그 1: '이미지 용량 줄이기 방법 총정리'
 - [x] 블로그 2: '아이폰 HEIC 사진 JPG 변환 방법'
+- [x] 개인정보처리방침 페이지 (/privacy)
+- [x] 이용약관 페이지 (/terms)
