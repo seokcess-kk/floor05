@@ -8,30 +8,32 @@
 ## 현재 상태 ← 여기를 매번 갱신!
 
 ```
-마지막 완료: Phase 3 — SEO/Analytics/광고 코드 (코드 리뷰 완료)
-완료 시각: 2026-03-07 00:30
-다음 할 일: 배포 및 수동 작업 (아래 체크리스트 참조)
+마지막 완료: Phase 3 — Vercel 배포 + 도메인 연결 완료
+완료 시각: 2026-03-07 00:55
+다음 할 일: OG 이미지 생성, Google Search Console 등록
 막힌 것: 없음
-마지막 빌드: 성공 (lint 0 errors, build 성공, sitemap 생성 완료)
+마지막 빌드: 성공 (Vercel Production 배포 완료)
 ```
 
+### 배포 정보
+- **Production URL**: https://www.floor05.com
+- **Vercel URL**: https://floor05.vercel.app
+- **GitHub**: https://github.com/seokcess-kk/floor05
+
 ### 마지막에 만들거나 수정한 파일
-- `next-sitemap.config.js` — 환경변수명 통일 (SITE_URL → NEXT_PUBLIC_SITE_URL)
+- `.npmrc` — legacy-peer-deps 설정 (ESLint 충돌 해결)
+- `vercel.json` — Vercel 배포 설정
 
-### Phase 3 코드 리뷰 결과
-- ✅ layout.tsx: Metadata 타입, AdSense 조건부 로드, Analytics 적용
-- ✅ ToolLayout: Schema JSON-LD 올바르게 렌더링
-- ✅ AdSlot: 개발/프로덕션 분기, 광고 로드 로직
-- ✅ 도구 페이지들: Metadata + Schema (SoftwareApplication, FAQPage, HowTo)
-- ✅ next-sitemap: priority 설정 적절 (메인 1.0, 도구 0.9, 블로그 0.8)
-- ✅ CLAUDE.md 규칙 준수 (title에 "floor05" 브랜드명 미포함)
-- 🔧 환경변수명 불일치 수정 (SITE_URL → NEXT_PUBLIC_SITE_URL)
+### 배포 완료 항목
+- ✅ Vercel 배포 성공
+- ✅ 커스텀 도메인 연결 (floor05.com, www.floor05.com)
+- ✅ SSL 인증서 자동 발급
+- ✅ GitHub 자동 배포 연동
 
-### 수동 작업 필요 (배포 후)
-- [ ] Vercel 배포 + 도메인 연결
-- [ ] `.env.local` 환경변수 설정 (AdSense ID, 도메인 등)
+### 남은 수동 작업
 - [ ] OG 이미지 (`public/og-image.png`) 생성 (1200x630)
-- [ ] Google Search Console 등록 + 인증
+- [ ] Vercel 환경변수 설정 (AdSense ID 등)
+- [ ] Google Search Console 등록 + sitemap 제출
 - [ ] 블로그 1: '이미지 용량 줄이기 방법 총정리'
 - [ ] 블로그 2: '아이폰 HEIC 사진 JPG 변환 방법'
 

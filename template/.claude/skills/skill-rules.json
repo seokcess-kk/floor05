@@ -1,0 +1,36 @@
+{
+  "_사용법": {
+    "설명": "AI가 어떤 스킬을 언제 켤지 정하는 규칙입니다. 3가지 조건 중 하나만 맞으면 해당 스킬이 켜집니다.",
+    "enforcement 종류": {
+      "suggest": "참고용 — 성능 팁, 코딩 패턴 같은 가이드",
+      "block": "필수 — 브랜드 규칙, 보안 규칙처럼 반드시 지켜야 하는 것"
+    },
+    "type 종류": {
+      "domain": "특정 기술 전문 지식 (React, DB, API 등)",
+      "guardrail": "프로젝트 전체에 적용되는 규칙 (디자인, 보안 등)"
+    },
+    "토큰 참고": "이 파일은 매 대화마다 읽힙니다. 스킬은 5~7개가 적당합니다. 10개 넘으면 토큰 낭비.",
+    "Vercel Skills 참고": "npx skills add로 설치한 Vercel Skills(vercel-react-best-practices 등)는 자체 트리거가 있어서 여기에 추가할 필요 없습니다. 직접 만든 스킬만 여기에 등록하세요."
+  },
+  "version": "1.0",
+  "skills": {
+    "_샘플-스킬": {
+      "_참고": "이건 샘플입니다. 복사해서 프로젝트 스킬을 추가하세요. 다 만들면 이 _샘플-스킬은 삭제.",
+      "type": "guardrail",
+      "enforcement": "block",
+      "priority": "critical",
+      "description": "[스킬 설명 — AI가 이 문장으로 켤지 말지 판단합니다]",
+      "promptTriggers": {
+        "keywords": ["한국어 키워드", "english keyword"],
+        "intentPatterns": [
+          "(만들|create|작성|수정).*?(대상1|대상2)"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": ["src/**/*.ts"],
+        "pathExclusions": ["**/*.test.*"],
+        "contentPatterns": ["import.*from"]
+      }
+    }
+  }
+}
