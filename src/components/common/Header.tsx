@@ -1,17 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { TOOLS } from "@/lib/common/tools";
 
 function Logo() {
   return (
-    <Link href="/" className="flex items-end gap-0.5 group">
-      <span className="font-mono text-[15px] font-medium text-brand-black group-hover:text-brand-mid transition-colors">
-        floor
-      </span>
-      <span className="font-mono text-[12px] font-bold text-brand-accent relative -top-1">
-        05
+    <Link href="/" className="flex items-center gap-2 group">
+      <Image
+        src="/images/logo-dark.svg"
+        alt="floor05"
+        width={28}
+        height={28}
+        className="rounded-md"
+      />
+      <span className="font-mono text-sm font-medium text-brand-black group-hover:text-brand-mid transition-colors hidden sm:inline">
+        floor05
       </span>
     </Link>
   );

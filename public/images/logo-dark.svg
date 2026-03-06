@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="61" fill="#0A0A0A"/>
+  <line x1="0" y1="384.0" x2="179.2" y2="384.0" stroke="#F2F0ED" stroke-width="2.048" opacity="0.2"/>
+  <line x1="179.2" y1="384.0" x2="179.2" y2="256.0" stroke="#F2F0ED" stroke-width="2.048" opacity="0.2"/>
+  <line x1="179.2" y1="256.0" x2="512" y2="256.0" stroke="#F2F0ED" stroke-width="2.048" opacity="0.2"/>
+  <text x="215" y="245" font-family="'IBM Plex Mono','SF Mono','Fira Code',monospace" font-size="215" font-weight="700" fill="#F2F0ED" letter-spacing="-3">05</text>
+</svg>
