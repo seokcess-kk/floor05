@@ -8,9 +8,9 @@
 ## 현재 상태 ← 여기를 매번 갱신!
 
 ```
-마지막 완료: 쿠키 동의 배너 구현 (GDPR 준수)
+마지막 완료: 블로그 2편 추가 (인스타 크기, PNG vs JPG)
 완료 시각: 2026-03-10
-다음 할 일: AdSense 승인 후 실제 광고 단위 ID 적용
+다음 할 일: AdSense 승인 대기, 트래픽 모니터링
 막힌 것: 없음
 마지막 빌드: 성공
 ```
@@ -21,12 +21,9 @@
 - **GitHub**: https://github.com/seokcess-kk/floor05
 
 ### 마지막에 만들거나 수정한 파일
-- `src/components/common/CookieConsent.tsx` — 쿠키 동의 배너 + useCookieConsent 훅
-- `src/components/common/AdSlot.tsx` — 동의 상태 확인 후 광고 렌더링
-- `src/lib/common/constants.ts` — 공통 상수 (CONSENT_KEY, ADSENSE_ID)
-- `src/app/layout.tsx` — CookieConsent 컴포넌트 추가
-- `src/app/blog/*/page.tsx` — JSON-LD 스크립트 위치 수정 (빌드 에러 해결)
-- `CLAUDE.md` — Claude Code 표준 형식으로 간소화
+- `src/app/blog/instagram-image-size/page.tsx` — 인스타그램 사진 크기 가이드
+- `src/app/blog/png-vs-jpg/page.tsx` — PNG vs JPG 차이점
+- `src/app/blog/page.tsx` — 블로그 목록에 새 글 추가
 
 ### 완료 항목
 - ✅ Vercel 배포 + 커스텀 도메인 (floor05.com, www.floor05.com)
@@ -36,7 +33,7 @@
 - ✅ OG 이미지 (정적 png)
 - ✅ Header/Footer 로고 적용
 - ✅ Google Search Console 등록 + sitemap 제출
-- ✅ 블로그 2편 작성
+- ✅ 블로그 4편 작성
 - ✅ AdSense 설정 (메타태그, 스크립트, ads.txt)
 - ✅ 개인정보처리방침 + 이용약관 페이지
 - ✅ 쿠키 동의 배너 (GDPR 준수, EU 사용자 대응)
@@ -44,7 +41,6 @@
 ### 남은 작업 (선택/후속)
 - [ ] AdSense 승인 대기 (Google 심사)
 - [ ] AdSense 승인 후 실제 광고 단위 ID 적용 (현재 슬롯 이름 사용 중)
-- [ ] 추가 블로그 작성 (SEO 트래픽 확보)
 
 ---
 
@@ -92,6 +88,8 @@
 - [x] Google Search Console 등록 + sitemap 제출
 - [x] 블로그 1: '이미지 용량 줄이기 방법 총정리'
 - [x] 블로그 2: '아이폰 HEIC 사진 JPG 변환 방법'
+- [x] 블로그 3: '인스타그램 사진 크기 총정리'
+- [x] 블로그 4: 'PNG vs JPG 차이점'
 - [x] 개인정보처리방침 페이지 (/privacy)
 - [x] 이용약관 페이지 (/terms)
 
