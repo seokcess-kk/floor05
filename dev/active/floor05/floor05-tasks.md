@@ -8,9 +8,9 @@
 ## 현재 상태 ← 여기를 매번 갱신!
 
 ```
-마지막 완료: Phase 4 (4-1, 4-2) 코드 리뷰 완료
+마지막 완료: Search Console 색인 요청 완료
 완료 시각: 2026-03-10
-다음 할 일: Phase 4-4 (Search Console 색인 요청 → AdSense 재신청)
+다음 할 일: 색인 확인 (1-2일 후) → AdSense 재신청
 막힌 것: 없음
 마지막 빌드: 성공
 ```
@@ -48,8 +48,7 @@
 - ✅ Contact 페이지 (/contact)
 
 ### 남은 작업
-- [ ] **Phase 4-3** (블로그 품질 개선 - 선택)
-- [ ] **Phase 4-4** (최종 점검 - Search Console 색인 요청)
+- [ ] **Phase 4-4** (색인 확인 후 AdSense 재신청)
 - [ ] AdSense 승인 후 실제 광고 단위 ID 적용
 
 ---
@@ -141,10 +140,34 @@
 - [ ] 블로그에 직접 제작한 이미지 1-2장 추가 (ALT 태그 포함)
 - [ ] 공식 출처 링크 추가 (필요 시)
 
-### 4-4. 최종 점검
-- [ ] Google Search Console에서 모든 블로그 URL 색인 요청
-- [ ] `site:floor05.com` 검색으로 색인 확인
+### 4-4. 최종 점검 🔄 진행 중
+- [x] Google Search Console에서 새 URL 색인 요청 (2026-03-10 완료)
+- [ ] `site:floor05.com` 검색으로 색인 확인 (1-2일 소요)
 - [ ] AdSense 재신청
+
+#### 색인 요청 필요 URL (8개)
+```
+https://www.floor05.com/about
+https://www.floor05.com/contact
+https://www.floor05.com/blog/webp-guide
+https://www.floor05.com/blog/passport-photo-size
+https://www.floor05.com/blog/image-crop-guide
+https://www.floor05.com/blog/sns-image-size
+https://www.floor05.com/blog/transparent-background
+https://www.floor05.com/blog/image-quality-vs-size
+```
+
+#### AdSense 재신청 체크리스트
+| 항목 | 상태 |
+|------|------|
+| About 페이지 | ✅ |
+| Contact 페이지 | ✅ |
+| Privacy 페이지 | ✅ |
+| Terms 페이지 | ✅ |
+| 블로그 10편 이상 | ✅ |
+| Schema Markup | ✅ |
+| 쿠키 동의 배너 | ✅ |
+| ads.txt | ✅ |
 
 ### 블로그 주제 선정 기준
 | 기준 | 설명 |
