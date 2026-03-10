@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useCookieConsent } from "./CookieConsent";
+import { ADSENSE_ID } from "@/lib/common/constants";
 
 interface AdSlotProps {
   slot: "tool-below" | "cta-below" | "footer-above" | "blog-inline";
@@ -15,38 +17,30 @@ const SLOT_CONFIG: Record<string, { height: string; format: string }> = {
   "blog-inline": { height: "h-32", format: "rectangle" },
 };
 
-const CONSENT_KEY = "floor05_cookie_consent";
-
 export default function AdSlot({ slot, className = "" }: AdSlotProps) {
   const adRef = useRef<HTMLDivElement>(null);
-  const [consented, setConsented] = useState(false);
+  const [adPushed, setAdPushed] = useState(false);
+  const { consented, scriptReady } = useCookieConsent();
   const isDev = process.env.NODE_ENV === "development";
-  const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
-  const adfitId = process.env.NEXT_PUBLIC_ADFIT_UNIT_ID;
 
   const config = SLOT_CONFIG[slot] || SLOT_CONFIG["tool-below"];
 
-  // 쿠키 동의 상태 확인
   useEffect(() => {
-    const saved = localStorage.getItem(CONSENT_KEY);
-    setConsented(saved === "accepted");
-  }, []);
-
-  useEffect(() => {
-    // AdSense 광고 로드 (동의한 경우에만)
-    if (!isDev && adsenseId && adRef.current && consented) {
+    // AdSense 광고 로드 (동의 + 스크립트 준비 완료 시에만)
+    if (!isDev && consented && scriptReady && adRef.current && !adPushed) {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const adsbygoogle = (window as any).adsbygoogle || [];
         adsbygoogle.push({});
+        setAdPushed(true);
       } catch {
         // 광고 로드 실패 시 무시
       }
     }
-  }, [isDev, adsenseId, consented]);
+  }, [isDev, consented, scriptReady, adPushed]);
 
-  // 개발 환경 또는 광고 ID 미설정 시 플레이스홀더 표시
-  if (isDev || (!adsenseId && !adfitId)) {
+  // 개발 환경: 플레이스홀더 표시
+  if (isDev) {
     return (
       <div
         className={`
@@ -70,36 +64,22 @@ export default function AdSlot({ slot, className = "" }: AdSlotProps) {
     );
   }
 
+  // 동의하지 않은 경우: 아무것도 렌더링하지 않음
+  if (!consented) {
+    return null;
+  }
+
   // AdSense 광고
-  if (adsenseId) {
-    return (
-      <div ref={adRef} className={`${config.height} ${className}`}>
-        <ins
-          className="adsbygoogle"
-          style={{ display: "block" }}
-          data-ad-client={adsenseId}
-          data-ad-slot={slot}
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        />
-      </div>
-    );
-  }
-
-  // Kakao Adfit 광고
-  if (adfitId) {
-    return (
-      <div className={`${config.height} ${className}`}>
-        <ins
-          className="kakao_ad_area"
-          style={{ display: "none" }}
-          data-ad-unit={adfitId}
-          data-ad-width="320"
-          data-ad-height="100"
-        />
-      </div>
-    );
-  }
-
-  return null;
+  return (
+    <div ref={adRef} className={`min-h-[90px] ${className}`}>
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client={ADSENSE_ID}
+        data-ad-slot={slot}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
+    </div>
+  );
 }
