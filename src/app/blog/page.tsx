@@ -24,6 +24,22 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: "instagram-image-size",
+    title: "인스타그램 사진 크기 총정리",
+    description:
+      "인스타그램 피드, 스토리, 릴스, 프로필 사진의 최적 크기와 무료 리사이즈 방법.",
+    date: "2026-03-10",
+    readTime: "4분",
+  },
+  {
+    slug: "png-vs-jpg",
+    title: "PNG vs JPG 차이점",
+    description:
+      "PNG와 JPG의 차이점, 투명 배경, 용량 비교와 상황별 추천 포맷을 알려드립니다.",
+    date: "2026-03-10",
+    readTime: "5분",
+  },
+  {
     slug: "image-compression-guide",
     title: "이미지 용량 줄이기 방법 총정리",
     description:
