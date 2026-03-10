@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
+import CookieConsent from "@/components/common/CookieConsent";
 import "./globals.css";
-
-const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
 const SITE_URL = "https://www.floor05.com";
 
@@ -88,14 +86,10 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <meta name="google-adsense-account" content="ca-pub-3069814419179785" />
-        <Script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3069814419179785`}
-          crossOrigin="anonymous"
-        />
       </head>
       <body className="font-sans antialiased">
         {children}
+        <CookieConsent />
         <Analytics />
       </body>
     </html>

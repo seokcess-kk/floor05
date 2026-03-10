@@ -81,8 +81,6 @@ const howToSchema = {
 export default function HeicToJpgGuidePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
-      <Header />
-
       {/* Schema Markup */}
       <script
         type="application/ld+json"
@@ -92,6 +90,8 @@ export default function HeicToJpgGuidePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
+
+      <Header />
 
       <main className="flex-1">
         <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

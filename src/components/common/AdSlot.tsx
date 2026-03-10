@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface AdSlotProps {
   slot: "tool-below" | "cta-below" | "footer-above" | "blog-inline";
@@ -15,17 +15,26 @@ const SLOT_CONFIG: Record<string, { height: string; format: string }> = {
   "blog-inline": { height: "h-32", format: "rectangle" },
 };
 
+const CONSENT_KEY = "floor05_cookie_consent";
+
 export default function AdSlot({ slot, className = "" }: AdSlotProps) {
   const adRef = useRef<HTMLDivElement>(null);
+  const [consented, setConsented] = useState(false);
   const isDev = process.env.NODE_ENV === "development";
   const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
   const adfitId = process.env.NEXT_PUBLIC_ADFIT_UNIT_ID;
 
   const config = SLOT_CONFIG[slot] || SLOT_CONFIG["tool-below"];
 
+  // 쿠키 동의 상태 확인
   useEffect(() => {
-    // AdSense 광고 로드
-    if (!isDev && adsenseId && adRef.current) {
+    const saved = localStorage.getItem(CONSENT_KEY);
+    setConsented(saved === "accepted");
+  }, []);
+
+  useEffect(() => {
+    // AdSense 광고 로드 (동의한 경우에만)
+    if (!isDev && adsenseId && adRef.current && consented) {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const adsbygoogle = (window as any).adsbygoogle || [];
@@ -34,7 +43,7 @@ export default function AdSlot({ slot, className = "" }: AdSlotProps) {
         // 광고 로드 실패 시 무시
       }
     }
-  }, [isDev, adsenseId]);
+  }, [isDev, adsenseId, consented]);
 
   // 개발 환경 또는 광고 ID 미설정 시 플레이스홀더 표시
   if (isDev || (!adsenseId && !adfitId)) {
