@@ -8,11 +8,11 @@
 ## 현재 상태 ← 여기를 매번 갱신!
 
 ```
-마지막 완료: Phase 3 완료 — 모든 필수 작업 완료
-완료 시각: 2026-03-07 03:00
-다음 할 일: 출시 후 모니터링, 추가 블로그 작성
+마지막 완료: 쿠키 동의 배너 구현 (GDPR 준수)
+완료 시각: 2026-03-10
+다음 할 일: AdSense 승인 후 실제 광고 단위 ID 적용
 막힌 것: 없음
-마지막 빌드: 성공 (Vercel Production 배포 완료)
+마지막 빌드: 성공
 ```
 
 ### 배포 정보
@@ -21,12 +21,12 @@
 - **GitHub**: https://github.com/seokcess-kk/floor05
 
 ### 마지막에 만들거나 수정한 파일
-- `src/app/privacy/page.tsx` — 개인정보처리방침
-- `src/app/terms/page.tsx` — 이용약관
-- `src/components/common/Footer.tsx` — 법적 페이지 링크 추가
-- `src/app/layout.tsx` — AdSense 메타태그/스크립트
-- `public/ads.txt` — AdSense 인증 파일
-- `public/images/logo-wordmark*.png` — 워드마크 로고
+- `src/components/common/CookieConsent.tsx` — 쿠키 동의 배너 + useCookieConsent 훅
+- `src/components/common/AdSlot.tsx` — 동의 상태 확인 후 광고 렌더링
+- `src/lib/common/constants.ts` — 공통 상수 (CONSENT_KEY, ADSENSE_ID)
+- `src/app/layout.tsx` — CookieConsent 컴포넌트 추가
+- `src/app/blog/*/page.tsx` — JSON-LD 스크립트 위치 수정 (빌드 에러 해결)
+- `CLAUDE.md` — Claude Code 표준 형식으로 간소화
 
 ### 완료 항목
 - ✅ Vercel 배포 + 커스텀 도메인 (floor05.com, www.floor05.com)
@@ -39,9 +39,11 @@
 - ✅ 블로그 2편 작성
 - ✅ AdSense 설정 (메타태그, 스크립트, ads.txt)
 - ✅ 개인정보처리방침 + 이용약관 페이지
+- ✅ 쿠키 동의 배너 (GDPR 준수, EU 사용자 대응)
 
 ### 남은 작업 (선택/후속)
 - [ ] AdSense 승인 대기 (Google 심사)
+- [ ] AdSense 승인 후 실제 광고 단위 ID 적용 (현재 슬롯 이름 사용 중)
 - [ ] 추가 블로그 작성 (SEO 트래픽 확보)
 
 ---
@@ -92,3 +94,11 @@
 - [x] 블로그 2: '아이폰 HEIC 사진 JPG 변환 방법'
 - [x] 개인정보처리방침 페이지 (/privacy)
 - [x] 이용약관 페이지 (/terms)
+
+## Phase 3+ : AdSense 정책 준수 ✅ 완료
+- [x] 쿠키 동의 배너 (CookieConsent 컴포넌트)
+- [x] 동의 전 AdSense 스크립트 로드 차단
+- [x] 동의 후 실시간 광고 활성화 (커스텀 이벤트)
+- [x] 거부 시 광고 슬롯 미렌더링 (빈 공간 없음)
+- [x] 공통 상수 분리 (constants.ts)
+- [x] useCookieConsent 훅으로 상태 관리 일원화
