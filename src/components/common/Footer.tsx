@@ -63,6 +63,22 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
+                  href="/about"
+                  className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                >
+                  소개
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                >
+                  문의
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/blog"
                   className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
                 >

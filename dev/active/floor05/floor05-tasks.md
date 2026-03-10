@@ -8,9 +8,9 @@
 ## 현재 상태 ← 여기를 매번 갱신!
 
 ```
-마지막 완료: AdSense 승인 요건 검토
+마지막 완료: Phase 4 (4-1, 4-2) - About/Contact 페이지 + 블로그 6편 추가
 완료 시각: 2026-03-10
-다음 할 일: Phase 4 - AdSense 승인 준비 (About/Contact 페이지, 블로그 추가)
+다음 할 일: Phase 4-3 (블로그 품질 개선) 또는 4-4 (최종 점검)
 막힌 것: 없음
 마지막 빌드: 성공
 ```
@@ -21,9 +21,16 @@
 - **GitHub**: https://github.com/seokcess-kk/floor05
 
 ### 마지막에 만들거나 수정한 파일
-- `src/app/blog/instagram-image-size/page.tsx` — 인스타그램 사진 크기 가이드
-- `src/app/blog/png-vs-jpg/page.tsx` — PNG vs JPG 차이점
-- `src/app/blog/page.tsx` — 블로그 목록에 새 글 추가
+- `src/app/about/page.tsx` — 소개 페이지 (신규)
+- `src/app/contact/page.tsx` — 문의 페이지 (신규)
+- `src/components/common/Footer.tsx` — About/Contact 링크 추가
+- `src/app/blog/webp-guide/page.tsx` — WebP 포맷 가이드 (신규)
+- `src/app/blog/passport-photo-size/page.tsx` — 증명사진 용량 줄이기 (신규)
+- `src/app/blog/image-crop-guide/page.tsx` — 사진 자르기 가이드 (신규)
+- `src/app/blog/sns-image-size/page.tsx` — SNS별 이미지 크기 (신규)
+- `src/app/blog/transparent-background/page.tsx` — 이미지 배경 투명 (신규)
+- `src/app/blog/image-quality-vs-size/page.tsx` — 화질 vs 용량 (신규)
+- `src/app/blog/page.tsx` — 블로그 목록 업데이트
 
 ### 완료 항목
 - ✅ Vercel 배포 + 커스텀 도메인 (floor05.com, www.floor05.com)
@@ -33,13 +40,16 @@
 - ✅ OG 이미지 (정적 png)
 - ✅ Header/Footer 로고 적용
 - ✅ Google Search Console 등록 + sitemap 제출
-- ✅ 블로그 4편 작성
+- ✅ 블로그 10편 작성 (4편 → 10편 확장 완료)
 - ✅ AdSense 설정 (메타태그, 스크립트, ads.txt)
 - ✅ 개인정보처리방침 + 이용약관 페이지
 - ✅ 쿠키 동의 배너 (GDPR 준수, EU 사용자 대응)
+- ✅ About 페이지 (/about)
+- ✅ Contact 페이지 (/contact)
 
 ### 남은 작업
-- [ ] **Phase 4 진행** (AdSense 승인 준비)
+- [ ] **Phase 4-3** (블로그 품질 개선 - 선택)
+- [ ] **Phase 4-4** (최종 점검 - Search Console 색인 요청)
 - [ ] AdSense 승인 후 실제 광고 단위 ID 적용
 
 ---
@@ -103,30 +113,30 @@
 
 ---
 
-## Phase 4: AdSense 승인 준비 🔄 진행 예정
+## Phase 4: AdSense 승인 준비 🔄 진행 중
 
 > **목표**: 구글 애드센스 승인 요건 충족 (2025년 기준)
-> **예상 소요**: 2-3일
 
-### 4-1. 신뢰도 페이지 생성 (필수)
-- [ ] About 페이지 (`/about`)
+### 4-1. 신뢰도 페이지 생성 ✅ 완료
+- [x] About 페이지 (`/about`)
   - 블로그 운영 목적
   - 운영자 소개 (floor05 브랜드)
   - "파일이 서버로 전송되지 않습니다" 핵심 가치
-- [ ] Contact 페이지 (`/contact`)
-  - 이메일 연락처
-  - 간단한 문의 안내
-- [ ] Footer에 About/Contact 링크 추가
+- [x] Contact 페이지 (`/contact`)
+  - 이메일 연락처 (contact@floor05.com)
+  - 응답 시간 안내
+  - FAQ 섹션
+- [x] Footer에 About/Contact 링크 추가
 
-### 4-2. 블로그 콘텐츠 확장 (현재 4편 → 10편 이상)
-- [ ] 블로그 5: 'WebP 포맷 완벽 가이드' (포맷 변환 연결)
-- [ ] 블로그 6: '증명사진 용량 줄이기' (압축 연결)
-- [ ] 블로그 7: '사진 자르기 완벽 가이드' (크롭 연결)
-- [ ] 블로그 8: 'SNS별 이미지 크기 총정리' (리사이즈 연결)
-- [ ] 블로그 9: '이미지 배경 투명하게 만들기' (포맷 변환 연결)
-- [ ] 블로그 10: '사진 화질 높이기 vs 용량 줄이기' (압축/리사이즈 연결)
+### 4-2. 블로그 콘텐츠 확장 ✅ 완료 (4편 → 10편)
+- [x] 블로그 5: 'WebP 포맷 완벽 가이드' (포맷 변환 연결)
+- [x] 블로그 6: '증명사진 용량 줄이기' (압축 연결)
+- [x] 블로그 7: '사진 자르기 완벽 가이드' (크롭 연결)
+- [x] 블로그 8: 'SNS별 이미지 크기 총정리' (리사이즈 연결)
+- [x] 블로그 9: '이미지 배경 투명하게 만들기' (포맷 변환 연결)
+- [x] 블로그 10: '사진 화질 높이기 vs 용량 줄이기' (압축/리사이즈 연결)
 
-### 4-3. 블로그 품질 개선
+### 4-3. 블로그 품질 개선 (선택)
 - [ ] 기존 블로그 4편 글자 수 보강 (2,000자 이상)
 - [ ] 블로그에 직접 제작한 이미지 1-2장 추가 (ALT 태그 포함)
 - [ ] 공식 출처 링크 추가 (필요 시)

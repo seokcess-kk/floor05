@@ -24,6 +24,54 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: "image-quality-vs-size",
+    title: "사진 화질 높이기 vs 용량 줄이기",
+    description:
+      "화질과 용량의 차이점, 상황별 올바른 선택 방법을 알려드립니다.",
+    date: "2026-03-10",
+    readTime: "6분",
+  },
+  {
+    slug: "transparent-background",
+    title: "이미지 배경 투명하게 만들기",
+    description:
+      "PNG 투명 배경의 원리와 포맷별 특성, 활용 방법을 알려드립니다.",
+    date: "2026-03-10",
+    readTime: "5분",
+  },
+  {
+    slug: "sns-image-size",
+    title: "SNS별 이미지 크기 총정리",
+    description:
+      "인스타, 유튜브, 페이스북, 트위터 등 플랫폼별 최적 이미지 규격.",
+    date: "2026-03-10",
+    readTime: "6분",
+  },
+  {
+    slug: "image-crop-guide",
+    title: "사진 자르기 완벽 가이드",
+    description:
+      "비율별 크롭 방법과 무료 온라인 도구 사용법을 알려드립니다.",
+    date: "2026-03-10",
+    readTime: "5분",
+  },
+  {
+    slug: "passport-photo-size",
+    title: "증명사진 용량 줄이기",
+    description:
+      "취업사이트, 원서접수용 200KB, 500KB 용량 제한 맞추는 방법.",
+    date: "2026-03-10",
+    readTime: "4분",
+  },
+  {
+    slug: "webp-guide",
+    title: "WebP 포맷 완벽 가이드",
+    description:
+      "차세대 이미지 포맷 WebP의 장단점과 JPG/PNG에서 변환하는 방법.",
+    date: "2026-03-10",
+    readTime: "5분",
+  },
+  {
     slug: "instagram-image-size",
     title: "인스타그램 사진 크기 총정리",
     description:
