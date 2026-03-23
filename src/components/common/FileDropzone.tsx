@@ -196,7 +196,7 @@ export default function FileDropzone({
         </p>
 
         {/* 지원 포맷 */}
-        <p className="text-xs text-brand-light mt-2">
+        <p className="text-xs text-brand-mid mt-2">
           {accept === "image/*"
             ? "JPG, PNG, WebP, HEIC 지원"
             : accept

@@ -6,7 +6,7 @@ import { TOOLS } from "@/lib/common/tools";
 // Hero 섹션의 모션 그래픽 (CSS 애니메이션)
 function HeroAnimation() {
   return (
-    <div className="relative w-full h-64 sm:h-80 overflow-hidden">
+    <div className="relative w-full h-64 sm:h-80 overflow-hidden" aria-hidden="true">
       {/* 배경 그라데이션 */}
       <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-brand-dark to-brand-black" />
 

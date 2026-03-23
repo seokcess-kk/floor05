@@ -35,7 +35,9 @@ export default function CompressTool() {
   const [quality, setQuality] = useState(80);
   const [targetSizeKB, setTargetSizeKB] = useState(200);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [processingIndex, setProcessingIndex] = useState(0);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+  const [batchNotice, setBatchNotice] = useState<string | null>(null);
 
   // 선택된 이미지
   const selectedImage = useMemo(
@@ -90,10 +92,17 @@ export default function CompressTool() {
       })
     );
 
+    let overflow = 0;
     setImages((prev) => {
       const combined = [...prev, ...newImages];
+      overflow = Math.max(0, combined.length - maxBatch);
       return combined.slice(0, maxBatch);
     });
+
+    if (newImages.length > 0 && overflow > 0) {
+      setBatchNotice(`최대 ${maxBatch}개까지 처리됩니다. ${overflow}개 파일이 제외되었습니다.`);
+      setTimeout(() => setBatchNotice(null), 4000);
+    }
 
     // 첫 번째 이미지 선택
     if (newImages.length > 0) {
@@ -123,6 +132,7 @@ export default function CompressTool() {
     if (images.length === 0 || isProcessing) return;
 
     setIsProcessing(true);
+    setProcessingIndex(0);
 
     // 모든 이미지 처리 상태로 변경
     setImages((prev) =>
@@ -130,6 +140,7 @@ export default function CompressTool() {
     );
 
     for (let i = 0; i < images.length; i++) {
+      setProcessingIndex(i + 1);
       const img = images[i];
 
       try {
@@ -197,6 +208,13 @@ export default function CompressTool() {
         />
       ) : (
         <>
+          {/* 배치 초과 알림 */}
+          {batchNotice && (
+            <div className="bg-brand-accent/10 border border-brand-accent/30 rounded-lg p-3">
+              <p className="text-sm text-brand-black">{batchNotice}</p>
+            </div>
+          )}
+
           {/* 이미지 목록 */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -253,8 +271,11 @@ export default function CompressTool() {
                   )}
 
                   {img.status === "error" && (
-                    <div className="absolute inset-0 bg-red-500/20 flex items-center justify-center">
-                      <span className="text-red-500 text-xl">!</span>
+                    <div className="absolute inset-0 bg-red-500/20 flex items-center justify-center" title={img.error || "압축 실패"}>
+                      <div className="text-center px-2">
+                        <span className="text-red-500 text-xl block">!</span>
+                        <span className="text-red-600 text-[10px] leading-tight block mt-1">{img.error || "실패"}</span>
+                      </div>
                     </div>
                   )}
 
@@ -430,8 +451,10 @@ export default function CompressTool() {
               {isProcessing ? (
                 <span className="flex items-center justify-center gap-2">
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  압축 중...
+                  압축 중... ({processingIndex}/{images.length})
                 </span>
+              ) : completedImages.length > 0 ? (
+                "설정 변경 후 다시 압축"
               ) : (
                 `${images.length}개 이미지 압축하기`
               )}

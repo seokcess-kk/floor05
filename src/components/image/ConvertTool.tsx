@@ -34,7 +34,6 @@ const BACKGROUND_COLORS = [
   { value: "#FFFFFF", label: "흰색", class: "bg-white border" },
   { value: "#000000", label: "검정", class: "bg-black" },
   { value: "#F5F5F5", label: "밝은 회색", class: "bg-gray-100" },
-  { value: "transparent", label: "투명 (PNG만)", class: "bg-gradient-to-br from-gray-200 to-gray-300" },
 ];
 
 export default function ConvertTool() {
@@ -44,7 +43,9 @@ export default function ConvertTool() {
   const [quality, setQuality] = useState(90);
   const [backgroundColor, setBackgroundColor] = useState("#FFFFFF");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [processingIndex, setProcessingIndex] = useState(0);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+  const [batchNotice, setBatchNotice] = useState<string | null>(null);
   const [webpSupported, setWebpSupported] = useState(true);
 
   // WebP 지원 확인
@@ -100,10 +101,17 @@ export default function ConvertTool() {
       })
     );
 
+    let overflow = 0;
     setImages((prev) => {
       const combined = [...prev, ...newImages];
+      overflow = Math.max(0, combined.length - maxBatch);
       return combined.slice(0, maxBatch);
     });
+
+    if (overflow > 0) {
+      setBatchNotice(`최대 ${maxBatch}개까지 처리됩니다. ${overflow}개 파일이 제외되었습니다.`);
+      setTimeout(() => setBatchNotice(null), 4000);
+    }
 
     if (newImages.length > 0) {
       setSelectedImageId(newImages[0].id);
@@ -132,20 +140,21 @@ export default function ConvertTool() {
     if (images.length === 0 || isProcessing) return;
 
     setIsProcessing(true);
+    setProcessingIndex(0);
 
     setImages((prev) =>
       prev.map((img) => ({ ...img, status: "processing" as const }))
     );
 
     for (let i = 0; i < images.length; i++) {
+      setProcessingIndex(i + 1);
       const img = images[i];
 
       try {
         const result = await convertImage(img.file, {
           outputFormat,
           quality: quality / 100,
-          backgroundColor:
-            backgroundColor === "transparent" ? "#FFFFFF" : backgroundColor,
+          backgroundColor,
         });
 
         setImages((prev) =>
@@ -203,6 +212,13 @@ export default function ConvertTool() {
         />
       ) : (
         <>
+          {/* 배치 초과 알림 */}
+          {batchNotice && (
+            <div className="bg-brand-accent/10 border border-brand-accent/30 rounded-lg p-3">
+              <p className="text-sm text-brand-black">{batchNotice}</p>
+            </div>
+          )}
+
           {/* 이미지 목록 */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -221,10 +237,15 @@ export default function ConvertTool() {
               {images.map((img) => (
                 <div
                   key={img.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${img.file.name} 선택`}
+                  aria-pressed={selectedImageId === img.id}
                   onClick={() => setSelectedImageId(img.id)}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelectedImageId(img.id); } }}
                   className={`
                     relative aspect-square rounded-lg overflow-hidden cursor-pointer
-                    border-2 transition-all
+                    border-2 transition-all focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2
                     ${
                       selectedImageId === img.id
                         ? "border-brand-accent"
@@ -269,8 +290,11 @@ export default function ConvertTool() {
                   )}
 
                   {img.status === "error" && (
-                    <div className="absolute inset-0 bg-red-500/20 flex items-center justify-center">
-                      <span className="text-red-500 text-xl">!</span>
+                    <div className="absolute inset-0 bg-red-500/20 flex items-center justify-center" title={img.error || "변환 실패"}>
+                      <div className="text-center px-2">
+                        <span className="text-red-500 text-xl block">!</span>
+                        <span className="text-red-600 text-[10px] leading-tight block mt-1">{img.error || "실패"}</span>
+                      </div>
                     </div>
                   )}
 
@@ -280,6 +304,7 @@ export default function ConvertTool() {
                       e.stopPropagation();
                       handleRemoveImage(img.id);
                     }}
+                    aria-label={`${img.file.name} 삭제`}
                     className="absolute top-1 right-1 w-6 h-6 bg-brand-black/70 rounded-full flex items-center justify-center text-brand-paper hover:bg-red-500 transition-colors"
                   >
                     <svg
@@ -399,6 +424,7 @@ export default function ConvertTool() {
                   max="100"
                   value={quality}
                   onChange={(e) => setQuality(Number(e.target.value))}
+                  aria-label={`이미지 변환 품질 ${quality}%`}
                   className="w-full h-2 bg-brand-light rounded-lg appearance-none cursor-pointer accent-brand-accent"
                 />
                 <div className="flex justify-between text-xs text-brand-mid">
@@ -418,7 +444,7 @@ export default function ConvertTool() {
                   PNG 이미지의 투명한 부분을 채울 색상입니다.
                 </p>
                 <div className="flex gap-3">
-                  {BACKGROUND_COLORS.filter((c) => c.value !== "transparent").map(
+                  {BACKGROUND_COLORS.map(
                     (color) => (
                       <button
                         key={color.value}
@@ -455,8 +481,10 @@ export default function ConvertTool() {
               {isProcessing ? (
                 <span className="flex items-center justify-center gap-2">
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  변환 중...
+                  변환 중... ({processingIndex}/{images.length})
                 </span>
+              ) : completedImages.length > 0 ? (
+                "설정 변경 후 다시 변환"
               ) : (
                 `${images.length}개 이미지 ${getFormatName(outputFormat)}로 변환`
               )}

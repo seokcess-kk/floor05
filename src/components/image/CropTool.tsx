@@ -399,7 +399,8 @@ export default function CropTool() {
                   aria-valuemin={50}
                   aria-valuenow={Math.round(cropArea.width)}
                   tabIndex={0}
-                  className="absolute -right-2 -bottom-2 w-4 h-4 bg-white rounded-full cursor-se-resize focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  className="absolute -right-3 -bottom-3 w-6 h-6 bg-white rounded-full cursor-se-resize focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  style={{ touchAction: "none", minWidth: 44, minHeight: 44, padding: 10, margin: -10, boxSizing: "content-box" }}
                   onMouseDown={(e) => {
                     e.stopPropagation();
                     handleMouseDown(e, "resize");
@@ -436,7 +437,7 @@ export default function CropTool() {
                     key={preset.id}
                     onClick={() => handlePresetSelect(preset.id)}
                     className={`
-                      px-4 py-2 rounded-lg text-sm transition-all
+                      px-4 py-2.5 rounded-lg text-sm transition-all min-h-[44px]
                       ${
                         selectedPresetId === preset.id
                           ? "bg-brand-accent text-white"

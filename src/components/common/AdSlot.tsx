@@ -76,7 +76,7 @@ export default function AdSlot({ slot, className = "" }: AdSlotProps) {
 
   // AdSense 광고
   return (
-    <div ref={adRef} className={`min-h-[90px] ${className}`}>
+    <div ref={adRef} role="complementary" aria-label="광고" className={`min-h-[90px] ${className}`}>
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
