@@ -25,7 +25,7 @@ function HeroAnimation() {
         </div>
 
         {/* 1층 라인 */}
-        <div className="w-3/4 max-w-md h-px bg-brand-mid/20 mt-8 animate-pulse" style={{ animationDelay: "0.5s" }} />
+        <div className="w-3/4 max-w-md h-px bg-brand-mid/20 mt-8 animate-pulse [animation-delay:0.5s]" />
 
         {/* 부유하는 05 */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

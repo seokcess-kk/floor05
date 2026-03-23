@@ -87,8 +87,8 @@ export async function compressImage(
     );
   });
 
-  // 압축된 Data URL 생성
-  const compressedDataUrl = canvas.toDataURL(outputFormat, quality);
+  // Blob에서 Data URL 생성 (toDataURL 중복 호출 방지)
+  const compressedDataUrl = URL.createObjectURL(blob);
 
   return {
     blob,
@@ -140,11 +140,15 @@ export async function compressToTargetSize(
     });
 
     if (result.compressedSize <= targetBytes) {
-      // 목표 달성, 품질 높여보기
+      // 이전 bestResult의 object URL 해제
+      if (bestResult) {
+        URL.revokeObjectURL(bestResult.dataUrl);
+      }
       bestResult = result;
       low = mid;
     } else {
-      // 아직 큼, 품질 낮추기
+      // 목표 미달 결과의 object URL 즉시 해제
+      URL.revokeObjectURL(result.dataUrl);
       high = mid;
     }
 
@@ -157,6 +161,9 @@ export async function compressToTargetSize(
   }
 
   // 최저 품질로 한 번 더 시도
+  if (bestResult) {
+    URL.revokeObjectURL(bestResult.dataUrl);
+  }
   const finalResult = await compressImage(file, {
     ...options,
     quality: 0.01,

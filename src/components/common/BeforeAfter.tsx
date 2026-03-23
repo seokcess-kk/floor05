@@ -92,6 +92,18 @@ export default function BeforeAfter({
     setIsDragging(false);
   }, []);
 
+  // 키보드로 슬라이더 조작
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    const step = e.shiftKey ? 10 : 2;
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      setSliderPosition((prev) => Math.max(0, prev - step));
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      setSliderPosition((prev) => Math.min(100, prev + step));
+    }
+  }, []);
+
   return (
     <div className={`relative select-none ${className}`}>
       {/* 라벨 */}
@@ -117,7 +129,13 @@ export default function BeforeAfter({
       {/* 비교 컨테이너 */}
       <div
         ref={containerRef}
-        className="relative w-full aspect-video bg-brand-paper rounded-lg overflow-hidden cursor-ew-resize"
+        role="slider"
+        aria-label="이미지 비교 슬라이더"
+        aria-valuenow={Math.round(sliderPosition)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        tabIndex={0}
+        className="relative w-full aspect-video bg-brand-paper rounded-lg overflow-hidden cursor-ew-resize focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -125,6 +143,7 @@ export default function BeforeAfter({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onKeyDown={handleKeyDown}
       >
         {/* After 이미지 (전체) */}
         <div className="absolute inset-0">

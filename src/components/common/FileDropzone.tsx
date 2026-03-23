@@ -136,7 +136,12 @@ export default function FileDropzone({
     <div className={className}>
       {/* 드롭존 */}
       <div
+        role="button"
+        tabIndex={disabled ? -1 : 0}
+        aria-label={multiple ? `이미지 파일 선택 (최대 ${maxFiles}개)` : "이미지 파일 선택"}
+        aria-disabled={disabled}
         onClick={handleClick}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleClick(); } }}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -147,6 +152,7 @@ export default function FileDropzone({
           text-center
           cursor-pointer
           transition-all duration-200
+          focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2
           ${disabled
             ? "bg-brand-paper/50 border-brand-light/30 cursor-not-allowed"
             : isDragging
@@ -191,7 +197,12 @@ export default function FileDropzone({
 
         {/* 지원 포맷 */}
         <p className="text-xs text-brand-light mt-2">
-          JPG, PNG, WebP, HEIC 지원
+          {accept === "image/*"
+            ? "JPG, PNG, WebP, HEIC 지원"
+            : accept
+                .replace(/image\//g, "")
+                .replace(/,/g, ", ")
+                .toUpperCase() + " 지원"}
         </p>
       </div>
 

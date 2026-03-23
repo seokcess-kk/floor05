@@ -46,7 +46,7 @@ export default function Footer() {
                 <li key={tool.href}>
                   <Link
                     href={tool.href}
-                    className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                    className="text-sm text-brand-light hover:text-brand-paper transition-colors"
                   >
                     {tool.name}
                   </Link>
@@ -64,7 +64,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/about"
-                  className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                  className="text-sm text-brand-light hover:text-brand-paper transition-colors"
                 >
                   소개
                 </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                  className="text-sm text-brand-light hover:text-brand-paper transition-colors"
                 >
                   문의
                 </Link>
@@ -80,7 +80,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/blog"
-                  className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                  className="text-sm text-brand-light hover:text-brand-paper transition-colors"
                 >
                   블로그
                 </Link>
@@ -88,7 +88,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                  className="text-sm text-brand-light hover:text-brand-paper transition-colors"
                 >
                   개인정보처리방침
                 </Link>
@@ -96,7 +96,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/terms"
-                  className="text-sm text-brand-mid hover:text-brand-paper transition-colors"
+                  className="text-sm text-brand-light hover:text-brand-paper transition-colors"
                 >
                   이용약관
                 </Link>

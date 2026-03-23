@@ -124,9 +124,7 @@ export function useCookieConsent(): { consented: boolean; scriptReady: boolean }
 
     // 이미 스크립트가 로드되어 있는지 확인
     if (isAccepted && typeof window !== "undefined") {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const adsbygoogle = (window as any).adsbygoogle;
-      if (adsbygoogle) {
+      if (window.adsbygoogle) {
         setScriptReady(true);
       }
     }

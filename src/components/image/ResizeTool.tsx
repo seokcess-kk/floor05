@@ -262,6 +262,10 @@ export default function ResizeTool() {
               {images.map((img) => (
                 <div
                   key={img.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${img.file.name} 선택`}
+                  aria-pressed={selectedImageId === img.id}
                   onClick={() => {
                     setSelectedImageId(img.id);
                     if (mode === "custom") {
@@ -272,9 +276,22 @@ export default function ResizeTool() {
                       );
                     }
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedImageId(img.id);
+                      if (mode === "custom") {
+                        setCustomWidth(img.originalWidth);
+                        setCustomHeight(img.originalHeight);
+                        setOriginalAspectRatio(
+                          img.originalWidth / img.originalHeight
+                        );
+                      }
+                    }
+                  }}
                   className={`
                     relative aspect-square rounded-lg overflow-hidden cursor-pointer
-                    border-2 transition-all
+                    border-2 transition-all focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2
                     ${
                       selectedImageId === img.id
                         ? "border-brand-accent"
@@ -309,6 +326,7 @@ export default function ResizeTool() {
                       e.stopPropagation();
                       handleRemoveImage(img.id);
                     }}
+                    aria-label={`${img.file.name} 삭제`}
                     className="absolute top-1 right-1 w-6 h-6 bg-brand-black/70 rounded-full flex items-center justify-center text-brand-paper hover:bg-red-500 transition-colors"
                   >
                     <svg
@@ -425,10 +443,11 @@ export default function ResizeTool() {
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="flex-1">
-                    <label className="text-sm text-brand-mid mb-1 block">
+                    <label htmlFor="resize-width" className="text-sm text-brand-mid mb-1 block">
                       너비 (px)
                     </label>
                     <input
+                      id="resize-width"
                       type="number"
                       value={customWidth}
                       onChange={(e) =>
@@ -449,13 +468,15 @@ export default function ResizeTool() {
                           : "bg-brand-white text-brand-mid border border-brand-light"
                       }
                     `}
-                    title={lockAspectRatio ? "비율 잠금 해제" : "비율 잠금"}
+                    aria-label={lockAspectRatio ? "비율 잠금 해제" : "비율 잠금"}
+                    aria-pressed={lockAspectRatio}
                   >
                     <svg
                       className="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       {lockAspectRatio ? (
                         <path
@@ -476,10 +497,11 @@ export default function ResizeTool() {
                   </button>
 
                   <div className="flex-1">
-                    <label className="text-sm text-brand-mid mb-1 block">
+                    <label htmlFor="resize-height" className="text-sm text-brand-mid mb-1 block">
                       높이 (px)
                     </label>
                     <input
+                      id="resize-height"
                       type="number"
                       value={customHeight}
                       onChange={(e) =>

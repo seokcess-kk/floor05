@@ -4,6 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { useCookieConsent } from "./CookieConsent";
 import { ADSENSE_ID } from "@/lib/common/constants";
 
+declare global {
+  interface Window {
+    adsbygoogle: Record<string, unknown>[];
+  }
+}
+
 interface AdSlotProps {
   slot: "tool-below" | "cta-below" | "footer-above" | "blog-inline";
   className?: string;
@@ -29,8 +35,7 @@ export default function AdSlot({ slot, className = "" }: AdSlotProps) {
     // AdSense 광고 로드 (동의 + 스크립트 준비 완료 시에만)
     if (!isDev && consented && scriptReady && adRef.current && !adPushed) {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const adsbygoogle = (window as any).adsbygoogle || [];
+        const adsbygoogle = window.adsbygoogle || [];
         adsbygoogle.push({});
         setAdPushed(true);
       } catch {

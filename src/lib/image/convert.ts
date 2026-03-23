@@ -77,12 +77,21 @@ export function isWebPSupported(): boolean {
   return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
 }
 
+// heic2any 모듈 캐싱
+let cachedHeic2any: ((options: { blob: Blob; toType: string; quality: number }) => Promise<Blob | Blob[]>) | null = null;
+
+async function getHeic2any() {
+  if (!cachedHeic2any) {
+    cachedHeic2any = (await import("heic2any")).default;
+  }
+  return cachedHeic2any;
+}
+
 /**
  * HEIC를 JPEG로 변환 (heic2any 동적 로드)
  */
 async function convertHeicToJpeg(file: File): Promise<Blob> {
-  // heic2any 동적 로드
-  const heic2any = (await import("heic2any")).default;
+  const heic2any = await getHeic2any();
 
   const result = await heic2any({
     blob: file,
@@ -163,8 +172,8 @@ export async function convertImage(
     );
   });
 
-  // 변환된 Data URL 생성
-  const convertedDataUrl = canvas.toDataURL(outputFormat, quality);
+  // Blob에서 URL 생성 (toDataURL 중복 호출 방지)
+  const convertedDataUrl = URL.createObjectURL(blob);
 
   return {
     blob,

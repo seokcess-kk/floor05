@@ -45,6 +45,7 @@ export default function CropTool() {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
   const [displayScale, setDisplayScale] = useState(1);
 
   // 현재 이미지 크기 (회전 적용)
@@ -156,59 +157,61 @@ export default function CropTool() {
     []
   );
 
-  // 드래그 중
+  // 드래그 중 (RAF로 성능 최적화)
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
       if (!isDragging || !dragType) return;
 
-      const dx = (e.clientX - dragStart.x) / displayScale;
-      const dy = (e.clientY - dragStart.y) / displayScale;
+      const clientX = e.clientX;
+      const clientY = e.clientY;
 
-      setCropArea((prev) => {
-        const newArea = { ...prev };
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => {
+        const dx = (clientX - dragStart.x) / displayScale;
+        const dy = (clientY - dragStart.y) / displayScale;
 
-        if (dragType === "move") {
-          newArea.x = Math.max(
-            0,
-            Math.min(currentDimensions.width - prev.width, prev.x + dx)
-          );
-          newArea.y = Math.max(
-            0,
-            Math.min(currentDimensions.height - prev.height, prev.y + dy)
-          );
-        } else if (dragType === "resize") {
-          let newWidth = prev.width + dx;
-          let newHeight = prev.height + dy;
+        setCropArea((prev) => {
+          const newArea = { ...prev };
 
-          // 비율 유지
-          if (aspectRatio !== null) {
-            newHeight = newWidth / aspectRatio;
-          }
+          if (dragType === "move") {
+            newArea.x = Math.max(
+              0,
+              Math.min(currentDimensions.width - prev.width, prev.x + dx)
+            );
+            newArea.y = Math.max(
+              0,
+              Math.min(currentDimensions.height - prev.height, prev.y + dy)
+            );
+          } else if (dragType === "resize") {
+            let newWidth = prev.width + dx;
+            let newHeight = prev.height + dy;
 
-          // 최소 크기
-          newWidth = Math.max(50, newWidth);
-          newHeight = Math.max(50, newHeight);
-
-          // 이미지 범위 내
-          newWidth = Math.min(newWidth, currentDimensions.width - prev.x);
-          newHeight = Math.min(newHeight, currentDimensions.height - prev.y);
-
-          // 비율 유지 시 재조정
-          if (aspectRatio !== null) {
-            if (newWidth / aspectRatio > currentDimensions.height - prev.y) {
-              newHeight = currentDimensions.height - prev.y;
-              newWidth = newHeight * aspectRatio;
+            if (aspectRatio !== null) {
+              newHeight = newWidth / aspectRatio;
             }
+
+            newWidth = Math.max(50, newWidth);
+            newHeight = Math.max(50, newHeight);
+
+            newWidth = Math.min(newWidth, currentDimensions.width - prev.x);
+            newHeight = Math.min(newHeight, currentDimensions.height - prev.y);
+
+            if (aspectRatio !== null) {
+              if (newWidth / aspectRatio > currentDimensions.height - prev.y) {
+                newHeight = currentDimensions.height - prev.y;
+                newWidth = newHeight * aspectRatio;
+              }
+            }
+
+            newArea.width = newWidth;
+            newArea.height = newHeight;
           }
 
-          newArea.width = newWidth;
-          newArea.height = newHeight;
-        }
+          return newArea;
+        });
 
-        return newArea;
+        setDragStart({ x: clientX, y: clientY });
       });
-
-      setDragStart({ x: e.clientX, y: e.clientY });
     },
     [isDragging, dragType, dragStart, displayScale, currentDimensions, aspectRatio]
   );
@@ -218,6 +221,55 @@ export default function CropTool() {
     setIsDragging(false);
     setDragType(null);
   }, []);
+
+  // 키보드로 크롭 영역 이동/리사이즈
+  const handleCropKeyDown = useCallback(
+    (e: React.KeyboardEvent, type: "move" | "resize") => {
+      const step = e.shiftKey ? 10 : 1;
+      let dx = 0;
+      let dy = 0;
+
+      switch (e.key) {
+        case "ArrowLeft": dx = -step; break;
+        case "ArrowRight": dx = step; break;
+        case "ArrowUp": dy = -step; break;
+        case "ArrowDown": dy = step; break;
+        default: return;
+      }
+
+      e.preventDefault();
+
+      setCropArea((prev) => {
+        const newArea = { ...prev };
+
+        if (type === "move") {
+          newArea.x = Math.max(0, Math.min(currentDimensions.width - prev.width, prev.x + dx));
+          newArea.y = Math.max(0, Math.min(currentDimensions.height - prev.height, prev.y + dy));
+        } else {
+          let newWidth = Math.max(50, prev.width + dx);
+          let newHeight = Math.max(50, prev.height + dy);
+
+          if (aspectRatio !== null) {
+            newHeight = newWidth / aspectRatio;
+          }
+
+          newWidth = Math.min(newWidth, currentDimensions.width - prev.x);
+          newHeight = Math.min(newHeight, currentDimensions.height - prev.y);
+
+          if (aspectRatio !== null && newWidth / aspectRatio > currentDimensions.height - prev.y) {
+            newHeight = currentDimensions.height - prev.y;
+            newWidth = newHeight * aspectRatio;
+          }
+
+          newArea.width = newWidth;
+          newArea.height = newHeight;
+        }
+
+        return newArea;
+      });
+    },
+    [currentDimensions, aspectRatio]
+  );
 
   // 크롭 실행
   const handleCrop = useCallback(async () => {
@@ -297,7 +349,7 @@ export default function CropTool() {
               {/* 이미지 */}
               <img
                 src={imageData.transformedDataUrl}
-                alt="Edit"
+                alt="크롭할 이미지 미리보기"
                 className="absolute top-0 left-0"
                 style={{
                   width: currentDimensions.width * displayScale,
@@ -327,7 +379,10 @@ export default function CropTool() {
 
               {/* 크롭 영역 */}
               <div
-                className="absolute border-2 border-white cursor-move"
+                role="application"
+                aria-label="크롭 영역 - 방향키로 이동, Shift+방향키로 빠르게 이동"
+                tabIndex={0}
+                className="absolute border-2 border-white cursor-move focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2"
                 style={{
                   left: cropArea.x * displayScale,
                   top: cropArea.y * displayScale,
@@ -335,19 +390,34 @@ export default function CropTool() {
                   height: cropArea.height * displayScale,
                 }}
                 onMouseDown={(e) => handleMouseDown(e, "move")}
+                onKeyDown={(e) => handleCropKeyDown(e, "move")}
               >
                 {/* 리사이즈 핸들 */}
                 <div
-                  className="absolute -right-2 -bottom-2 w-4 h-4 bg-white rounded-full cursor-se-resize"
+                  role="slider"
+                  aria-label="크롭 크기 조절 - 방향키로 조절, Shift+방향키로 빠르게 조절"
+                  aria-valuemin={50}
+                  aria-valuenow={Math.round(cropArea.width)}
+                  tabIndex={0}
+                  className="absolute -right-2 -bottom-2 w-4 h-4 bg-white rounded-full cursor-se-resize focus:outline-none focus:ring-2 focus:ring-brand-accent"
                   onMouseDown={(e) => {
                     e.stopPropagation();
                     handleMouseDown(e, "resize");
+                  }}
+                  onKeyDown={(e) => {
+                    e.stopPropagation();
+                    handleCropKeyDown(e, "resize");
                   }}
                 />
 
                 {/* 크기 표시 */}
                 <div className="absolute bottom-2 left-2 px-2 py-1 bg-black/70 rounded text-xs text-white font-mono">
                   {Math.round(cropArea.width)} × {Math.round(cropArea.height)}
+                </div>
+
+                {/* 모바일 터치 안내 */}
+                <div className="absolute top-2 left-2 px-2 py-1 bg-black/70 rounded text-[10px] text-white/70 sm:hidden">
+                  드래그하여 이동
                 </div>
               </div>
             </div>
@@ -388,6 +458,7 @@ export default function CropTool() {
               <div className="flex gap-2">
                 <button
                   onClick={() => handleRotate("ccw")}
+                  aria-label="왼쪽으로 90도 회전"
                   className="flex-1 py-3 px-4 rounded-lg bg-brand-white border border-brand-light text-brand-mid hover:text-brand-black hover:border-brand-accent transition-all"
                 >
                   <span className="flex items-center justify-center gap-2">
@@ -410,6 +481,7 @@ export default function CropTool() {
                 </button>
                 <button
                   onClick={() => handleRotate("cw")}
+                  aria-label="오른쪽으로 90도 회전"
                   className="flex-1 py-3 px-4 rounded-lg bg-brand-white border border-brand-light text-brand-mid hover:text-brand-black hover:border-brand-accent transition-all"
                 >
                   <span className="flex items-center justify-center gap-2">
@@ -433,6 +505,8 @@ export default function CropTool() {
               <div className="flex gap-2">
                 <button
                   onClick={() => setFlipHorizontal(!flipHorizontal)}
+                  aria-label="좌우 반전"
+                  aria-pressed={flipHorizontal}
                   className={`
                     flex-1 py-3 px-4 rounded-lg transition-all
                     ${
@@ -446,6 +520,8 @@ export default function CropTool() {
                 </button>
                 <button
                   onClick={() => setFlipVertical(!flipVertical)}
+                  aria-label="상하 반전"
+                  aria-pressed={flipVertical}
                   className={`
                     flex-1 py-3 px-4 rounded-lg transition-all
                     ${

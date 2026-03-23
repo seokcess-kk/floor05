@@ -215,10 +215,15 @@ export default function CompressTool() {
               {images.map((img) => (
                 <div
                   key={img.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${img.file.name} 선택`}
+                  aria-pressed={selectedImageId === img.id}
                   onClick={() => setSelectedImageId(img.id)}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelectedImageId(img.id); } }}
                   className={`
                     relative aspect-square rounded-lg overflow-hidden cursor-pointer
-                    border-2 transition-all
+                    border-2 transition-all focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2
                     ${
                       selectedImageId === img.id
                         ? "border-brand-accent"
@@ -259,6 +264,7 @@ export default function CompressTool() {
                       e.stopPropagation();
                       handleRemoveImage(img.id);
                     }}
+                    aria-label={`${img.file.name} 삭제`}
                     className="absolute top-1 right-1 w-6 h-6 bg-brand-black/70 rounded-full flex items-center justify-center text-brand-paper hover:bg-red-500 transition-colors"
                   >
                     <svg
@@ -359,6 +365,7 @@ export default function CompressTool() {
                   max="100"
                   value={quality}
                   onChange={(e) => setQuality(Number(e.target.value))}
+                  aria-label={`이미지 압축 품질 ${quality}%`}
                   className="w-full h-2 bg-brand-light rounded-lg appearance-none cursor-pointer accent-brand-accent"
                 />
                 <div className="flex justify-between text-xs text-brand-mid">

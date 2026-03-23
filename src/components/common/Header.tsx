@@ -74,6 +74,7 @@ export default function Header() {
                 className="flex items-center gap-1 font-mono text-xs text-brand-mid hover:text-brand-black transition-colors uppercase tracking-wider"
                 aria-expanded={isToolsOpen}
                 aria-haspopup="true"
+                aria-label="도구 메뉴 열기"
               >
                 도구
                 <svg

@@ -7,3 +7,4 @@ export { default as FileDropzone } from "./FileDropzone";
 export { default as BeforeAfter } from "./BeforeAfter";
 export { default as DownloadButton } from "./DownloadButton";
 export { default as CookieConsent } from "./CookieConsent";
+export { default as ErrorBoundary } from "./ErrorBoundary";

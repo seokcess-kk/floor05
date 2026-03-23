@@ -4,23 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Pretendard 폰트 */
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 100;
-  font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Thin.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 200;
-  font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-ExtraLight.woff2') format('woff2');
-  font-display: swap;
-}
-
+/* Pretendard 폰트 (사용 weight만 로드: 300, 400, 500, 600, 700) */
 @font-face {
   font-family: 'Pretendard';
   font-weight: 300;
@@ -61,22 +45,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 800;
-  font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-ExtraBold.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 900;
-  font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Black.woff2') format('woff2');
-  font-display: swap;
-}
-
 /* 기본 스타일 */
 body {
   font-family: var(--font-sans);
@@ -101,4 +69,15 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #4A4A4A;
+}
+
+/* 모션 감소 선호 설정 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

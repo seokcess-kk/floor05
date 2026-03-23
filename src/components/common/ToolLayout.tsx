@@ -2,6 +2,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import AdSlot from "./AdSlot";
 import ToolCard from "./ToolCard";
+import ErrorBoundary from "./ErrorBoundary";
 import { getOtherTools } from "@/lib/common/tools";
 
 interface FAQ {
@@ -92,7 +93,9 @@ export default function ToolLayout({
         {/* 3. 도구 본체 */}
         <section className="py-8 sm:py-12">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            {children}
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
           </div>
         </section>
 
