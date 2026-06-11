@@ -129,7 +129,7 @@ export default function CropPage() {
       faqs={faqs}
       workflowCTA={workflowCTA}
       currentToolHref="/tools/image/crop"
-      relatedPostSlugs={["image-crop-guide", "image-merge-guide"]}
+      relatedPostSlugs={["id-photo-size-guide", "image-crop-guide", "image-merge-guide"]}
       schemas={schemas}
     >
       <CropTool />

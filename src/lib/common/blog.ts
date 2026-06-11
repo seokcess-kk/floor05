@@ -27,7 +27,47 @@ export interface BlogPost {
  * datePublished/dateModified는 검색엔진 신선도 신호(BlogPosting)로 사용된다.
  */
 export const POSTS: BlogPost[] = [
-  // ── 신규 (2026-06) ──────────────────────────────────────────────
+  // ── 신규 (2026-06-12) ───────────────────────────────────────────
+  {
+    slug: "character-count-guide",
+    title: "자소서 글자수 세는 법",
+    description:
+      "공백 포함/제외, 바이트(2·3바이트), 원고지 매수까지 — 자소서·리포트 글자수를 정확히 맞추는 방법을 정리했습니다.",
+    keywords: [
+      "글자수 세기",
+      "자소서 글자수",
+      "글자수 공백 포함",
+      "공백 제외 글자수",
+      "바이트 계산",
+      "원고지 매수",
+      "글자수 계산기",
+    ],
+    datePublished: "2026-06-12",
+    dateModified: "2026-06-12",
+    readTime: "5분",
+    related: ["id-photo-size-guide", "passport-photo-size"],
+  },
+  {
+    slug: "id-photo-size-guide",
+    title: "증명사진 크기와 만드는 법",
+    description:
+      "증명사진 3×4, 여권 3.5×4.5, 원형 프로필까지 — 규격에 맞춰 자르고 크기를 맞추는 방법을 알려드립니다.",
+    keywords: [
+      "증명사진 크기",
+      "증명사진 만들기",
+      "증명사진 규격",
+      "여권사진 크기",
+      "원형 프로필 사진",
+      "증명사진 자르기",
+      "증명사진 300dpi",
+    ],
+    datePublished: "2026-06-12",
+    dateModified: "2026-06-12",
+    readTime: "6분",
+    related: ["passport-photo-size", "image-crop-guide", "character-count-guide"],
+  },
+
+  // ── 신규 (2026-06-11) ───────────────────────────────────────────
   {
     slug: "image-merge-guide",
     title: "사진 여러 장 한 장으로 합치기",
@@ -184,7 +224,7 @@ export const POSTS: BlogPost[] = [
     datePublished: "2026-03-10",
     dateModified: "2026-06-11",
     readTime: "5분",
-    related: ["sns-image-size", "instagram-image-size", "image-merge-guide"],
+    related: ["id-photo-size-guide", "sns-image-size", "image-merge-guide"],
   },
   {
     slug: "passport-photo-size",
@@ -203,7 +243,7 @@ export const POSTS: BlogPost[] = [
     datePublished: "2026-03-10",
     dateModified: "2026-06-11",
     readTime: "4분",
-    related: ["image-compression-guide", "image-quality-vs-size", "image-crop-guide"],
+    related: ["id-photo-size-guide", "image-compression-guide", "image-quality-vs-size"],
   },
   {
     slug: "webp-guide",
