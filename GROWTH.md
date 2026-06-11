@@ -119,6 +119,8 @@ Google AI Overview·Perplexity 등에서 인용되도록:
 - 기술 SEO: 도메인 www 단일화, 블로그 14편 canonical + BlogPosting 스키마, 도구↔블로그 양방향 내부링크, Organization 스키마, 블로그 레지스트리(`blog.ts`)로 메타데이터 일원화
 
 ### 다음 우선순위
+> 경쟁사 리서치 기반 기능 보완 백로그는 `BACKLOG.md` 참조 (Tier 0 Quick Win ~ Tier 3 배경 제거).
+
 1. 배포 후 Search Console에 신규 URL 색인 요청 + 성능 추적
 2. 콘텐츠 캘린더 상위 4편(카톡 용량, 줌 배경, 네이버 이미지, 카톡 프로필) 작성
 3. 워터마크 도구 추가(다음 키워드 클러스터)
