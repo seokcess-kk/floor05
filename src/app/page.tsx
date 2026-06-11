@@ -1,7 +1,7 @@
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import ToolCard from "@/components/common/ToolCard";
-import { TOOLS } from "@/lib/common/tools";
+import { TOOL_CATEGORIES, getToolsByCategory } from "@/lib/common/tools";
 
 // Hero 섹션의 모션 그래픽 (CSS 애니메이션)
 function HeroAnimation() {
@@ -68,28 +68,34 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 도구 목록 섹션 */}
+        {/* 도구 목록 섹션 (Room별) */}
         <section className="py-16 sm:py-20">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="font-mono text-xs text-brand-accent uppercase tracking-widest mb-4">
-                Room 01 — Image Tools
-              </h2>
-              <p className="text-brand-mid text-lg">
-                파일이 서버로 전송되지 않습니다. 무제한 무료.
-              </p>
-            </div>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+            {TOOL_CATEGORIES.map((cat) => {
+              const tools = getToolsByCategory(cat.id);
+              if (tools.length === 0) return null;
+              return (
+                <div key={cat.id}>
+                  <div className="text-center mb-12">
+                    <h2 className="font-mono text-xs text-brand-accent uppercase tracking-widest mb-4">
+                      {cat.room} — {cat.label}
+                    </h2>
+                    <p className="text-brand-mid text-lg">{cat.tagline}</p>
+                  </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {TOOLS.map((tool) => (
-                <ToolCard
-                  key={tool.href}
-                  name={tool.name}
-                  href={tool.href}
-                  description={tool.description}
-                />
-              ))}
-            </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {tools.map((tool) => (
+                      <ToolCard
+                        key={tool.href}
+                        name={tool.name}
+                        href={tool.href}
+                        description={tool.description}
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
