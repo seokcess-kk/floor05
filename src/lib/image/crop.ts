@@ -19,7 +19,28 @@ export interface CropOptions {
   flipVertical?: boolean;
   outputFormat?: "image/jpeg" | "image/png" | "image/webp";
   quality?: number;
+  targetWidth?: number; // 고정 크기 출력 (px). 설정 시 크롭 결과를 이 크기로 리샘플
+  targetHeight?: number;
+  circle?: boolean; // 원형(타원) 마스크 — 코너 투명, PNG로 출력
 }
+
+export interface IdPhotoPreset {
+  id: string;
+  name: string;
+  ratio: number;
+  width: number; // 권장 출력 px (300 DPI 기준)
+  height: number;
+  description: string;
+}
+
+/**
+ * 증명/여권 사진 프리셋 (한국 규격, 300 DPI 기준 px)
+ */
+export const ID_PHOTO_PRESETS: IdPhotoPreset[] = [
+  { id: "id-3x4", name: "증명사진 3×4", ratio: 30 / 40, width: 354, height: 472, description: "3×4cm" },
+  { id: "passport", name: "여권 3.5×4.5", ratio: 35 / 45, width: 413, height: 531, description: "3.5×4.5cm" },
+  { id: "visa-2x2", name: "미국 비자 2×2", ratio: 1, width: 600, height: 600, description: "2×2 inch" },
+];
 
 export interface CropResult {
   blob: Blob;
@@ -61,6 +82,9 @@ export async function cropImage(
     flipVertical = false,
     outputFormat = "image/jpeg",
     quality = 0.92,
+    targetWidth,
+    targetHeight,
+    circle = false,
   } = options;
 
   // 파일을 Data URL로 변환
@@ -84,50 +108,64 @@ export async function cropImage(
   const cropW = Math.max(1, Math.min(Math.round(area.width), transformedCanvas.width - cropX));
   const cropH = Math.max(1, Math.min(Math.round(area.height), transformedCanvas.height - cropY));
 
-  // 크롭 영역 추출
+  // 원형 크롭은 투명 코너가 필요하므로 PNG로 출력
+  const effectiveFormat = circle ? "image/png" : outputFormat;
+
+  // 1) 원본 픽셀을 잘라낸 캔버스 (배경 없음)
   const cropCanvas = document.createElement("canvas");
   cropCanvas.width = cropW;
   cropCanvas.height = cropH;
-
-  const ctx = cropCanvas.getContext("2d");
-  if (!ctx) {
+  const cctx = cropCanvas.getContext("2d");
+  if (!cctx) {
     throw new Error("Canvas 컨텍스트를 생성할 수 없습니다.");
   }
+  cctx.imageSmoothingEnabled = true;
+  cctx.imageSmoothingQuality = "high";
+  cctx.drawImage(transformedCanvas, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
 
-  // 배경색 (JPG인 경우)
-  if (outputFormat === "image/jpeg") {
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, cropW, cropH);
+  // 2) 최종 출력 크기 (고정 크기 출력 지원)
+  const outW = targetWidth && targetWidth > 0 ? Math.round(targetWidth) : cropW;
+  const outH = targetHeight && targetHeight > 0 ? Math.round(targetHeight) : cropH;
+
+  const outCanvas = document.createElement("canvas");
+  outCanvas.width = outW;
+  outCanvas.height = outH;
+  const octx = outCanvas.getContext("2d");
+  if (!octx) {
+    throw new Error("Canvas 컨텍스트를 생성할 수 없습니다.");
+  }
+  octx.imageSmoothingEnabled = true;
+  octx.imageSmoothingQuality = "high";
+
+  // 배경: 원형이 아니고 JPG일 때만 흰색 채움 (JPG는 투명 미지원)
+  if (effectiveFormat === "image/jpeg") {
+    octx.fillStyle = "#FFFFFF";
+    octx.fillRect(0, 0, outW, outH);
   }
 
-  // 크롭 영역 그리기
-  ctx.drawImage(
-    transformedCanvas,
-    cropX,
-    cropY,
-    cropW,
-    cropH,
-    0,
-    0,
-    cropW,
-    cropH
-  );
+  octx.drawImage(cropCanvas, 0, 0, cropW, cropH, 0, 0, outW, outH);
 
-  // Blob 생성
+  // 3) 원형(타원) 마스크 — 코너를 투명하게
+  if (circle) {
+    octx.globalCompositeOperation = "destination-in";
+    octx.beginPath();
+    octx.ellipse(outW / 2, outH / 2, outW / 2, outH / 2, 0, 0, Math.PI * 2);
+    octx.fill();
+    octx.globalCompositeOperation = "source-over";
+  }
+
   const blob = await canvasToBlob(
-    cropCanvas,
-    outputFormat,
+    outCanvas,
+    effectiveFormat,
     quality,
     "이미지 크롭에 실패했습니다."
   );
-
-  // 크롭된 Data URL 생성
-  const croppedDataUrl = cropCanvas.toDataURL(outputFormat, quality);
+  const croppedDataUrl = outCanvas.toDataURL(effectiveFormat, quality);
 
   return {
     blob,
-    width: cropW,
-    height: cropH,
+    width: outW,
+    height: outH,
     dataUrl: croppedDataUrl,
   };
 }

@@ -9,6 +9,7 @@ import {
   fileToDataUrl,
   loadImage,
   validateImageFiles,
+  mimeToExtension,
 } from "@/lib/common/fileUtils";
 import {
   cropImage,
@@ -16,6 +17,7 @@ import {
   calculateMaxCropArea,
   getRotatedDimensions,
   ASPECT_RATIO_PRESETS,
+  ID_PHOTO_PRESETS,
   CropArea,
   CropResult,
 } from "@/lib/image/crop";
@@ -40,6 +42,9 @@ export default function CropTool() {
   const [flipVertical, setFlipVertical] = useState(false);
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
   const [selectedPresetId, setSelectedPresetId] = useState("free");
+  const [circle, setCircle] = useState(false);
+  const [fixedSize, setFixedSize] = useState<{ width: number; height: number } | null>(null);
+  const [idPresetId, setIdPresetId] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<CropResult | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -148,6 +153,9 @@ export default function CropTool() {
       setFlipVertical(false);
       setAspectRatio(null);
       setSelectedPresetId("free");
+      setCircle(false);
+      setFixedSize(null);
+      setIdPresetId(null);
       setResult(null);
     } catch {
       setError("이 파일은 열 수 없습니다. 다른 이미지를 시도해주세요.");
@@ -159,7 +167,49 @@ export default function CropTool() {
     setSelectedPresetId(presetId);
     const preset = ASPECT_RATIO_PRESETS.find((p) => p.id === presetId);
     setAspectRatio(preset?.ratio ?? null);
+    setIdPresetId(null);
+    setFixedSize(null);
   }, []);
+
+  // 증명사진 프리셋 (비율 + 고정 출력 크기)
+  const handleIdPreset = useCallback(
+    (preset: (typeof ID_PHOTO_PRESETS)[number]) => {
+      setIdPresetId(preset.id);
+      setSelectedPresetId(""); // 비율 버튼 강조 해제
+      setAspectRatio(preset.ratio);
+      setFixedSize({ width: preset.width, height: preset.height });
+      setCircle(false);
+    },
+    []
+  );
+
+  // 고정 크기 출력 토글
+  const handleToggleFixedSize = useCallback(() => {
+    if (fixedSize) {
+      setFixedSize(null);
+      setIdPresetId(null);
+    } else {
+      const w = Math.max(1, Math.round(cropArea.width));
+      const h = Math.max(1, Math.round(cropArea.height));
+      setFixedSize({ width: w, height: h });
+      setAspectRatio(w / h);
+      setSelectedPresetId("");
+    }
+  }, [fixedSize, cropArea]);
+
+  // 고정 출력 크기 직접 입력 (왜곡 방지를 위해 크롭 비율도 맞춤)
+  const handleFixedSizeChange = useCallback(
+    (dim: "width" | "height", value: number) => {
+      const v = Math.max(1, Math.min(10000, Math.round(value || 0)));
+      const base = fixedSize ?? { width: v, height: v };
+      const next = { ...base, [dim]: v };
+      setFixedSize(next);
+      setAspectRatio(next.width / next.height);
+      setIdPresetId(null);
+      setSelectedPresetId("");
+    },
+    [fixedSize]
+  );
 
   // 회전
   const handleRotate = useCallback((direction: "cw" | "ccw") => {
@@ -338,6 +388,9 @@ export default function CropTool() {
         rotation,
         flipHorizontal,
         flipVertical,
+        circle,
+        targetWidth: fixedSize?.width,
+        targetHeight: fixedSize?.height,
       });
 
       setResult(cropResult);
@@ -347,7 +400,7 @@ export default function CropTool() {
     } finally {
       setIsProcessing(false);
     }
-  }, [imageData, cropArea, rotation, flipHorizontal, flipVertical, isProcessing]);
+  }, [imageData, cropArea, rotation, flipHorizontal, flipVertical, circle, fixedSize, isProcessing]);
 
   // 초기화
   const handleReset = useCallback(() => {
@@ -358,6 +411,9 @@ export default function CropTool() {
     setFlipVertical(false);
     setAspectRatio(null);
     setSelectedPresetId("free");
+    setCircle(false);
+    setFixedSize(null);
+    setIdPresetId(null);
     setResult(null);
     setError(null);
   }, []);
@@ -520,6 +576,98 @@ export default function CropTool() {
               </div>
             </div>
 
+            {/* 증명사진 프리셋 */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-brand-black">
+                증명사진
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {ID_PHOTO_PRESETS.map((preset) => (
+                  <button
+                    key={preset.id}
+                    onClick={() => handleIdPreset(preset)}
+                    title={`${preset.description} · ${preset.width}×${preset.height}px`}
+                    className={`
+                      px-4 py-2.5 rounded-lg text-sm transition-all min-h-[44px]
+                      ${
+                        idPresetId === preset.id
+                          ? "bg-brand-accent text-white"
+                          : "bg-brand-white text-brand-mid hover:text-brand-black border border-brand-light"
+                      }
+                    `}
+                  >
+                    {preset.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 출력 옵션: 원형 / 고정 크기 */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-brand-black">
+                출력 옵션
+              </label>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setCircle((c) => !c)}
+                  aria-pressed={circle}
+                  className={`
+                    px-4 py-2.5 rounded-lg text-sm transition-all min-h-[44px]
+                    ${
+                      circle
+                        ? "bg-brand-accent text-white"
+                        : "bg-brand-white text-brand-mid hover:text-brand-black border border-brand-light"
+                    }
+                  `}
+                >
+                  원형으로 자르기
+                </button>
+                <button
+                  onClick={handleToggleFixedSize}
+                  aria-pressed={fixedSize !== null}
+                  className={`
+                    px-4 py-2.5 rounded-lg text-sm transition-all min-h-[44px]
+                    ${
+                      fixedSize !== null
+                        ? "bg-brand-accent text-white"
+                        : "bg-brand-white text-brand-mid hover:text-brand-black border border-brand-light"
+                    }
+                  `}
+                >
+                  정확한 크기로 출력
+                </button>
+              </div>
+
+              {fixedSize !== null && (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    min={1}
+                    value={fixedSize.width}
+                    onChange={(e) => handleFixedSizeChange("width", Number(e.target.value))}
+                    aria-label="출력 너비(px)"
+                    className="w-24 px-3 py-2 rounded-lg border border-brand-light text-sm font-mono focus:outline-none focus:border-brand-accent"
+                  />
+                  <span className="text-brand-mid">×</span>
+                  <input
+                    type="number"
+                    min={1}
+                    value={fixedSize.height}
+                    onChange={(e) => handleFixedSizeChange("height", Number(e.target.value))}
+                    aria-label="출력 높이(px)"
+                    className="w-24 px-3 py-2 rounded-lg border border-brand-light text-sm font-mono focus:outline-none focus:border-brand-accent"
+                  />
+                  <span className="text-sm text-brand-mid">px</span>
+                </div>
+              )}
+
+              {circle && (
+                <p className="text-xs text-brand-mid">
+                  1:1 비율과 함께 쓰면 완전한 원이 됩니다. 결과는 투명 PNG로 저장됩니다.
+                </p>
+              )}
+            </div>
+
             {/* 회전/반전 */}
             <div className="space-y-3">
               <label className="text-sm font-medium text-brand-black">
@@ -668,7 +816,7 @@ export default function CropTool() {
 
               <div className="flex justify-center">
                 <DownloadButton
-                  fileName={createNewFileName(imageData.file.name, "_cropped", "jpg")}
+                  fileName={createNewFileName(imageData.file.name, "_cropped", mimeToExtension(result.blob.type))}
                   fileBlob={result.blob}
                   variant="primary"
                   size="lg"
