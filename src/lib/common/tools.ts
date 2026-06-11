@@ -42,6 +42,12 @@ export const TOOLS: Tool[] = [
     description: "원하는 영역만 자르기. 1:1, 4:3, 16:9 비율 프리셋.",
     shortDescription: "자르기",
   },
+  {
+    name: "이미지 합치기",
+    href: "/tools/image/merge",
+    description: "여러 사진을 세로·가로로 한 장에. 캡처 이어붙이기까지.",
+    shortDescription: "여러 장 합치기",
+  },
 ];
 
 /**
