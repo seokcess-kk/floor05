@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import CookieConsent from "@/components/common/CookieConsent";
-import { ADSENSE_ID } from "@/lib/common/constants";
+import { ADSENSE_ID, SITE_URL } from "@/lib/common/constants";
 import "./globals.css";
 
-const SITE_URL = "https://www.floor05.com";
+// Organization 구조화 데이터 (브랜드 신뢰 신호 + AI 검색 인용 보조)
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "floor05",
+  alternateName: "플로어공오",
+  url: SITE_URL,
+  logo: `${SITE_URL}/og-image.png`,
+  description:
+    "서버 전송 없이 브라우저에서 처리하는 무료 이미지 도구 모음. 회원가입 없이 무제한 무료.",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -87,6 +97,10 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <meta name="google-adsense-account" content={ADSENSE_ID} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />

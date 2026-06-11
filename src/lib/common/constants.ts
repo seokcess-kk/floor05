@@ -1,3 +1,9 @@
+// 사이트 정식 도메인 (canonical/OG/구조화데이터 단일 진실 공급원)
+// 모든 페이지·sitemap·robots가 www 호스트로 통일되어야 색인 신호가 분산되지 않는다.
+// env로 덮어쓸 수 있으나 폴백 기본값도 반드시 www 형태를 유지한다.
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.floor05.com";
+
 // 쿠키 동의
 export const CONSENT_KEY = "floor05_cookie_consent";
 export const CONSENT_CHANGE_EVENT = "floor05_consent_change";

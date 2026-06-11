@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "WebP 포맷 완벽 가이드 - 장점, 단점, 변환 방법",
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     "JPG to WebP",
     "PNG to WebP",
   ],
+  alternates: { canonical: "/blog/webp-guide" },
   openGraph: {
     title: "WebP 포맷 완벽 가이드 - 장점, 단점, 변환 방법",
     description: "WebP 포맷의 모든 것: 장점, 단점, 변환 방법까지",
@@ -310,6 +312,7 @@ export default function WebPGuidePage() {
               </Link>
             </div>
           </div>
+          <BlogExtras slug="webp-guide" />
         </article>
       </main>
 

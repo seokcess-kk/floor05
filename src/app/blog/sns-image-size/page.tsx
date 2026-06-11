@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "SNS별 이미지 크기 총정리 - 2026년 최신",
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     "카카오톡 프로필 크기",
     "소셜미디어 이미지 규격",
   ],
+  alternates: { canonical: "/blog/sns-image-size" },
   openGraph: {
     title: "SNS별 이미지 크기 총정리 - 2026년 최신",
     description: "인스타, 유튜브, 페이스북 등 SNS별 최적 이미지 크기 가이드",
@@ -362,6 +364,7 @@ export default function SNSImageSizePage() {
               </Link>
             </div>
           </div>
+          <BlogExtras slug="sns-image-size" />
         </article>
       </main>
 

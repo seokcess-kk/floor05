@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import ToolLayout from "@/components/common/ToolLayout";
 import ConvertTool from "@/components/image/ConvertTool";
+import { SITE_URL } from "@/lib/common/constants";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://floor05.com";
 const PAGE_URL = `${SITE_URL}/tools/image/convert`;
 
 export const metadata: Metadata = {
@@ -110,6 +110,7 @@ export default function ConvertPage() {
       faqs={faqs}
       workflowCTA={workflowCTA}
       currentToolHref="/tools/image/convert"
+      relatedPostSlugs={["png-vs-jpg", "webp-guide", "transparent-background"]}
       schemas={schemas}
     >
       <ConvertTool />

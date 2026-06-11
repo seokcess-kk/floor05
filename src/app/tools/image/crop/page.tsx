@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import ToolLayout from "@/components/common/ToolLayout";
 import CropTool from "@/components/image/CropTool";
+import { SITE_URL } from "@/lib/common/constants";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://floor05.com";
 const PAGE_URL = `${SITE_URL}/tools/image/crop`;
 
 export const metadata: Metadata = {
@@ -110,6 +110,7 @@ export default function CropPage() {
       faqs={faqs}
       workflowCTA={workflowCTA}
       currentToolHref="/tools/image/crop"
+      relatedPostSlugs={["image-crop-guide", "image-merge-guide"]}
       schemas={schemas}
     >
       <CropTool />

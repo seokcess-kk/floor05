@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "PNG vs JPG 차이점 - 언제 어떤 포맷을 써야 할까?",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     "이미지 확장자",
     "사진 포맷 비교",
   ],
+  alternates: { canonical: "/blog/png-vs-jpg" },
   openGraph: {
     title: "PNG vs JPG 차이점 - 언제 어떤 포맷을 써야 할까?",
     description:
@@ -340,6 +342,7 @@ export default function PngVsJpgPage() {
               </div>
             </div>
           </div>
+          <BlogExtras slug="png-vs-jpg" />
         </article>
       </main>
 

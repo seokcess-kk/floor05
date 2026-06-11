@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "이미지 용량 줄이기 방법 총정리 - 화질 손실 없이 사진 크기 줄이는 법",
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     "JPG 압축",
     "PNG 압축",
   ],
+  alternates: { canonical: "/blog/image-compression-guide" },
   openGraph: {
     title: "이미지 용량 줄이기 방법 총정리",
     description:
@@ -276,6 +278,7 @@ export default function ImageCompressionGuidePage() {
               </div>
             </div>
           </div>
+          <BlogExtras slug="image-compression-guide" />
         </article>
       </main>
 

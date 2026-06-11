@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import ToolLayout from "@/components/common/ToolLayout";
 import CompressTool from "@/components/image/CompressTool";
+import { SITE_URL } from "@/lib/common/constants";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://floor05.com";
 const PAGE_URL = `${SITE_URL}/tools/image/compress`;
 
 export const metadata: Metadata = {
@@ -145,6 +145,7 @@ export default function CompressPage() {
       faqs={faqs}
       workflowCTA={workflowCTA}
       currentToolHref="/tools/image/compress"
+      relatedPostSlugs={["image-compression-guide", "passport-photo-size", "image-quality-vs-size"]}
       schemas={schemas}
     >
       <CompressTool />

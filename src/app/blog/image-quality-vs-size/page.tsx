@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "사진 화질 높이기 vs 용량 줄이기 - 차이점과 올바른 선택",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     "화질 손실",
     "무손실 압축",
   ],
+  alternates: { canonical: "/blog/image-quality-vs-size" },
   openGraph: {
     title: "사진 화질 높이기 vs 용량 줄이기 - 차이점과 올바른 선택",
     description: "화질과 용량, 둘 중 무엇을 선택해야 할까요?",
@@ -352,6 +354,7 @@ export default function ImageQualityVsSizePage() {
               </div>
             </div>
           </div>
+          <BlogExtras slug="image-quality-vs-size" />
         </article>
       </main>
 

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import ToolLayout from "@/components/common/ToolLayout";
 import ResizeTool from "@/components/image/ResizeTool";
+import { SITE_URL } from "@/lib/common/constants";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://floor05.com";
 const PAGE_URL = `${SITE_URL}/tools/image/resize`;
 
 export const metadata: Metadata = {
@@ -110,6 +110,7 @@ export default function ResizePage() {
       faqs={faqs}
       workflowCTA={workflowCTA}
       currentToolHref="/tools/image/resize"
+      relatedPostSlugs={["instagram-image-size", "sns-image-size", "youtube-thumbnail-size"]}
       schemas={schemas}
     >
       <ResizeTool />

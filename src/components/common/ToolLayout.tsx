@@ -1,9 +1,11 @@
+import Link from "next/link";
 import Header from "./Header";
 import Footer from "./Footer";
 import AdSlot from "./AdSlot";
 import ToolCard from "./ToolCard";
 import ErrorBoundary from "./ErrorBoundary";
 import { getOtherTools } from "@/lib/common/tools";
+import { getPostsBySlugs } from "@/lib/common/blog";
 
 interface FAQ {
   question: string;
@@ -43,6 +45,9 @@ interface ToolLayoutProps {
   // 현재 도구의 href (다른 도구 섹션에서 제외)
   currentToolHref?: string;
 
+  // 관련 블로그 글 slug 목록 (도구→블로그 내부링크). blog 레지스트리에서 제목 해석
+  relatedPostSlugs?: string[];
+
   // 광고 슬롯 3 표시 여부 (페이지 길이에 따라)
   showThirdAd?: boolean;
 
@@ -57,11 +62,15 @@ export default function ToolLayout({
   faqs = [],
   workflowCTA,
   currentToolHref,
+  relatedPostSlugs = [],
   showThirdAd = true,
   schemas = [],
 }: ToolLayoutProps) {
   // 현재 도구를 제외한 다른 도구들
   const otherTools = getOtherTools(currentToolHref);
+
+  // 관련 블로그 글 (도구→블로그 내부링크)
+  const relatedPosts = getPostsBySlugs(relatedPostSlugs);
 
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
@@ -149,6 +158,34 @@ export default function ToolLayout({
                   ))}
                 </div>
               </div>
+            </div>
+          </section>
+        )}
+
+        {/* 6-1. 관련 가이드 (도구→블로그 내부링크) */}
+        {relatedPosts.length > 0 && (
+          <section className="py-12">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="font-mono text-xs text-brand-accent uppercase tracking-widest mb-6 text-center">
+                관련 가이드
+              </h2>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {relatedPosts.map((post) => (
+                  <li key={post.slug}>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="group block h-full rounded-lg border border-brand-light/30 bg-brand-white p-5 hover:border-brand-accent/50 transition-colors"
+                    >
+                      <span className="block font-medium text-brand-black group-hover:text-brand-accent transition-colors">
+                        {post.title}
+                      </span>
+                      <span className="mt-1 block text-sm text-brand-mid line-clamp-2">
+                        {post.description}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
         )}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "이미지 배경 투명하게 만들기 - PNG 투명 배경 가이드",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     "로고 배경 투명",
     "사진 배경 제거",
   ],
+  alternates: { canonical: "/blog/transparent-background" },
   openGraph: {
     title: "이미지 배경 투명하게 만들기 - PNG 투명 배경 가이드",
     description: "PNG 투명 배경의 원리와 활용법",
@@ -339,6 +341,7 @@ export default function TransparentBackgroundPage() {
               </Link>
             </div>
           </div>
+          <BlogExtras slug="transparent-background" />
         </article>
       </main>
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "인스타그램 사진 크기 총정리 - 2026년 최신 규격",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     "인스타그램 이미지 사이즈",
     "인스타 정사각형",
   ],
+  alternates: { canonical: "/blog/instagram-image-size" },
   openGraph: {
     title: "인스타그램 사진 크기 총정리 - 2026년 최신 규격",
     description:
@@ -286,6 +288,7 @@ export default function InstagramImageSizePage() {
               </Link>
             </div>
           </div>
+          <BlogExtras slug="instagram-image-size" />
         </article>
       </main>
 

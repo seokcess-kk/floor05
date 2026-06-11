@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "사진 자르기 완벽 가이드 - 비율별 크롭 방법",
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     "4:3 자르기",
     "온라인 사진 자르기",
   ],
+  alternates: { canonical: "/blog/image-crop-guide" },
   openGraph: {
     title: "사진 자르기 완벽 가이드 - 비율별 크롭 방법",
     description: "사진 자르기, 크롭하는 방법. 비율별 가이드와 무료 도구",
@@ -337,6 +339,7 @@ export default function ImageCropGuidePage() {
               </Link>
             </div>
           </div>
+          <BlogExtras slug="image-crop-guide" />
         </article>
       </main>
 

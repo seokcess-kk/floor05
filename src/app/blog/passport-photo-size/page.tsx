@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "증명사진 용량 줄이기 - 200KB, 500KB 맞추는 방법",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     "원서 사진 용량",
     "사진 용량 줄이기",
   ],
+  alternates: { canonical: "/blog/passport-photo-size" },
   openGraph: {
     title: "증명사진 용량 줄이기 - 200KB, 500KB 맞추는 방법",
     description: "취업사이트, 원서접수용 증명사진 용량을 화질 손실 없이 줄이는 방법",
@@ -338,6 +340,7 @@ export default function PassportPhotoSizePage() {
               </Link>
             </div>
           </div>
+          <BlogExtras slug="passport-photo-size" />
         </article>
       </main>
 

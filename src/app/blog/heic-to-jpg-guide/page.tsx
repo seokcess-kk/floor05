@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import BlogExtras from "@/components/common/BlogExtras";
 
 export const metadata: Metadata = {
   title: "아이폰 HEIC 사진 JPG 변환 방법 - 가장 쉬운 무료 변환",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     "HEIC 파일 열기",
     "아이폰 사진 JPG",
   ],
+  alternates: { canonical: "/blog/heic-to-jpg-guide" },
   openGraph: {
     title: "아이폰 HEIC 사진 JPG 변환 방법",
     description:
@@ -262,6 +264,7 @@ export default function HeicToJpgGuidePage() {
               </Link>
             </div>
           </div>
+          <BlogExtras slug="heic-to-jpg-guide" />
         </article>
       </main>
 
