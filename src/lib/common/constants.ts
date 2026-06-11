@@ -1,8 +1,14 @@
 // 사이트 정식 도메인 (canonical/OG/구조화데이터 단일 진실 공급원)
 // 모든 페이지·sitemap·robots가 www 호스트로 통일되어야 색인 신호가 분산되지 않는다.
-// env로 덮어쓸 수 있으나 폴백 기본값도 반드시 www 형태를 유지한다.
+const PRIMARY_DOMAIN = "https://www.floor05.com";
+// env로 덮어쓸 수 있으나, *.vercel.app 미리보기/기본 도메인 값은 무시한다.
+// (프로덕션 canonical/OG가 vercel.app으로 새어 구글이 vercel.app을 정식 URL로
+//  인식하는 사고 방지 — 정식 커스텀 도메인을 항상 강제)
+const ENV_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.floor05.com";
+  ENV_SITE_URL && !ENV_SITE_URL.includes("vercel.app")
+    ? ENV_SITE_URL
+    : PRIMARY_DOMAIN;
 
 // 쿠키 동의
 export const CONSENT_KEY = "floor05_cookie_consent";
