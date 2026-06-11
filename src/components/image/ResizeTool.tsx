@@ -43,6 +43,7 @@ export default function ResizeTool() {
   const [customWidth, setCustomWidth] = useState(800);
   const [customHeight, setCustomHeight] = useState(600);
   const [lockAspectRatio, setLockAspectRatio] = useState(true);
+  const [doNotEnlarge, setDoNotEnlarge] = useState(false);
   const [percentage, setPercentage] = useState(50);
   const [selectedPresetId, setSelectedPresetId] = useState("instagram-square");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -217,27 +218,35 @@ export default function ResizeTool() {
     await Promise.all(
       images.map(async (img) => {
         try {
-          let result: ResizeResult;
+          let reqWidth: number;
+          let reqHeight: number;
+          let maintain: boolean;
 
           if (mode === "percentage") {
-            result = await resizeImageSmart(img.file, {
-              width: Math.round(img.originalWidth * (percentage / 100)),
-              height: Math.round(img.originalHeight * (percentage / 100)),
-              maintainAspectRatio: false,
-            });
+            reqWidth = Math.round(img.originalWidth * (percentage / 100));
+            reqHeight = Math.round(img.originalHeight * (percentage / 100));
+            maintain = false;
           } else if (mode === "preset" && selectedPreset) {
-            result = await resizeImageSmart(img.file, {
-              width: selectedPreset.width,
-              height: selectedPreset.height || 0,
-              maintainAspectRatio: selectedPreset.height === 0,
-            });
+            reqWidth = selectedPreset.width;
+            reqHeight = selectedPreset.height || 0;
+            maintain = selectedPreset.height === 0;
           } else {
-            result = await resizeImageSmart(img.file, {
-              width: customWidth,
-              height: customHeight,
-              maintainAspectRatio: lockAspectRatio,
-            });
+            reqWidth = customWidth;
+            reqHeight = customHeight;
+            maintain = lockAspectRatio;
           }
+
+          // 확대 안 함: 요청 크기를 원본 이하로 제한 (업스케일 방지)
+          if (doNotEnlarge) {
+            reqWidth = Math.min(reqWidth, img.originalWidth);
+            if (reqHeight > 0) reqHeight = Math.min(reqHeight, img.originalHeight);
+          }
+
+          const result: ResizeResult = await resizeImageSmart(img.file, {
+            width: reqWidth,
+            height: reqHeight,
+            maintainAspectRatio: maintain,
+          });
 
           // 이전 결과 URL 해제 (재리사이즈 시 누수 방지)
           revokeObjectUrl(img.result?.dataUrl);
@@ -279,6 +288,7 @@ export default function ResizeTool() {
     customWidth,
     customHeight,
     lockAspectRatio,
+    doNotEnlarge,
     isProcessing,
   ]);
 
@@ -658,6 +668,20 @@ export default function ResizeTool() {
                 )}
               </div>
             )}
+
+            {/* 확대 안 함 */}
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={doNotEnlarge}
+                onChange={(e) => setDoNotEnlarge(e.target.checked)}
+                className="w-4 h-4 accent-brand-accent"
+              />
+              <span className="text-sm text-brand-black">
+                원본보다 크게 키우지 않기{" "}
+                <span className="text-brand-mid">(확대 안 함)</span>
+              </span>
+            </label>
 
             {/* 리사이즈 버튼 */}
             <button

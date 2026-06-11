@@ -493,24 +493,38 @@ export default function ConvertTool() {
                 <p className="text-xs text-brand-mid">
                   PNG 이미지의 투명한 부분을 채울 색상입니다.
                 </p>
-                <div className="flex gap-3">
-                  {BACKGROUND_COLORS.map(
-                    (color) => (
-                      <button
-                        key={color.value}
-                        onClick={() => setBackgroundColor(color.value)}
-                        className={`
-                          w-10 h-10 rounded-lg ${color.class} transition-all
-                          ${
-                            backgroundColor === color.value
-                              ? "ring-2 ring-brand-accent ring-offset-2"
-                              : ""
-                          }
-                        `}
-                        title={color.label}
-                      />
-                    )
-                  )}
+                <div className="flex items-center gap-3 flex-wrap">
+                  {BACKGROUND_COLORS.map((color) => (
+                    <button
+                      key={color.value}
+                      onClick={() => setBackgroundColor(color.value)}
+                      className={`
+                        w-10 h-10 rounded-lg ${color.class} transition-all
+                        ${
+                          backgroundColor === color.value
+                            ? "ring-2 ring-brand-accent ring-offset-2"
+                            : ""
+                        }
+                      `}
+                      title={color.label}
+                    />
+                  ))}
+                  {/* 직접 색 선택 */}
+                  <label
+                    className="relative w-10 h-10 rounded-lg overflow-hidden border border-brand-light cursor-pointer shrink-0"
+                    title="직접 선택"
+                  >
+                    <input
+                      type="color"
+                      value={backgroundColor}
+                      onChange={(e) => setBackgroundColor(e.target.value)}
+                      aria-label="배경색 직접 선택"
+                      className="absolute -inset-1 w-[calc(100%+8px)] h-[calc(100%+8px)] cursor-pointer"
+                    />
+                  </label>
+                  <span className="font-mono text-xs text-brand-mid">
+                    {backgroundColor.toUpperCase()}
+                  </span>
                 </div>
               </div>
             )}

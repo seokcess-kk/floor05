@@ -602,6 +602,10 @@ export default function CompressTool() {
                 `${images.length}개 이미지 압축하기`
               )}
             </button>
+
+            <p className="text-xs text-brand-mid text-center">
+              🔒 업로드 없이 브라우저에서 처리되며, 사진의 위치(GPS)·촬영 정보(EXIF)도 함께 제거됩니다.
+            </p>
           </div>
 
           {/* 결과 비교 */}
