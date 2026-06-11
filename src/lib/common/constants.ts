@@ -8,10 +8,12 @@ export const ADSENSE_ID =
   process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-3069814419179785";
 
 // AdSense 광고 단위(슬롯) 숫자 ID.
-// AdSense 대시보드 > 광고 > 광고 단위에서 "반응형 디스플레이" 단위를 만들고
-// 발급된 숫자 ID(예: "1234567890")를 NEXT_PUBLIC_ADSENSE_SLOT_ID로 주입한다.
-// 반응형 단위는 여러 위치에 재사용 가능. 미설정(빈 문자열)이면 AdSense를 렌더링하지 않는다.
-export const ADSENSE_SLOT_ID = process.env.NEXT_PUBLIC_ADSENSE_SLOT_ID || "";
+// floor05_horizon_ad (반응형 디스플레이) 단위 ID를 기본값으로 사용하며,
+// 필요 시 NEXT_PUBLIC_ADSENSE_SLOT_ID 환경변수로 덮어쓸 수 있다.
+// 반응형 단위는 여러 위치(도구 아래·CTA 아래·푸터 위)에 재사용 가능.
+// 빈 문자열이면 AdSense를 렌더링하지 않는다(잘못된 광고 요청 방지).
+export const ADSENSE_SLOT_ID =
+  process.env.NEXT_PUBLIC_ADSENSE_SLOT_ID || "3227968565";
 
 // Kakao Adfit 광고 단위 ID (예: "DAN-xxxxxxxx").
 // 설정 시 AdSense 슬롯이 없을 때 대체 노출. 미설정이면 Adfit을 렌더링하지 않는다.
