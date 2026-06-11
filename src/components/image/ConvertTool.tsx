@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import FileDropzone from "@/components/common/FileDropzone";
-import BeforeAfter from "@/components/common/BeforeAfter";
+import ResultCompare from "@/components/common/ResultCompare";
 import DownloadButton from "@/components/common/DownloadButton";
 import {
   formatFileSize,
@@ -548,16 +548,17 @@ export default function ConvertTool() {
             (selectedImage.originalDataUrl ? (
               <div className="space-y-4">
                 <h3 className="font-mono text-xs text-brand-accent uppercase tracking-wider">
-                  Before / After 비교
+                  변환 결과
                 </h3>
 
-                <BeforeAfter
+                <ResultCompare
                   beforeSrc={selectedImage.originalDataUrl}
                   afterSrc={selectedImage.result.dataUrl}
                   beforeLabel={getFormatName(selectedImage.originalFormat)}
                   afterLabel={getFormatName(selectedImage.result.outputFormat)}
-                  beforeSize={formatFileSize(selectedImage.file.size)}
-                  afterSize={formatFileSize(selectedImage.result.blob.size)}
+                  beforeMeta={formatFileSize(selectedImage.file.size)}
+                  afterMeta={formatFileSize(selectedImage.result.blob.size)}
+                  transparent={selectedImage.result.outputFormat !== "image/jpeg"}
                 />
               </div>
             ) : (

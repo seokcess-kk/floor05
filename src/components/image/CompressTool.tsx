@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import FileDropzone from "@/components/common/FileDropzone";
-import BeforeAfter from "@/components/common/BeforeAfter";
+import ResultCompare from "@/components/common/ResultCompare";
 import DownloadButton from "@/components/common/DownloadButton";
 import {
   formatFileSize,
@@ -75,6 +75,16 @@ export default function CompressTool() {
     () => images.filter((img) => img.status === "done" && img.result),
     [images]
   );
+
+  // 압축 완료 시 결과 영역으로 한 번만 자동 스크롤 (긴 페이지에서 결과 인지 보조)
+  const resultSectionRef = useRef<HTMLDivElement>(null);
+  const hadResultsRef = useRef(false);
+  useEffect(() => {
+    if (!hadResultsRef.current && completedImages.length > 0) {
+      resultSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    hadResultsRef.current = completedImages.length > 0;
+  }, [completedImages.length]);
 
   // 전체 압축 통계
   const totalStats = useMemo(() => {
@@ -539,40 +549,63 @@ export default function CompressTool() {
             </button>
           </div>
 
-          {/* Before/After 비교 */}
+          {/* 결과 비교 */}
           {selectedImage && selectedImage.status === "done" && selectedImage.result && (
-            <div className="space-y-4">
+            <div ref={resultSectionRef} className="space-y-4 scroll-mt-4">
               <h3 className="font-mono text-xs text-brand-accent uppercase tracking-wider">
-                Before / After 비교
+                결과 비교
               </h3>
 
-              <BeforeAfter
+              <ResultCompare
                 beforeSrc={selectedImage.originalDataUrl}
                 afterSrc={selectedImage.result.dataUrl}
-                beforeSize={formatFileSize(selectedImage.result.originalSize)}
-                afterSize={formatFileSize(selectedImage.result.compressedSize)}
+                afterLabel="압축 결과"
+                beforeMeta={formatFileSize(selectedImage.result.originalSize)}
+                afterMeta={formatFileSize(selectedImage.result.compressedSize)}
               />
 
-              {/* 압축 결과 */}
-              <div className="bg-brand-paper rounded-xl p-6">
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <p className="text-sm text-brand-mid mb-1">원본</p>
-                    <p className="font-mono text-lg text-brand-black">
+              {/* 용량 절감 막대 — 압축의 핵심 성과를 한눈에 */}
+              <div className="bg-brand-paper rounded-xl p-6 space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-brand-mid">원본</span>
+                    <span className="font-mono text-brand-black">
                       {formatFileSize(selectedImage.result.originalSize)}
-                    </p>
+                    </span>
                   </div>
-                  <div>
-                    <p className="text-sm text-brand-mid mb-1">압축 후</p>
-                    <p className="font-mono text-lg text-brand-accent">
-                      {formatFileSize(selectedImage.result.compressedSize)}
-                    </p>
+                  <div className="h-3 rounded-full bg-brand-light/40 overflow-hidden">
+                    <div className="h-full w-full bg-brand-light" />
                   </div>
-                  <div>
-                    <p className="text-sm text-brand-mid mb-1">감소율</p>
-                    <p className="font-mono text-lg text-brand-accent">
-                      -{calculateCompressionRate(selectedImage.result.originalSize, selectedImage.result.compressedSize)}%
-                    </p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-brand-mid">압축 후</span>
+                    <span className="font-mono text-brand-accent">
+                      {formatFileSize(selectedImage.result.compressedSize)} · -
+                      {calculateCompressionRate(
+                        selectedImage.result.originalSize,
+                        selectedImage.result.compressedSize
+                      )}
+                      %
+                    </span>
+                  </div>
+                  <div className="h-3 rounded-full bg-brand-light/40 overflow-hidden">
+                    <div
+                      className="h-full bg-brand-accent transition-all"
+                      style={{
+                        width: `${Math.min(
+                          100,
+                          Math.max(
+                            2,
+                            Math.round(
+                              (selectedImage.result.compressedSize /
+                                selectedImage.result.originalSize) *
+                                100
+                            )
+                          )
+                        )}%`,
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -582,32 +615,35 @@ export default function CompressTool() {
           {/* 전체 통계 & 다운로드 */}
           {totalStats && totalStats.count > 0 && (
             <div className="bg-brand-black rounded-xl p-6 space-y-6">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                <div>
-                  <p className="text-sm text-brand-light mb-1">처리 완료</p>
-                  <p className="font-mono text-2xl text-brand-paper">
-                    {totalStats.count}개
-                  </p>
+              {/* 합계 통계는 여러 장 일괄 처리일 때만 (단일 장은 위 절감 막대와 중복) */}
+              {totalStats.count > 1 && (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                  <div>
+                    <p className="text-sm text-brand-light mb-1">처리 완료</p>
+                    <p className="font-mono text-2xl text-brand-paper">
+                      {totalStats.count}개
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-brand-light mb-1">원본 총 용량</p>
+                    <p className="font-mono text-2xl text-brand-paper">
+                      {formatFileSize(totalStats.originalSize)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-brand-light mb-1">압축 후</p>
+                    <p className="font-mono text-2xl text-brand-accent">
+                      {formatFileSize(totalStats.compressedSize)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-brand-light mb-1">절약</p>
+                    <p className="font-mono text-2xl text-brand-accent">
+                      {formatFileSize(totalStats.savedSize)} (-{totalStats.rate}%)
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm text-brand-light mb-1">원본 총 용량</p>
-                  <p className="font-mono text-2xl text-brand-paper">
-                    {formatFileSize(totalStats.originalSize)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-brand-light mb-1">압축 후</p>
-                  <p className="font-mono text-2xl text-brand-accent">
-                    {formatFileSize(totalStats.compressedSize)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-brand-light mb-1">절약</p>
-                  <p className="font-mono text-2xl text-brand-accent">
-                    {formatFileSize(totalStats.savedSize)} (-{totalStats.rate}%)
-                  </p>
-                </div>
-              </div>
+              )}
 
               {/* 다운로드 버튼 */}
               <div className="flex justify-center">

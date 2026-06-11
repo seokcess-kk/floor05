@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import FileDropzone from "@/components/common/FileDropzone";
-import BeforeAfter from "@/components/common/BeforeAfter";
 import DownloadButton from "@/components/common/DownloadButton";
 import {
   formatFileSize,
@@ -638,19 +637,20 @@ export default function CropTool() {
             )}
           </div>
 
-          {/* Before/After 비교 */}
+          {/* 크롭 결과 — 원본과 겹쳐 비교하는 건 구도가 달라 무의미하므로 결과 단독 표시 */}
           {result && (
             <div className="space-y-4">
               <h3 className="font-mono text-xs text-brand-accent uppercase tracking-wider">
-                Before / After 비교
+                크롭 결과
               </h3>
 
-              <BeforeAfter
-                beforeSrc={imageData.originalDataUrl}
-                afterSrc={result.dataUrl}
-                beforeSize={`${imageData.originalWidth}×${imageData.originalHeight}`}
-                afterSize={`${result.width}×${result.height}`}
-              />
+              <div className="rounded-lg overflow-hidden bg-brand-paper flex justify-center">
+                <img
+                  src={result.dataUrl}
+                  alt="크롭 결과"
+                  className="max-h-[480px] w-auto object-contain"
+                />
+              </div>
             </div>
           )}
 

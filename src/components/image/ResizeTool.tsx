@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import FileDropzone from "@/components/common/FileDropzone";
-import BeforeAfter from "@/components/common/BeforeAfter";
+import ResultCompare from "@/components/common/ResultCompare";
 import DownloadButton from "@/components/common/DownloadButton";
 import {
   formatFileSize,
@@ -685,19 +685,42 @@ export default function ResizeTool() {
             </button>
           </div>
 
-          {/* Before/After 비교 */}
+          {/* 결과 비교 */}
           {selectedImage && selectedImage.status === "done" && selectedImage.result && (
             <div className="space-y-4">
               <h3 className="font-mono text-xs text-brand-accent uppercase tracking-wider">
-                Before / After 비교
+                결과 비교
               </h3>
 
-              <BeforeAfter
+              <ResultCompare
                 beforeSrc={selectedImage.originalDataUrl}
                 afterSrc={selectedImage.result.dataUrl}
-                beforeSize={`${selectedImage.originalWidth}×${selectedImage.originalHeight}`}
-                afterSize={`${selectedImage.result.width}×${selectedImage.result.height}`}
+                beforeMeta={`${selectedImage.originalWidth}×${selectedImage.originalHeight}`}
+                afterMeta={`${selectedImage.result.width}×${selectedImage.result.height}`}
               />
+
+              {/* 치수 변화 — 리사이즈는 화면상 차이가 안 드러나므로 수치로 강조 */}
+              <div className="bg-brand-paper rounded-xl p-5 flex items-center justify-center gap-4 font-mono text-base">
+                <span className="text-brand-mid">
+                  {selectedImage.originalWidth}×{selectedImage.originalHeight}
+                </span>
+                <svg
+                  className="w-5 h-5 text-brand-light shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+                <span className="text-brand-accent">
+                  {selectedImage.result.width}×{selectedImage.result.height}
+                </span>
+              </div>
             </div>
           )}
 
