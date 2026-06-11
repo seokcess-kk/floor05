@@ -20,6 +20,7 @@ import {
   CompressionResult,
 } from "@/lib/image/compress";
 import { compressImageSmart } from "@/lib/image/processPool";
+import { compressPng } from "@/lib/image/pngCompress";
 import { useBeforeUnload, useMaxBatchSize } from "@/lib/common/hooks";
 
 const ACCEPT_IMAGE = "image/jpeg,image/png,image/webp";
@@ -34,11 +35,24 @@ interface ProcessedImage {
 }
 
 type CompressionMode = "quality" | "target";
+type OutputMode = "auto" | "jpg" | "png";
+
+function isPngFile(file: File): boolean {
+  return file.type === "image/png" || file.name.toLowerCase().endsWith(".png");
+}
+
+// 이 파일을 PNG로 저장할지 결정 (auto: PNG 입력만 PNG 유지, 나머지는 JPG)
+function wantsPng(file: File, outputMode: OutputMode): boolean {
+  if (outputMode === "png") return true;
+  if (outputMode === "jpg") return false;
+  return isPngFile(file);
+}
 
 export default function CompressTool() {
   // 상태
   const [images, setImages] = useState<ProcessedImage[]>([]);
   const [mode, setMode] = useState<CompressionMode>("quality");
+  const [outputMode, setOutputMode] = useState<OutputMode>("auto");
   const [quality, setQuality] = useState(80);
   const [targetSizeKB, setTargetSizeKB] = useState(200);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -111,7 +125,7 @@ export default function CompressTool() {
 
   // 품질 슬라이더 실시간 예상 용량 (선택 이미지 기준, 디바운스)
   useEffect(() => {
-    if (mode !== "quality" || !selectedImage) {
+    if (mode !== "quality" || !selectedImage || wantsPng(selectedImage.file, outputMode)) {
       setEstimatedSize(null);
       return;
     }
@@ -130,7 +144,7 @@ export default function CompressTool() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [mode, quality, selectedImage]);
+  }, [mode, quality, selectedImage, outputMode]);
 
   // 파일 추가
   const handleFilesAdd = useCallback(async (files: File[]) => {
@@ -221,12 +235,14 @@ export default function CompressTool() {
       images.map(async (img) => {
         try {
           const result =
-            mode === "quality"
-              ? await compressImageSmart(img.file, {
-                  quality: quality / 100,
+            mode === "target"
+              ? await compressToTargetSize(img.file, targetSizeKB, {
                   outputFormat: "image/jpeg",
                 })
-              : await compressToTargetSize(img.file, targetSizeKB, {
+              : wantsPng(img.file, outputMode)
+              ? await compressPng(img.file, quality)
+              : await compressImageSmart(img.file, {
+                  quality: quality / 100,
                   outputFormat: "image/jpeg",
                 });
 
@@ -262,7 +278,7 @@ export default function CompressTool() {
     );
 
     setIsProcessing(false);
-  }, [images, mode, quality, targetSizeKB, isProcessing]);
+  }, [images, mode, quality, targetSizeKB, outputMode, isProcessing]);
 
   // 다운로드용 파일 목록
   const downloadFiles = useMemo(() => {
@@ -452,6 +468,45 @@ export default function CompressTool() {
               </button>
             </div>
 
+            {/* 결과 형식 (품질 모드 전용) */}
+            {mode === "quality" && (
+              <div className="space-y-3">
+                <label className="text-sm font-medium text-brand-black">
+                  결과 형식
+                </label>
+                <div className="flex gap-2">
+                  {([
+                    ["auto", "자동"],
+                    ["jpg", "JPG"],
+                    ["png", "PNG"],
+                  ] as const).map(([value, label]) => (
+                    <button
+                      key={value}
+                      onClick={() => setOutputMode(value)}
+                      className={`
+                        flex-1 py-2.5 rounded-lg text-sm font-medium transition-all
+                        ${
+                          outputMode === value
+                            ? "bg-brand-accent text-white"
+                            : "bg-brand-white text-brand-mid hover:text-brand-black"
+                        }
+                      `}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-xs text-brand-mid">
+                  {outputMode === "auto" &&
+                    "PNG는 투명을 유지한 채 압축하고, 나머지는 JPG로 더 작게 만듭니다."}
+                  {outputMode === "jpg" &&
+                    "모두 JPG로 저장합니다. 투명 배경은 흰색으로 채워집니다."}
+                  {outputMode === "png" &&
+                    "모두 PNG로 저장해 투명 배경을 유지합니다. 품질을 낮추면 색상 수를 줄여 더 작게 만듭니다."}
+                </p>
+              </div>
+            )}
+
             {/* 품질 슬라이더 */}
             {mode === "quality" && (
               <div className="space-y-3">
@@ -562,6 +617,7 @@ export default function CompressTool() {
                 afterLabel="압축 결과"
                 beforeMeta={formatFileSize(selectedImage.result.originalSize)}
                 afterMeta={formatFileSize(selectedImage.result.compressedSize)}
+                transparent={selectedImage.result.blob.type === "image/png"}
               />
 
               {/* 용량 절감 막대 — 압축의 핵심 성과를 한눈에 */}
