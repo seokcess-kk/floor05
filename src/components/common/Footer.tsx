@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { TOOLS } from "@/lib/common/tools";
+import CookieSettings from "./CookieSettings";
 
 function FooterLogo() {
   return (
@@ -100,6 +101,9 @@ export default function Footer() {
                 >
                   이용약관
                 </Link>
+              </li>
+              <li>
+                <CookieSettings className="text-sm text-brand-light hover:text-brand-paper transition-colors" />
               </li>
             </ul>
           </div>

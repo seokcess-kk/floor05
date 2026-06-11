@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import FileDropzone from "@/components/common/FileDropzone";
 import BeforeAfter from "@/components/common/BeforeAfter";
 import DownloadButton from "@/components/common/DownloadButton";
@@ -10,14 +10,18 @@ import {
   getMaxBatchSize,
   fileToDataUrl,
   loadImage,
+  validateImageFiles,
+  revokeObjectUrl,
 } from "@/lib/common/fileUtils";
 import {
-  resizeImage,
-  resizeByPercentage,
   SNS_PRESETS,
   getPresetsByPlatform,
   ResizeResult,
 } from "@/lib/image/resize";
+import { resizeImageSmart } from "@/lib/image/processPool";
+import { useBeforeUnload, useMaxBatchSize } from "@/lib/common/hooks";
+
+const ACCEPT_IMAGE = "image/jpeg,image/png,image/webp";
 
 interface ProcessedImage {
   id: string;
@@ -48,6 +52,23 @@ export default function ResizeTool() {
 
   // 원본 비율 저장
   const [originalAspectRatio, setOriginalAspectRatio] = useState(4 / 3);
+
+  // 최신 images 스냅샷 (일괄 장수 계산 / 객체 URL 정리용)
+  const imagesRef = useRef<ProcessedImage[]>([]);
+  useEffect(() => {
+    imagesRef.current = images;
+  }, [images]);
+  useEffect(() => {
+    return () => {
+      imagesRef.current.forEach((img) => revokeObjectUrl(img.result?.dataUrl));
+    };
+  }, []);
+
+  // 처리 중 페이지 이탈 경고
+  useBeforeUnload(isProcessing);
+
+  // 일괄 최대 장수 (하이드레이션 안전)
+  const maxBatchSize = useMaxBatchSize();
 
   // 선택된 이미지
   const selectedImage = useMemo(
@@ -102,50 +123,68 @@ export default function ResizeTool() {
   // 파일 추가
   const handleFilesAdd = useCallback(async (files: File[]) => {
     const maxBatch = getMaxBatchSize();
-    const filesToAdd = files.slice(0, maxBatch);
+    const notices: string[] = [];
 
-    const newImages: ProcessedImage[] = await Promise.all(
-      filesToAdd.map(async (file) => {
-        const dataUrl = await fileToDataUrl(file);
-        const img = await loadImage(dataUrl);
-        return {
-          id: `${file.name}-${Date.now()}-${Math.random()}`,
-          file,
-          originalDataUrl: dataUrl,
-          originalWidth: img.width,
-          originalHeight: img.height,
-          result: null,
-          status: "pending" as const,
-        };
+    // 형식/크기 검증 (FileDropzone를 거치지 않는 "+" 입력도 여기서 막힌다)
+    const { valid, oversize, unsupported } = validateImageFiles(files, ACCEPT_IMAGE);
+    if (unsupported > 0) notices.push(`${unsupported}개 파일은 지원하지 않는 형식이라 제외했어요.`);
+    if (oversize > 0) notices.push(`${oversize}개 파일은 50MB를 넘어 제외했어요.`);
+
+    // 파일별로 읽기 (한 장이 실패해도 나머지는 살린다)
+    const loaded = await Promise.all(
+      valid.map(async (file): Promise<ProcessedImage | null> => {
+        try {
+          const dataUrl = await fileToDataUrl(file);
+          const img = await loadImage(dataUrl);
+          return {
+            id: `${file.name}-${Date.now()}-${Math.random()}`,
+            file,
+            originalDataUrl: dataUrl,
+            originalWidth: img.width,
+            originalHeight: img.height,
+            result: null,
+            status: "pending",
+          };
+        } catch {
+          return null;
+        }
       })
     );
+    const newImages = loaded.filter((img): img is ProcessedImage => img !== null);
+    const failed = valid.length - newImages.length;
+    if (failed > 0) notices.push(`${failed}개 파일을 열 수 없어 제외했어요.`);
 
-    let overflow = 0;
-    setImages((prev) => {
-      const combined = [...prev, ...newImages];
-      overflow = Math.max(0, combined.length - maxBatch);
-      return combined.slice(0, maxBatch);
-    });
-
+    // 일괄 장수 제한 (현재 목록 + 신규)
+    const room = Math.max(0, maxBatch - imagesRef.current.length);
+    const accepted = newImages.slice(0, room);
+    const overflow = newImages.length - accepted.length;
     if (overflow > 0) {
-      setBatchNotice(`최대 ${maxBatch}개까지 처리됩니다. ${overflow}개 파일이 제외되었습니다.`);
-      setTimeout(() => setBatchNotice(null), 4000);
+      notices.push(`최대 ${maxBatch}개까지 처리할 수 있어 ${overflow}개를 제외했어요.`);
     }
 
     // 첫 번째 이미지 선택 및 크기 설정
-    if (newImages.length > 0) {
-      setSelectedImageId(newImages[0].id);
-      setCustomWidth(newImages[0].originalWidth);
-      setCustomHeight(newImages[0].originalHeight);
+    if (accepted.length > 0) {
+      setImages((prev) => [...prev, ...accepted]);
+      setSelectedImageId(accepted[0].id);
+      setCustomWidth(accepted[0].originalWidth);
+      setCustomHeight(accepted[0].originalHeight);
       setOriginalAspectRatio(
-        newImages[0].originalWidth / newImages[0].originalHeight
+        accepted[0].originalWidth / accepted[0].originalHeight
       );
+    }
+
+    if (notices.length > 0) {
+      setBatchNotice(notices.join(" "));
+      setTimeout(() => setBatchNotice(null), 4000);
     }
   }, []);
 
   // 이미지 제거
   const handleRemoveImage = useCallback(
     (id: string) => {
+      revokeObjectUrl(
+        imagesRef.current.find((img) => img.id === id)?.result?.dataUrl
+      );
       setImages((prev) => prev.filter((img) => img.id !== id));
       if (selectedImageId === id) {
         setSelectedImageId(null);
@@ -156,6 +195,7 @@ export default function ResizeTool() {
 
   // 모든 이미지 제거
   const handleClearAll = useCallback(() => {
+    imagesRef.current.forEach((img) => revokeObjectUrl(img.result?.dataUrl));
     setImages([]);
     setSelectedImageId(null);
   }, []);
@@ -172,53 +212,63 @@ export default function ResizeTool() {
       prev.map((img) => ({ ...img, status: "processing" as const }))
     );
 
-    for (let i = 0; i < images.length; i++) {
-      setProcessingIndex(i + 1);
-      const img = images[i];
+    // 병렬 처리 (워커 풀이 파이프라인 처리, 미지원 시 메인 스레드 폴백)
+    let completed = 0;
+    await Promise.all(
+      images.map(async (img) => {
+        try {
+          let result: ResizeResult;
 
-      try {
-        let result: ResizeResult;
+          if (mode === "percentage") {
+            result = await resizeImageSmart(img.file, {
+              width: Math.round(img.originalWidth * (percentage / 100)),
+              height: Math.round(img.originalHeight * (percentage / 100)),
+              maintainAspectRatio: false,
+            });
+          } else if (mode === "preset" && selectedPreset) {
+            result = await resizeImageSmart(img.file, {
+              width: selectedPreset.width,
+              height: selectedPreset.height || 0,
+              maintainAspectRatio: selectedPreset.height === 0,
+            });
+          } else {
+            result = await resizeImageSmart(img.file, {
+              width: customWidth,
+              height: customHeight,
+              maintainAspectRatio: lockAspectRatio,
+            });
+          }
 
-        if (mode === "percentage") {
-          result = await resizeByPercentage(img.file, percentage);
-        } else if (mode === "preset" && selectedPreset) {
-          result = await resizeImage(img.file, {
-            width: selectedPreset.width,
-            height: selectedPreset.height || 0,
-            maintainAspectRatio: selectedPreset.height === 0,
-          });
-        } else {
-          result = await resizeImage(img.file, {
-            width: customWidth,
-            height: customHeight,
-            maintainAspectRatio: lockAspectRatio,
-          });
+          // 이전 결과 URL 해제 (재리사이즈 시 누수 방지)
+          revokeObjectUrl(img.result?.dataUrl);
+          setImages((prev) =>
+            prev.map((item) =>
+              item.id === img.id
+                ? { ...item, result, status: "done" as const }
+                : item
+            )
+          );
+        } catch (error) {
+          setImages((prev) =>
+            prev.map((item) =>
+              item.id === img.id
+                ? {
+                    ...item,
+                    status: "error" as const,
+                    error:
+                      error instanceof Error
+                        ? error.message
+                        : "리사이즈에 실패했습니다.",
+                  }
+                : item
+            )
+          );
+        } finally {
+          completed++;
+          setProcessingIndex(completed);
         }
-
-        setImages((prev) =>
-          prev.map((item) =>
-            item.id === img.id
-              ? { ...item, result, status: "done" as const }
-              : item
-          )
-        );
-      } catch (error) {
-        setImages((prev) =>
-          prev.map((item) =>
-            item.id === img.id
-              ? {
-                  ...item,
-                  status: "error" as const,
-                  error:
-                    error instanceof Error
-                      ? error.message
-                      : "리사이즈에 실패했습니다.",
-                }
-              : item
-          )
-        );
-      }
-    }
+      })
+    );
 
     setIsProcessing(false);
   }, [
@@ -248,9 +298,9 @@ export default function ResizeTool() {
       {images.length === 0 ? (
         <FileDropzone
           onFilesSelected={handleFilesAdd}
-          accept="image/jpeg,image/png,image/webp"
+          accept={ACCEPT_IMAGE}
           multiple
-          maxFiles={getMaxBatchSize()}
+          maxFiles={maxBatchSize}
           maxSize={50 * 1024 * 1024}
         />
       ) : (
@@ -284,27 +334,11 @@ export default function ResizeTool() {
                   tabIndex={0}
                   aria-label={`${img.file.name} 선택`}
                   aria-pressed={selectedImageId === img.id}
-                  onClick={() => {
-                    setSelectedImageId(img.id);
-                    if (mode === "custom") {
-                      setCustomWidth(img.originalWidth);
-                      setCustomHeight(img.originalHeight);
-                      setOriginalAspectRatio(
-                        img.originalWidth / img.originalHeight
-                      );
-                    }
-                  }}
+                  onClick={() => setSelectedImageId(img.id)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
                       setSelectedImageId(img.id);
-                      if (mode === "custom") {
-                        setCustomWidth(img.originalWidth);
-                        setCustomHeight(img.originalHeight);
-                        setOriginalAspectRatio(
-                          img.originalWidth / img.originalHeight
-                        );
-                      }
                     }
                   }}
                   className={`
@@ -338,6 +372,15 @@ export default function ResizeTool() {
                     </div>
                   )}
 
+                  {img.status === "error" && (
+                    <div className="absolute inset-0 bg-red-500/20 flex items-center justify-center" title={img.error || "리사이즈 실패"}>
+                      <div className="text-center px-2">
+                        <span className="text-red-500 text-xl block">!</span>
+                        <span className="text-red-600 text-[10px] leading-tight block mt-1">{img.error || "실패"}</span>
+                      </div>
+                    </div>
+                  )}
+
                   {/* 삭제 버튼 */}
                   <button
                     onClick={(e) => {
@@ -364,12 +407,12 @@ export default function ResizeTool() {
                 </div>
               ))}
 
-              {/* 추가 버튼 */}
-              {images.length < getMaxBatchSize() && (
+              {/* 추가 버튼 (처리 중에는 숨김 — 진행 중 배치 누락 방지) */}
+              {!isProcessing && images.length < maxBatchSize && (
                 <label className="aspect-square rounded-lg border-2 border-dashed border-brand-light hover:border-brand-accent cursor-pointer flex items-center justify-center transition-colors">
                   <input
                     type="file"
-                    accept="image/jpeg,image/png,image/webp"
+                    accept={ACCEPT_IMAGE}
                     multiple
                     className="hidden"
                     onChange={(e) => {

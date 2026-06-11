@@ -134,7 +134,7 @@ export default function AboutPage() {
                 <li className="flex items-start gap-3">
                   <span className="text-brand-accent font-bold">•</span>
                   <div>
-                    <Link href="/tools/image/heic" className="font-medium text-brand-black hover:text-brand-accent transition-colors">
+                    <Link href="/tools/image/heic-to-jpg" className="font-medium text-brand-black hover:text-brand-accent transition-colors">
                       HEIC → JPG 변환
                     </Link>
                     <span className="ml-2">— 아이폰 사진을 어디서든 열 수 있게</span>

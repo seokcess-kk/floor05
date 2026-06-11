@@ -56,41 +56,90 @@ export function createNewFileName(
 }
 
 /**
- * 이미지 파일인지 확인
+ * 이미지 MIME 타입 → 파일 확장자 (다운로드 파일명이 실제 내용과 일치하도록)
  */
-export function isImageFile(file: File): boolean {
-  const validTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/webp",
-    "image/heic",
-    "image/heif",
-  ];
-  return validTypes.includes(file.type.toLowerCase());
+export function mimeToExtension(mimeType: string): string {
+  switch (mimeType.toLowerCase()) {
+    case "image/png":
+      return "png";
+    case "image/webp":
+      return "webp";
+    case "image/gif":
+      return "gif";
+    default:
+      return "jpg";
+  }
 }
 
 /**
- * 지원하는 이미지 포맷인지 확인
+ * 파일 크기 제한 (MB)
  */
-export function isSupportedFormat(file: File): boolean {
-  const supportedTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/webp",
-    "image/heic",
-    "image/heif",
-  ];
-  return supportedTypes.includes(file.type.toLowerCase());
-}
+export const MAX_FILE_SIZE_MB = 50;
 
 /**
  * 파일 크기 제한 확인 (기본 50MB)
  */
-export function isFileSizeValid(file: File, maxSizeMB: number = 50): boolean {
+export function isFileSizeValid(file: File, maxSizeMB: number = MAX_FILE_SIZE_MB): boolean {
   const maxSizeBytes = maxSizeMB * 1024 * 1024;
   return file.size <= maxSizeBytes;
+}
+
+/**
+ * accept 문자열(예: "image/jpeg,image/png,.heic")에 파일이 부합하는지 검사.
+ * - 정확한 MIME(image/png), 와일드카드(image/*), 확장자(.heic) 토큰을 모두 지원
+ * - HEIC처럼 브라우저가 MIME을 빈 문자열로 주는 경우 확장자로 폴백 판정
+ */
+export function fileMatchesAccept(file: File, accept: string): boolean {
+  if (!accept || accept.trim() === "image/*") {
+    return file.type.startsWith("image/");
+  }
+
+  const type = file.type.toLowerCase();
+  const name = file.name.toLowerCase();
+  const tokens = accept
+    .split(",")
+    .map((t) => t.trim().toLowerCase())
+    .filter(Boolean);
+
+  return tokens.some((token) => {
+    if (token.startsWith(".")) return name.endsWith(token); // 확장자
+    if (token.endsWith("/*")) return type.startsWith(token.slice(0, -1)); // 와일드카드
+    return type !== "" && type === token; // 정확한 MIME
+  });
+}
+
+export interface FileValidationResult {
+  valid: File[];
+  oversize: number; // 크기 초과로 제외된 개수
+  unsupported: number; // 형식 불일치로 제외된 개수
+}
+
+/**
+ * 업로드 파일 일괄 검증 (형식 + 크기).
+ * FileDropzone와 각 도구의 "+" 추가 입력 양쪽에서 공통 사용한다.
+ */
+export function validateImageFiles(
+  files: File[],
+  accept: string,
+  maxSizeMB: number = MAX_FILE_SIZE_MB
+): FileValidationResult {
+  const valid: File[] = [];
+  let oversize = 0;
+  let unsupported = 0;
+
+  for (const file of files) {
+    if (!fileMatchesAccept(file, accept)) {
+      unsupported++;
+      continue;
+    }
+    if (!isFileSizeValid(file, maxSizeMB)) {
+      oversize++;
+      continue;
+    }
+    valid.push(file);
+  }
+
+  return { valid, oversize, unsupported };
 }
 
 /**
@@ -135,6 +184,15 @@ export function fileToArrayBuffer(file: File): Promise<ArrayBuffer> {
 }
 
 /**
+ * blob: 객체 URL이면 해제한다. base64 data URL이나 빈 값은 무시(안전한 no-op).
+ */
+export function revokeObjectUrl(url?: string | null): void {
+  if (url && url.startsWith("blob:")) {
+    URL.revokeObjectURL(url);
+  }
+}
+
+/**
  * Data URL에서 Blob 생성
  */
 export function dataUrlToBlob(dataUrl: string): Blob {
@@ -160,5 +218,27 @@ export function loadImage(src: string): Promise<HTMLImageElement> {
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error("이미지를 로드할 수 없습니다."));
     img.src = src;
+  });
+}
+
+/**
+ * canvas.toBlob을 Promise로 래핑. 콜백이 null(메모리 부족·초대형 캔버스 등)이면 reject.
+ * 4개 이미지 도구가 공유하는 단일 인코딩 경로.
+ */
+export function canvasToBlob(
+  canvas: HTMLCanvasElement,
+  type: string,
+  quality?: number,
+  errorMessage = "이미지를 처리할 수 없습니다."
+): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error(errorMessage));
+      },
+      type,
+      quality
+    );
   });
 }

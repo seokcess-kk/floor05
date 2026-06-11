@@ -3,7 +3,7 @@
  * Canvas API + toBlob() quality parameter 사용
  */
 
-import { loadImage, fileToDataUrl } from "../common/fileUtils";
+import { loadImage, fileToDataUrl, canvasToBlob } from "../common/fileUtils";
 
 export interface CompressionOptions {
   quality: number; // 0.01 ~ 1.0
@@ -73,19 +73,12 @@ export async function compressImage(
   ctx.drawImage(img, 0, 0, width, height);
 
   // Blob 생성
-  const blob = await new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob(
-      (b) => {
-        if (b) {
-          resolve(b);
-        } else {
-          reject(new Error("이미지 압축에 실패했습니다."));
-        }
-      },
-      outputFormat,
-      quality
-    );
-  });
+  const blob = await canvasToBlob(
+    canvas,
+    outputFormat,
+    quality,
+    "이미지 압축에 실패했습니다."
+  );
 
   // Blob에서 Data URL 생성 (toDataURL 중복 호출 방지)
   const compressedDataUrl = URL.createObjectURL(blob);
@@ -155,21 +148,32 @@ export async function compressToTargetSize(
     attempts++;
   }
 
-  // 최종 결과
+  // 품질 탐색으로 목표를 맞췄으면 반환
   if (bestResult && bestResult.compressedSize <= targetBytes) {
     return bestResult;
   }
-
-  // 최저 품질로 한 번 더 시도
   if (bestResult) {
     URL.revokeObjectURL(bestResult.dataUrl);
   }
-  const finalResult = await compressImage(file, {
-    ...options,
-    quality: 0.01,
-  });
 
-  return finalResult;
+  // 품질만으로 목표 미달 → 해상도를 단계적으로 축소하며 목표 이하를 시도
+  // (과거: 초과 결과를 그대로 성공 반환하던 문제 해결)
+  const baseImg = await loadImage(await fileToDataUrl(file));
+  let best = await compressImage(file, { ...options, quality: 0.5 });
+  let scale = 1;
+  for (let i = 0; i < 8 && best.compressedSize > targetBytes; i++) {
+    scale *= 0.8;
+    const candidate = await compressImage(file, {
+      ...options,
+      quality: 0.5,
+      maxWidth: Math.max(1, Math.round(baseImg.width * scale)),
+      maxHeight: Math.max(1, Math.round(baseImg.height * scale)),
+    });
+    URL.revokeObjectURL(best.dataUrl);
+    best = candidate;
+  }
+
+  return best;
 }
 
 /**
@@ -224,15 +228,3 @@ export function getOutputFormat(
   }
 }
 
-/**
- * WebP 지원 여부 확인
- */
-export function isWebPSupported(): boolean {
-  if (typeof document === "undefined") return false;
-
-  const canvas = document.createElement("canvas");
-  canvas.width = 1;
-  canvas.height = 1;
-
-  return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
-}

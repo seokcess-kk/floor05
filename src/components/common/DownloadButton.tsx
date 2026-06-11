@@ -100,9 +100,20 @@ export default function DownloadButton({
       const JSZip = (await import("jszip")).default;
       const zip = new JSZip();
 
-      // 파일 추가
+      // 파일 추가 (동일 이름 충돌 시 " (n)" 접미사로 구분 — 덮어쓰기/손실 방지)
+      const usedNames = new Set<string>();
       for (const file of files) {
-        zip.file(file.name, file.blob);
+        let name = file.name;
+        if (usedNames.has(name)) {
+          const dotIndex = name.lastIndexOf(".");
+          const base = dotIndex > 0 ? name.slice(0, dotIndex) : name;
+          const ext = dotIndex > 0 ? name.slice(dotIndex) : "";
+          let n = 1;
+          while (usedNames.has(`${base} (${n})${ext}`)) n++;
+          name = `${base} (${n})${ext}`;
+        }
+        usedNames.add(name);
+        zip.file(name, file.blob);
       }
 
       // ZIP 생성

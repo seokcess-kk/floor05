@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef } from "react";
 
 interface BeforeAfterProps {
   beforeSrc: string;
@@ -29,21 +29,7 @@ export default function BeforeAfter({
 }: BeforeAfterProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
-  const [containerWidth, setContainerWidth] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // 컨테이너 너비 측정 (클라이언트 전용)
-  useEffect(() => {
-    const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
-      }
-    };
-
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
 
   // 슬라이더 위치 계산
   const calculatePosition = useCallback((clientX: number) => {
@@ -155,19 +141,15 @@ export default function BeforeAfter({
           />
         </div>
 
-        {/* Before 이미지 (클리핑) */}
+        {/* Before 이미지 (좌측 sliderPosition%만 노출 — clip-path로 정렬 보장) */}
         <div
-          className="absolute inset-0 overflow-hidden"
-          style={{ width: `${sliderPosition}%` }}
+          className="absolute inset-0"
+          style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
         >
           <img
             src={beforeSrc}
             alt={beforeLabel}
-            className="h-full object-contain"
-            style={{
-              width: containerWidth ?? "100%",
-              maxWidth: "none",
-            }}
+            className="w-full h-full object-contain"
             draggable={false}
           />
         </div>

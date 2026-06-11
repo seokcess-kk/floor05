@@ -4,7 +4,7 @@
  * HEIC 변환: heic2any 라이브러리 (동적 로드)
  */
 
-import { loadImage, fileToDataUrl } from "../common/fileUtils";
+import { loadImage, fileToDataUrl, canvasToBlob } from "../common/fileUtils";
 
 export type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
 
@@ -149,8 +149,9 @@ export async function convertImage(
     throw new Error("Canvas 컨텍스트를 생성할 수 없습니다.");
   }
 
-  // 투명 배경 처리 (PNG→JPG 변환 시)
-  if (outputFormat === "image/jpeg" && originalFormat === "image/png") {
+  // 투명 배경 처리 (JPG는 알파를 지원하지 않으므로 출력이 JPG면 항상 배경을 채운다.
+  // PNG뿐 아니라 투명 WebP 등도 검은 배경이 되지 않도록 함)
+  if (outputFormat === "image/jpeg") {
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, img.width, img.height);
   }
@@ -158,19 +159,12 @@ export async function convertImage(
   ctx.drawImage(img, 0, 0);
 
   // Blob 생성
-  const blob = await new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob(
-      (b) => {
-        if (b) {
-          resolve(b);
-        } else {
-          reject(new Error("이미지 변환에 실패했습니다."));
-        }
-      },
-      outputFormat,
-      quality
-    );
-  });
+  const blob = await canvasToBlob(
+    canvas,
+    outputFormat,
+    quality,
+    "이미지 변환에 실패했습니다."
+  );
 
   // Blob에서 URL 생성 (toDataURL 중복 호출 방지)
   const convertedDataUrl = URL.createObjectURL(blob);

@@ -3,7 +3,7 @@
  * Canvas + 마우스/터치 이벤트
  */
 
-import { loadImage, fileToDataUrl } from "../common/fileUtils";
+import { loadImage, fileToDataUrl, canvasToBlob } from "../common/fileUtils";
 
 export interface CropArea {
   x: number;
@@ -77,10 +77,17 @@ export async function cropImage(
     flipVertical
   );
 
+  // 크롭 좌표를 정수로 정규화하고 캔버스 경계로 클램프
+  // (비정수 area → 1px 빈 줄/흐림 + 비정수 치수 표시 방지)
+  const cropX = Math.max(0, Math.round(area.x));
+  const cropY = Math.max(0, Math.round(area.y));
+  const cropW = Math.max(1, Math.min(Math.round(area.width), transformedCanvas.width - cropX));
+  const cropH = Math.max(1, Math.min(Math.round(area.height), transformedCanvas.height - cropY));
+
   // 크롭 영역 추출
   const cropCanvas = document.createElement("canvas");
-  cropCanvas.width = area.width;
-  cropCanvas.height = area.height;
+  cropCanvas.width = cropW;
+  cropCanvas.height = cropH;
 
   const ctx = cropCanvas.getContext("2d");
   if (!ctx) {
@@ -90,44 +97,37 @@ export async function cropImage(
   // 배경색 (JPG인 경우)
   if (outputFormat === "image/jpeg") {
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, area.width, area.height);
+    ctx.fillRect(0, 0, cropW, cropH);
   }
 
   // 크롭 영역 그리기
   ctx.drawImage(
     transformedCanvas,
-    area.x,
-    area.y,
-    area.width,
-    area.height,
+    cropX,
+    cropY,
+    cropW,
+    cropH,
     0,
     0,
-    area.width,
-    area.height
+    cropW,
+    cropH
   );
 
   // Blob 생성
-  const blob = await new Promise<Blob>((resolve, reject) => {
-    cropCanvas.toBlob(
-      (b) => {
-        if (b) {
-          resolve(b);
-        } else {
-          reject(new Error("이미지 크롭에 실패했습니다."));
-        }
-      },
-      outputFormat,
-      quality
-    );
-  });
+  const blob = await canvasToBlob(
+    cropCanvas,
+    outputFormat,
+    quality,
+    "이미지 크롭에 실패했습니다."
+  );
 
   // 크롭된 Data URL 생성
   const croppedDataUrl = cropCanvas.toDataURL(outputFormat, quality);
 
   return {
     blob,
-    width: area.width,
-    height: area.height,
+    width: cropW,
+    height: cropH,
     dataUrl: croppedDataUrl,
   };
 }
@@ -229,5 +229,7 @@ export async function getTransformedPreview(
 ): Promise<string> {
   const img = await loadImage(dataUrl);
   const canvas = applyTransformations(img, rotation, flipHorizontal, flipVertical);
-  return canvas.toDataURL("image/jpeg", 0.8);
+  // PNG로 직렬화 — 투명 이미지가 편집 미리보기에서 검은색으로 막히지 않도록
+  // (JPEG는 알파 미지원이라 투명 영역이 검게 합성됨)
+  return canvas.toDataURL("image/png");
 }

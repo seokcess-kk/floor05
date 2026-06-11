@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import CookieConsent from "@/components/common/CookieConsent";
+import { ADSENSE_ID } from "@/lib/common/constants";
 import "./globals.css";
 
 const SITE_URL = "https://www.floor05.com";
@@ -85,7 +86,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <meta name="google-adsense-account" content="ca-pub-3069814419179785" />
+        <meta name="google-adsense-account" content={ADSENSE_ID} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />

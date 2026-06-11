@@ -3,7 +3,8 @@
  * Canvas drawImage() 사용
  */
 
-import { loadImage, fileToDataUrl } from "../common/fileUtils";
+import { loadImage, fileToDataUrl, canvasToBlob } from "../common/fileUtils";
+import { computeResizeDimensions } from "./resizeDims";
 
 export interface ResizeOptions {
   width: number;
@@ -127,34 +128,12 @@ export async function resizeImage(
   // 이미지 로드
   const img = await loadImage(dataUrl);
 
-  // 새 크기 계산
-  let newWidth = width;
-  let newHeight = height;
-
-  if (maintainAspectRatio) {
-    const aspectRatio = img.width / img.height;
-
-    if (height === 0 || height === undefined) {
-      // 너비만 지정된 경우
-      newHeight = Math.round(width / aspectRatio);
-    } else if (width === 0 || width === undefined) {
-      // 높이만 지정된 경우
-      newWidth = Math.round(height * aspectRatio);
-    } else {
-      // 둘 다 지정된 경우: fit 방식
-      const targetRatio = width / height;
-
-      if (aspectRatio > targetRatio) {
-        // 이미지가 더 넓음 - 너비에 맞춤
-        newWidth = width;
-        newHeight = Math.round(width / aspectRatio);
-      } else {
-        // 이미지가 더 높음 - 높이에 맞춤
-        newHeight = height;
-        newWidth = Math.round(height * aspectRatio);
-      }
-    }
-  }
+  // 새 크기 계산 (워커와 공유하는 순수 함수)
+  const { width: newWidth, height: newHeight } = computeResizeDimensions(
+    img.width,
+    img.height,
+    { width, height, maintainAspectRatio }
+  );
 
   // Canvas에 그리기
   const canvas = document.createElement("canvas");
@@ -178,23 +157,13 @@ export async function resizeImage(
 
   ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
-  // Blob 생성
-  const blob = await new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob(
-      (b) => {
-        if (b) {
-          resolve(b);
-        } else {
-          reject(new Error("이미지 리사이즈에 실패했습니다."));
-        }
-      },
-      outputFormat,
-      quality
-    );
-  });
-
-  // 리사이즈된 Data URL 생성
-  const resizedDataUrl = canvas.toDataURL(outputFormat, quality);
+  // Blob 생성 (단일 인코딩 — toDataURL 중복 제거, 호출측에서 objectURL 해제)
+  const blob = await canvasToBlob(
+    canvas,
+    outputFormat,
+    quality,
+    "이미지 리사이즈에 실패했습니다."
+  );
 
   return {
     blob,
@@ -202,7 +171,7 @@ export async function resizeImage(
     height: newHeight,
     originalWidth: img.width,
     originalHeight: img.height,
-    dataUrl: resizedDataUrl,
+    dataUrl: URL.createObjectURL(blob),
   };
 }
 

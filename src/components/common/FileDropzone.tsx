@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { fileMatchesAccept, formatFileSize } from "@/lib/common/fileUtils";
 
 interface FileDropzoneProps {
   onFilesSelected: (files: File[]) => void;
@@ -10,13 +11,6 @@ interface FileDropzoneProps {
   maxSize?: number; // bytes
   disabled?: boolean;
   className?: string;
-}
-
-// 파일 크기 포맷팅
-function formatFileSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
 /**
@@ -56,8 +50,8 @@ export default function FileDropzone({
           continue;
         }
 
-        // 파일 타입 검증 (기본적인 이미지 타입 체크)
-        if (accept === "image/*" && !file.type.startsWith("image/")) {
+        // 파일 형식 검증 (accept 목록 기준. HEIC 등 빈 MIME은 확장자로 폴백)
+        if (!fileMatchesAccept(file, accept)) {
           errorMessage = "지원하지 않는 파일 형식입니다. JPG, PNG, WebP, HEIC 파일을 사용해주세요.";
           continue;
         }

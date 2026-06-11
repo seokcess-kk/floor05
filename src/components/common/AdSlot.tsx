@@ -2,7 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useCookieConsent } from "./CookieConsent";
-import { ADSENSE_ID } from "@/lib/common/constants";
+import KakaoAdfit from "./KakaoAdfit";
+import {
+  ADSENSE_ID,
+  ADSENSE_SLOT_ID,
+  ADFIT_UNIT_ID,
+} from "@/lib/common/constants";
 
 declare global {
   interface Window {
@@ -15,12 +20,15 @@ interface AdSlotProps {
   className?: string;
 }
 
-// 슬롯별 설정
-const SLOT_CONFIG: Record<string, { height: string; format: string }> = {
-  "tool-below": { height: "h-24", format: "horizontal" },
-  "cta-below": { height: "h-24", format: "horizontal" },
-  "footer-above": { height: "h-20", format: "horizontal" },
-  "blog-inline": { height: "h-32", format: "rectangle" },
+// 슬롯별 설정 (Adfit 대체 노출 시 사용할 크기 포함)
+const SLOT_CONFIG: Record<
+  string,
+  { height: string; format: string; adfitWidth: number; adfitHeight: number }
+> = {
+  "tool-below": { height: "h-24", format: "horizontal", adfitWidth: 320, adfitHeight: 100 },
+  "cta-below": { height: "h-24", format: "horizontal", adfitWidth: 320, adfitHeight: 100 },
+  "footer-above": { height: "h-20", format: "horizontal", adfitWidth: 320, adfitHeight: 50 },
+  "blog-inline": { height: "h-32", format: "rectangle", adfitWidth: 300, adfitHeight: 250 },
 };
 
 export default function AdSlot({ slot, className = "" }: AdSlotProps) {
@@ -32,8 +40,8 @@ export default function AdSlot({ slot, className = "" }: AdSlotProps) {
   const config = SLOT_CONFIG[slot] || SLOT_CONFIG["tool-below"];
 
   useEffect(() => {
-    // AdSense 광고 로드 (동의 + 스크립트 준비 완료 시에만)
-    if (!isDev && consented && scriptReady && adRef.current && !adPushed) {
+    // AdSense 광고 로드 (동의 + 스크립트 준비 + 슬롯 ID 설정 시에만)
+    if (!isDev && consented && scriptReady && ADSENSE_SLOT_ID && adRef.current && !adPushed) {
       try {
         const adsbygoogle = window.adsbygoogle || [];
         adsbygoogle.push({});
@@ -74,17 +82,34 @@ export default function AdSlot({ slot, className = "" }: AdSlotProps) {
     return null;
   }
 
-  // AdSense 광고
-  return (
-    <div ref={adRef} role="complementary" aria-label="광고" className={`min-h-[90px] ${className}`}>
-      <ins
-        className="adsbygoogle"
-        style={{ display: "block" }}
-        data-ad-client={ADSENSE_ID}
-        data-ad-slot={slot}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
+  // AdSense (슬롯 ID가 설정된 경우 우선)
+  if (ADSENSE_SLOT_ID) {
+    return (
+      <div ref={adRef} role="complementary" aria-label="광고" className={`min-h-[90px] ${className}`}>
+        <ins
+          className="adsbygoogle"
+          style={{ display: "block" }}
+          data-ad-client={ADSENSE_ID}
+          data-ad-slot={ADSENSE_SLOT_ID}
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
+      </div>
+    );
+  }
+
+  // AdSense 슬롯이 없으면 Adfit으로 대체 (설정된 경우)
+  if (ADFIT_UNIT_ID) {
+    return (
+      <KakaoAdfit
+        unit={ADFIT_UNIT_ID}
+        width={config.adfitWidth}
+        height={config.adfitHeight}
+        className={`flex justify-center ${className}`}
       />
-    </div>
-  );
+    );
+  }
+
+  // 설정된 광고 ID가 없으면 렌더링하지 않음 (잘못된 광고 요청 방지)
+  return null;
 }

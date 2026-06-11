@@ -2,7 +2,12 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Script from "next/script";
-import { CONSENT_KEY, CONSENT_CHANGE_EVENT, ADSENSE_ID } from "@/lib/common/constants";
+import {
+  CONSENT_KEY,
+  CONSENT_CHANGE_EVENT,
+  CONSENT_RESET_EVENT,
+  ADSENSE_ID,
+} from "@/lib/common/constants";
 
 type ConsentStatus = "pending" | "accepted" | "declined";
 
@@ -17,6 +22,18 @@ export default function CookieConsent() {
     if (saved === "accepted" || saved === "declined") {
       setStatus(saved);
     }
+  }, []);
+
+  // "쿠키 설정" 재진입: 동의 초기화 → 배너 다시 표시 + 광고 중단
+  useEffect(() => {
+    const handleReset = () => {
+      setStatus("pending");
+      window.dispatchEvent(
+        new CustomEvent(CONSENT_CHANGE_EVENT, { detail: { accepted: false } })
+      );
+    };
+    window.addEventListener(CONSENT_RESET_EVENT, handleReset);
+    return () => window.removeEventListener(CONSENT_RESET_EVENT, handleReset);
   }, []);
 
   const dispatchConsentChange = useCallback((accepted: boolean) => {

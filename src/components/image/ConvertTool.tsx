@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import FileDropzone from "@/components/common/FileDropzone";
 import BeforeAfter from "@/components/common/BeforeAfter";
 import DownloadButton from "@/components/common/DownloadButton";
@@ -9,9 +9,10 @@ import {
   createNewFileName,
   getMaxBatchSize,
   fileToDataUrl,
+  validateImageFiles,
+  revokeObjectUrl,
 } from "@/lib/common/fileUtils";
 import {
-  convertImage,
   getFormatName,
   getExtension,
   isHeicFile,
@@ -19,6 +20,11 @@ import {
   OutputFormat,
   ConvertResult,
 } from "@/lib/image/convert";
+import { convertImageSmart } from "@/lib/image/processPool";
+import { useBeforeUnload, useMaxBatchSize } from "@/lib/common/hooks";
+
+const ACCEPT_CONVERT =
+  "image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif";
 
 interface ProcessedImage {
   id: string;
@@ -48,10 +54,27 @@ export default function ConvertTool() {
   const [batchNotice, setBatchNotice] = useState<string | null>(null);
   const [webpSupported, setWebpSupported] = useState(true);
 
+  // 최신 images 스냅샷 (객체 URL 정리/언마운트용)
+  const imagesRef = useRef<ProcessedImage[]>([]);
+  useEffect(() => {
+    imagesRef.current = images;
+  }, [images]);
+  useEffect(() => {
+    return () => {
+      imagesRef.current.forEach((img) => revokeObjectUrl(img.result?.dataUrl));
+    };
+  }, []);
+
   // WebP 지원 확인
   useEffect(() => {
     setWebpSupported(isWebPSupported());
   }, []);
+
+  // 처리 중 페이지 이탈 경고
+  useBeforeUnload(isProcessing);
+
+  // 일괄 최대 장수 (하이드레이션 안전)
+  const maxBatchSize = useMaxBatchSize();
 
 
   // 선택된 이미지
@@ -75,52 +98,67 @@ export default function ConvertTool() {
   // 파일 추가
   const handleFilesAdd = useCallback(async (files: File[]) => {
     const maxBatch = getMaxBatchSize();
-    const filesToAdd = files.slice(0, maxBatch);
+    const notices: string[] = [];
 
-    const newImages: ProcessedImage[] = await Promise.all(
-      filesToAdd.map(async (file) => {
-        let dataUrl: string;
-        let originalFormat = file.type;
+    // 형식/크기 검증 (FileDropzone를 거치지 않는 "+" 입력도 여기서 막힌다)
+    const { valid, oversize, unsupported } = validateImageFiles(files, ACCEPT_CONVERT);
+    if (unsupported > 0) notices.push(`${unsupported}개 파일은 지원하지 않는 형식이라 제외했어요.`);
+    if (oversize > 0) notices.push(`${oversize}개 파일은 50MB를 넘어 제외했어요.`);
 
-        // HEIC 파일은 플레이스홀더 표시
-        if (isHeicFile(file)) {
-          originalFormat = "image/heic";
-          dataUrl = ""; // HEIC는 미리보기 불가
-        } else {
-          dataUrl = await fileToDataUrl(file);
+    // 파일별로 읽기 (한 장이 실패해도 나머지는 살린다. HEIC는 미리보기 없이 통과)
+    const loaded = await Promise.all(
+      valid.map(async (file): Promise<ProcessedImage | null> => {
+        try {
+          let dataUrl: string;
+          let originalFormat = file.type;
+          if (isHeicFile(file)) {
+            originalFormat = "image/heic";
+            dataUrl = ""; // HEIC는 미리보기 불가
+          } else {
+            dataUrl = await fileToDataUrl(file);
+          }
+          return {
+            id: `${file.name}-${Date.now()}-${Math.random()}`,
+            file,
+            originalDataUrl: dataUrl,
+            originalFormat,
+            result: null,
+            status: "pending",
+          };
+        } catch {
+          return null;
         }
-
-        return {
-          id: `${file.name}-${Date.now()}-${Math.random()}`,
-          file,
-          originalDataUrl: dataUrl,
-          originalFormat,
-          result: null,
-          status: "pending" as const,
-        };
       })
     );
+    const newImages = loaded.filter((img): img is ProcessedImage => img !== null);
+    const failed = valid.length - newImages.length;
+    if (failed > 0) notices.push(`${failed}개 파일을 열 수 없어 제외했어요.`);
 
-    let overflow = 0;
-    setImages((prev) => {
-      const combined = [...prev, ...newImages];
-      overflow = Math.max(0, combined.length - maxBatch);
-      return combined.slice(0, maxBatch);
-    });
-
+    // 일괄 장수 제한 (현재 목록 + 신규)
+    const room = Math.max(0, maxBatch - imagesRef.current.length);
+    const accepted = newImages.slice(0, room);
+    const overflow = newImages.length - accepted.length;
     if (overflow > 0) {
-      setBatchNotice(`최대 ${maxBatch}개까지 처리됩니다. ${overflow}개 파일이 제외되었습니다.`);
-      setTimeout(() => setBatchNotice(null), 4000);
+      notices.push(`최대 ${maxBatch}개까지 처리할 수 있어 ${overflow}개를 제외했어요.`);
     }
 
-    if (newImages.length > 0) {
-      setSelectedImageId(newImages[0].id);
+    if (accepted.length > 0) {
+      setImages((prev) => [...prev, ...accepted]);
+      setSelectedImageId(accepted[0].id);
+    }
+
+    if (notices.length > 0) {
+      setBatchNotice(notices.join(" "));
+      setTimeout(() => setBatchNotice(null), 4000);
     }
   }, []);
 
   // 이미지 제거
   const handleRemoveImage = useCallback(
     (id: string) => {
+      revokeObjectUrl(
+        imagesRef.current.find((img) => img.id === id)?.result?.dataUrl
+      );
       setImages((prev) => prev.filter((img) => img.id !== id));
       if (selectedImageId === id) {
         setSelectedImageId(null);
@@ -131,6 +169,7 @@ export default function ConvertTool() {
 
   // 모든 이미지 제거
   const handleClearAll = useCallback(() => {
+    imagesRef.current.forEach((img) => revokeObjectUrl(img.result?.dataUrl));
     setImages([]);
     setSelectedImageId(null);
   }, []);
@@ -146,41 +185,47 @@ export default function ConvertTool() {
       prev.map((img) => ({ ...img, status: "processing" as const }))
     );
 
-    for (let i = 0; i < images.length; i++) {
-      setProcessingIndex(i + 1);
-      const img = images[i];
+    // 병렬 처리 (워커 풀이 파이프라인 처리, 미지원 시 메인 스레드 폴백)
+    let completed = 0;
+    await Promise.all(
+      images.map(async (img) => {
+        try {
+          const result = await convertImageSmart(img.file, {
+            outputFormat,
+            quality: quality / 100,
+            backgroundColor,
+          });
 
-      try {
-        const result = await convertImage(img.file, {
-          outputFormat,
-          quality: quality / 100,
-          backgroundColor,
-        });
-
-        setImages((prev) =>
-          prev.map((item) =>
-            item.id === img.id
-              ? { ...item, result, status: "done" as const }
-              : item
-          )
-        );
-      } catch (error) {
-        setImages((prev) =>
-          prev.map((item) =>
-            item.id === img.id
-              ? {
-                  ...item,
-                  status: "error" as const,
-                  error:
-                    error instanceof Error
-                      ? error.message
-                      : "변환에 실패했습니다.",
-                }
-              : item
-          )
-        );
-      }
-    }
+          // 이전 결과 URL 해제 (재변환 시 누수 방지)
+          revokeObjectUrl(img.result?.dataUrl);
+          setImages((prev) =>
+            prev.map((item) =>
+              item.id === img.id
+                ? { ...item, result, status: "done" as const }
+                : item
+            )
+          );
+        } catch (error) {
+          setImages((prev) =>
+            prev.map((item) =>
+              item.id === img.id
+                ? {
+                    ...item,
+                    status: "error" as const,
+                    error:
+                      error instanceof Error
+                        ? error.message
+                        : "변환에 실패했습니다.",
+                  }
+                : item
+            )
+          );
+        } finally {
+          completed++;
+          setProcessingIndex(completed);
+        }
+      })
+    );
 
     setIsProcessing(false);
   }, [images, outputFormat, quality, backgroundColor, isProcessing]);
@@ -205,9 +250,9 @@ export default function ConvertTool() {
       {images.length === 0 ? (
         <FileDropzone
           onFilesSelected={handleFilesAdd}
-          accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif"
+          accept={ACCEPT_CONVERT}
           multiple
-          maxFiles={getMaxBatchSize()}
+          maxFiles={maxBatchSize}
           maxSize={50 * 1024 * 1024}
         />
       ) : (
@@ -324,12 +369,12 @@ export default function ConvertTool() {
                 </div>
               ))}
 
-              {/* 추가 버튼 */}
-              {images.length < getMaxBatchSize() && (
+              {/* 추가 버튼 (처리 중에는 숨김 — 진행 중 배치 누락 방지) */}
+              {!isProcessing && images.length < maxBatchSize && (
                 <label className="aspect-square rounded-lg border-2 border-dashed border-brand-light hover:border-brand-accent cursor-pointer flex items-center justify-center transition-colors">
                   <input
                     type="file"
-                    accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif"
+                    accept={ACCEPT_CONVERT}
                     multiple
                     className="hidden"
                     onChange={(e) => {
@@ -405,6 +450,11 @@ export default function ConvertTool() {
                   );
                 })}
               </div>
+              {!webpSupported && (
+                <p className="text-xs text-brand-mid">
+                  이 브라우저에서는 WebP를 지원하지 않습니다. JPG 또는 PNG를 이용해주세요.
+                </p>
+              )}
             </div>
 
             {/* 품질 설정 (JPG, WebP) */}
@@ -491,11 +541,11 @@ export default function ConvertTool() {
             </button>
           </div>
 
-          {/* Before/After 비교 */}
+          {/* 결과 비교 / 미리보기 */}
           {selectedImage &&
             selectedImage.status === "done" &&
             selectedImage.result &&
-            selectedImage.originalDataUrl && (
+            (selectedImage.originalDataUrl ? (
               <div className="space-y-4">
                 <h3 className="font-mono text-xs text-brand-accent uppercase tracking-wider">
                   Before / After 비교
@@ -510,7 +560,26 @@ export default function ConvertTool() {
                   afterSize={formatFileSize(selectedImage.result.blob.size)}
                 />
               </div>
-            )}
+            ) : (
+              // HEIC 등 원본 미리보기가 없는 경우: 변환 결과만 표시
+              <div className="space-y-4">
+                <h3 className="font-mono text-xs text-brand-accent uppercase tracking-wider">
+                  변환 결과
+                </h3>
+                <div className="rounded-lg overflow-hidden bg-brand-paper flex justify-center">
+                  <img
+                    src={selectedImage.result.dataUrl}
+                    alt={selectedImage.file.name}
+                    className="max-h-[480px] w-auto object-contain"
+                  />
+                </div>
+                <p className="text-sm text-brand-mid text-center">
+                  {getFormatName(selectedImage.originalFormat)} →{" "}
+                  {getFormatName(selectedImage.result.outputFormat)} ·{" "}
+                  {formatFileSize(selectedImage.result.blob.size)}
+                </p>
+              </div>
+            ))}
 
           {/* 다운로드 */}
           {completedImages.length > 0 && (

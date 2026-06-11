@@ -9,6 +9,7 @@ import {
   createNewFileName,
   fileToDataUrl,
   loadImage,
+  validateImageFiles,
 } from "@/lib/common/fileUtils";
 import {
   cropImage,
@@ -19,6 +20,9 @@ import {
   CropArea,
   CropResult,
 } from "@/lib/image/crop";
+import { useBeforeUnload } from "@/lib/common/hooks";
+
+const ACCEPT_IMAGE = "image/jpeg,image/png,image/webp";
 
 interface ImageData {
   file: File;
@@ -102,33 +106,53 @@ export default function CropTool() {
     return () => window.removeEventListener("resize", updateScale);
   }, [imageData, currentDimensions]);
 
+  // 처리 중 페이지 이탈 경고
+  useBeforeUnload(isProcessing);
+
   // 파일 추가
   const handleFilesAdd = useCallback(async (files: File[]) => {
     const file = files[0];
     if (!file) return;
 
-    const dataUrl = await fileToDataUrl(file);
-    const img = await loadImage(dataUrl);
+    // 형식/크기 검증
+    const { valid, oversize, unsupported } = validateImageFiles([file], ACCEPT_IMAGE);
+    if (unsupported > 0) {
+      setError("지원하지 않는 파일 형식입니다. JPG, PNG, WebP 파일을 사용해주세요.");
+      return;
+    }
+    if (oversize > 0) {
+      setError("50MB 이하 파일만 처리할 수 있습니다.");
+      return;
+    }
 
-    setImageData({
-      file,
-      originalDataUrl: dataUrl,
-      transformedDataUrl: dataUrl,
-      originalWidth: img.width,
-      originalHeight: img.height,
-    });
+    try {
+      const target = valid[0];
+      const dataUrl = await fileToDataUrl(target);
+      const img = await loadImage(dataUrl);
 
-    // 초기 크롭 영역 설정
-    const initialArea = calculateMaxCropArea(img.width, img.height, null);
-    setCropArea(initialArea);
+      setError(null);
+      setImageData({
+        file: target,
+        originalDataUrl: dataUrl,
+        transformedDataUrl: dataUrl,
+        originalWidth: img.width,
+        originalHeight: img.height,
+      });
 
-    // 상태 초기화
-    setRotation(0);
-    setFlipHorizontal(false);
-    setFlipVertical(false);
-    setAspectRatio(null);
-    setSelectedPresetId("free");
-    setResult(null);
+      // 초기 크롭 영역 설정
+      const initialArea = calculateMaxCropArea(img.width, img.height, null);
+      setCropArea(initialArea);
+
+      // 상태 초기화
+      setRotation(0);
+      setFlipHorizontal(false);
+      setFlipVertical(false);
+      setAspectRatio(null);
+      setSelectedPresetId("free");
+      setResult(null);
+    } catch {
+      setError("이 파일은 열 수 없습니다. 다른 이미지를 시도해주세요.");
+    }
   }, []);
 
   // 프리셋 선택
@@ -146,25 +170,19 @@ export default function CropTool() {
     });
   }, []);
 
-  // 드래그 시작 (크롭 영역)
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent, type: "move" | "resize") => {
-      e.preventDefault();
+  // 드래그 공통 로직 (마우스·터치 공용)
+  const beginDrag = useCallback(
+    (clientX: number, clientY: number, type: "move" | "resize") => {
       setIsDragging(true);
       setDragType(type);
-      setDragStart({ x: e.clientX, y: e.clientY });
+      setDragStart({ x: clientX, y: clientY });
     },
     []
   );
 
   // 드래그 중 (RAF로 성능 최적화)
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (!isDragging || !dragType) return;
-
-      const clientX = e.clientX;
-      const clientY = e.clientY;
-
+  const updateDrag = useCallback(
+    (clientX: number, clientY: number) => {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
         const dx = (clientX - dragStart.x) / displayScale;
@@ -213,14 +231,51 @@ export default function CropTool() {
         setDragStart({ x: clientX, y: clientY });
       });
     },
-    [isDragging, dragType, dragStart, displayScale, currentDimensions, aspectRatio]
+    [dragStart, displayScale, currentDimensions, dragType, aspectRatio]
   );
 
   // 드래그 종료
-  const handleMouseUp = useCallback(() => {
+  const endDrag = useCallback(() => {
     setIsDragging(false);
     setDragType(null);
   }, []);
+
+  // 마우스 핸들러
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent, type: "move" | "resize") => {
+      e.preventDefault();
+      beginDrag(e.clientX, e.clientY, type);
+    },
+    [beginDrag]
+  );
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isDragging || !dragType) return;
+      updateDrag(e.clientX, e.clientY);
+    },
+    [isDragging, dragType, updateDrag]
+  );
+
+  // 터치 핸들러 (모바일)
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent, type: "move" | "resize") => {
+      const t = e.touches[0];
+      if (!t) return;
+      beginDrag(t.clientX, t.clientY, type);
+    },
+    [beginDrag]
+  );
+
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      if (!isDragging || !dragType) return;
+      const t = e.touches[0];
+      if (!t) return;
+      updateDrag(t.clientX, t.clientY);
+    },
+    [isDragging, dragType, updateDrag]
+  );
 
   // 키보드로 크롭 영역 이동/리사이즈
   const handleCropKeyDown = useCallback(
@@ -312,13 +367,20 @@ export default function CropTool() {
     <div className="space-y-8">
       {/* 파일 업로드 영역 */}
       {!imageData ? (
-        <FileDropzone
-          onFilesSelected={handleFilesAdd}
-          accept="image/jpeg,image/png,image/webp"
-          multiple={false}
-          maxFiles={1}
-          maxSize={50 * 1024 * 1024}
-        />
+        <>
+          <FileDropzone
+            onFilesSelected={handleFilesAdd}
+            accept={ACCEPT_IMAGE}
+            multiple={false}
+            maxFiles={1}
+            maxSize={50 * 1024 * 1024}
+          />
+          {error && (
+            <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
+          )}
+        </>
       ) : (
         <>
           {/* 크롭 에디터 */}
@@ -343,8 +405,10 @@ export default function CropTool() {
                 height: currentDimensions.height * displayScale + 2,
               }}
               onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
+              onMouseUp={endDrag}
+              onMouseLeave={endDrag}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={endDrag}
             >
               {/* 이미지 */}
               <img
@@ -388,8 +452,10 @@ export default function CropTool() {
                   top: cropArea.y * displayScale,
                   width: cropArea.width * displayScale,
                   height: cropArea.height * displayScale,
+                  touchAction: "none",
                 }}
                 onMouseDown={(e) => handleMouseDown(e, "move")}
+                onTouchStart={(e) => handleTouchStart(e, "move")}
                 onKeyDown={(e) => handleCropKeyDown(e, "move")}
               >
                 {/* 리사이즈 핸들 */}
@@ -404,6 +470,10 @@ export default function CropTool() {
                   onMouseDown={(e) => {
                     e.stopPropagation();
                     handleMouseDown(e, "resize");
+                  }}
+                  onTouchStart={(e) => {
+                    e.stopPropagation();
+                    handleTouchStart(e, "resize");
                   }}
                   onKeyDown={(e) => {
                     e.stopPropagation();

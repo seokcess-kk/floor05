@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import FileDropzone from "@/components/common/FileDropzone";
 import BeforeAfter from "@/components/common/BeforeAfter";
 import DownloadButton from "@/components/common/DownloadButton";
@@ -10,12 +10,19 @@ import {
   createNewFileName,
   getMaxBatchSize,
   fileToDataUrl,
+  validateImageFiles,
+  revokeObjectUrl,
+  mimeToExtension,
 } from "@/lib/common/fileUtils";
 import {
-  compressImage,
   compressToTargetSize,
+  quickCompress,
   CompressionResult,
 } from "@/lib/image/compress";
+import { compressImageSmart } from "@/lib/image/processPool";
+import { useBeforeUnload, useMaxBatchSize } from "@/lib/common/hooks";
+
+const ACCEPT_IMAGE = "image/jpeg,image/png,image/webp";
 
 interface ProcessedImage {
   id: string;
@@ -38,6 +45,24 @@ export default function CompressTool() {
   const [processingIndex, setProcessingIndex] = useState(0);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [batchNotice, setBatchNotice] = useState<string | null>(null);
+  const [estimatedSize, setEstimatedSize] = useState<number | null>(null);
+
+  // 최신 images 스냅샷 (객체 URL 정리/언마운트용)
+  const imagesRef = useRef<ProcessedImage[]>([]);
+  useEffect(() => {
+    imagesRef.current = images;
+  }, [images]);
+  useEffect(() => {
+    return () => {
+      imagesRef.current.forEach((img) => revokeObjectUrl(img.result?.dataUrl));
+    };
+  }, []);
+
+  // 처리 중 페이지 이탈 경고
+  useBeforeUnload(isProcessing);
+
+  // 일괄 최대 장수 (하이드레이션 안전)
+  const maxBatchSize = useMaxBatchSize();
 
   // 선택된 이미지
   const selectedImage = useMemo(
@@ -74,45 +99,85 @@ export default function CompressTool() {
     };
   }, [completedImages]);
 
+  // 품질 슬라이더 실시간 예상 용량 (선택 이미지 기준, 디바운스)
+  useEffect(() => {
+    if (mode !== "quality" || !selectedImage) {
+      setEstimatedSize(null);
+      return;
+    }
+    let cancelled = false;
+    const file = selectedImage.file;
+    const timer = setTimeout(() => {
+      quickCompress(file, quality / 100)
+        .then(({ size }) => {
+          if (!cancelled && size > 0) setEstimatedSize(size);
+        })
+        .catch(() => {
+          if (!cancelled) setEstimatedSize(null);
+        });
+    }, 350);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [mode, quality, selectedImage]);
+
   // 파일 추가
   const handleFilesAdd = useCallback(async (files: File[]) => {
     const maxBatch = getMaxBatchSize();
-    const filesToAdd = files.slice(0, maxBatch);
+    const notices: string[] = [];
 
-    const newImages: ProcessedImage[] = await Promise.all(
-      filesToAdd.map(async (file) => {
-        const dataUrl = await fileToDataUrl(file);
-        return {
-          id: `${file.name}-${Date.now()}-${Math.random()}`,
-          file,
-          originalDataUrl: dataUrl,
-          result: null,
-          status: "pending" as const,
-        };
+    // 형식/크기 검증 (FileDropzone를 거치지 않는 "+" 입력도 여기서 막힌다)
+    const { valid, oversize, unsupported } = validateImageFiles(files, ACCEPT_IMAGE);
+    if (unsupported > 0) notices.push(`${unsupported}개 파일은 지원하지 않는 형식이라 제외했어요.`);
+    if (oversize > 0) notices.push(`${oversize}개 파일은 50MB를 넘어 제외했어요.`);
+
+    // 파일별로 읽기 (한 장이 실패해도 나머지는 살린다)
+    const loaded = await Promise.all(
+      valid.map(async (file): Promise<ProcessedImage | null> => {
+        try {
+          const dataUrl = await fileToDataUrl(file);
+          return {
+            id: `${file.name}-${Date.now()}-${Math.random()}`,
+            file,
+            originalDataUrl: dataUrl,
+            result: null,
+            status: "pending",
+          };
+        } catch {
+          return null;
+        }
       })
     );
+    const newImages = loaded.filter((img): img is ProcessedImage => img !== null);
+    const failed = valid.length - newImages.length;
+    if (failed > 0) notices.push(`${failed}개 파일을 열 수 없어 제외했어요.`);
 
-    let overflow = 0;
-    setImages((prev) => {
-      const combined = [...prev, ...newImages];
-      overflow = Math.max(0, combined.length - maxBatch);
-      return combined.slice(0, maxBatch);
-    });
-
-    if (newImages.length > 0 && overflow > 0) {
-      setBatchNotice(`최대 ${maxBatch}개까지 처리됩니다. ${overflow}개 파일이 제외되었습니다.`);
-      setTimeout(() => setBatchNotice(null), 4000);
+    // 일괄 장수 제한 (현재 목록 + 신규)
+    const room = Math.max(0, maxBatch - imagesRef.current.length);
+    const accepted = newImages.slice(0, room);
+    const overflow = newImages.length - accepted.length;
+    if (overflow > 0) {
+      notices.push(`최대 ${maxBatch}개까지 처리할 수 있어 ${overflow}개를 제외했어요.`);
     }
 
-    // 첫 번째 이미지 선택
-    if (newImages.length > 0) {
-      setSelectedImageId(newImages[0].id);
+    if (accepted.length > 0) {
+      setImages((prev) => [...prev, ...accepted]);
+      setSelectedImageId(accepted[0].id);
+    }
+
+    if (notices.length > 0) {
+      setBatchNotice(notices.join(" "));
+      setTimeout(() => setBatchNotice(null), 4000);
     }
   }, []);
 
   // 이미지 제거
   const handleRemoveImage = useCallback(
     (id: string) => {
+      revokeObjectUrl(
+        imagesRef.current.find((img) => img.id === id)?.result?.dataUrl
+      );
       setImages((prev) => prev.filter((img) => img.id !== id));
       if (selectedImageId === id) {
         setSelectedImageId(null);
@@ -123,6 +188,7 @@ export default function CompressTool() {
 
   // 모든 이미지 제거
   const handleClearAll = useCallback(() => {
+    imagesRef.current.forEach((img) => revokeObjectUrl(img.result?.dataUrl));
     setImages([]);
     setSelectedImageId(null);
   }, []);
@@ -139,48 +205,51 @@ export default function CompressTool() {
       prev.map((img) => ({ ...img, status: "processing" as const }))
     );
 
-    for (let i = 0; i < images.length; i++) {
-      setProcessingIndex(i + 1);
-      const img = images[i];
+    // 병렬 처리 (워커 풀이 파이프라인 처리, 미지원 시 메인 스레드 폴백)
+    let completed = 0;
+    await Promise.all(
+      images.map(async (img) => {
+        try {
+          const result =
+            mode === "quality"
+              ? await compressImageSmart(img.file, {
+                  quality: quality / 100,
+                  outputFormat: "image/jpeg",
+                })
+              : await compressToTargetSize(img.file, targetSizeKB, {
+                  outputFormat: "image/jpeg",
+                });
 
-      try {
-        let result: CompressionResult;
-
-        if (mode === "quality") {
-          result = await compressImage(img.file, {
-            quality: quality / 100,
-            outputFormat: "image/jpeg",
-          });
-        } else {
-          result = await compressToTargetSize(img.file, targetSizeKB, {
-            outputFormat: "image/jpeg",
-          });
+          // 이전 결과 URL 해제 (재압축 시 누수 방지)
+          revokeObjectUrl(img.result?.dataUrl);
+          setImages((prev) =>
+            prev.map((item) =>
+              item.id === img.id
+                ? { ...item, result, status: "done" as const }
+                : item
+            )
+          );
+        } catch (error) {
+          setImages((prev) =>
+            prev.map((item) =>
+              item.id === img.id
+                ? {
+                    ...item,
+                    status: "error" as const,
+                    error:
+                      error instanceof Error
+                        ? error.message
+                        : "압축에 실패했습니다.",
+                  }
+                : item
+            )
+          );
+        } finally {
+          completed++;
+          setProcessingIndex(completed);
         }
-
-        setImages((prev) =>
-          prev.map((item) =>
-            item.id === img.id
-              ? { ...item, result, status: "done" as const }
-              : item
-          )
-        );
-      } catch (error) {
-        setImages((prev) =>
-          prev.map((item) =>
-            item.id === img.id
-              ? {
-                  ...item,
-                  status: "error" as const,
-                  error:
-                    error instanceof Error
-                      ? error.message
-                      : "압축에 실패했습니다.",
-                }
-              : item
-          )
-        );
-      }
-    }
+      })
+    );
 
     setIsProcessing(false);
   }, [images, mode, quality, targetSizeKB, isProcessing]);
@@ -190,7 +259,11 @@ export default function CompressTool() {
     return completedImages
       .filter((img) => img.result)
       .map((img) => ({
-        name: createNewFileName(img.file.name, "_compressed", "jpg"),
+        name: createNewFileName(
+          img.file.name,
+          "_compressed",
+          mimeToExtension(img.result!.blob.type)
+        ),
         blob: img.result!.blob,
       }));
   }, [completedImages]);
@@ -201,9 +274,9 @@ export default function CompressTool() {
       {images.length === 0 ? (
         <FileDropzone
           onFilesSelected={handleFilesAdd}
-          accept="image/jpeg,image/png,image/webp"
+          accept={ACCEPT_IMAGE}
           multiple
-          maxFiles={getMaxBatchSize()}
+          maxFiles={maxBatchSize}
           maxSize={50 * 1024 * 1024}
         />
       ) : (
@@ -305,12 +378,12 @@ export default function CompressTool() {
                 </div>
               ))}
 
-              {/* 추가 버튼 */}
-              {images.length < getMaxBatchSize() && (
+              {/* 추가 버튼 (처리 중에는 숨김 — 진행 중 배치 누락 방지) */}
+              {!isProcessing && images.length < maxBatchSize && (
                 <label className="aspect-square rounded-lg border-2 border-dashed border-brand-light hover:border-brand-accent cursor-pointer flex items-center justify-center transition-colors">
                   <input
                     type="file"
-                    accept="image/jpeg,image/png,image/webp"
+                    accept={ACCEPT_IMAGE}
                     multiple
                     className="hidden"
                     onChange={(e) => {
@@ -378,6 +451,11 @@ export default function CompressTool() {
                   </label>
                   <span className="font-mono text-sm text-brand-accent">
                     {quality}%
+                    {estimatedSize !== null && (
+                      <span className="text-brand-mid ml-2">
+                        ~{formatFileSize(estimatedSize)}
+                      </span>
+                    )}
                   </span>
                 </div>
                 <input

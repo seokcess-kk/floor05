@@ -120,45 +120,21 @@ export default function SNSImageSizePage() {
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               1. 인스타그램
             </h2>
-
-            <div className="overflow-x-auto mb-6">
-              <table className="w-full text-sm border-collapse">
-                <thead>
-                  <tr className="border-b border-brand-light/30">
-                    <th className="text-left py-3 px-4 text-brand-black font-semibold">유형</th>
-                    <th className="text-left py-3 px-4 text-brand-black font-semibold">비율</th>
-                    <th className="text-left py-3 px-4 text-brand-black font-semibold">크기 (px)</th>
-                  </tr>
-                </thead>
-                <tbody className="text-brand-mid">
-                  <tr className="border-b border-brand-light/20">
-                    <td className="py-3 px-4">피드 정사각형</td>
-                    <td className="py-3 px-4">1:1</td>
-                    <td className="py-3 px-4 font-mono">1080 × 1080</td>
-                  </tr>
-                  <tr className="border-b border-brand-light/20 bg-brand-accent/5">
-                    <td className="py-3 px-4 font-medium">피드 세로형 (추천)</td>
-                    <td className="py-3 px-4">4:5</td>
-                    <td className="py-3 px-4 font-mono">1080 × 1350</td>
-                  </tr>
-                  <tr className="border-b border-brand-light/20">
-                    <td className="py-3 px-4">피드 가로형</td>
-                    <td className="py-3 px-4">1.91:1</td>
-                    <td className="py-3 px-4 font-mono">1080 × 566</td>
-                  </tr>
-                  <tr className="border-b border-brand-light/20">
-                    <td className="py-3 px-4">스토리/릴스</td>
-                    <td className="py-3 px-4">9:16</td>
-                    <td className="py-3 px-4 font-mono">1080 × 1920</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4">프로필 사진</td>
-                    <td className="py-3 px-4">1:1</td>
-                    <td className="py-3 px-4 font-mono">320 × 320</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              가장 추천하는 크기는 <strong>피드 세로형 1080×1350px(4:5)</strong>이고,
+              스토리·릴스는 <strong>1080×1920px(9:16)</strong>입니다. 피드 정사각형은
+              1080×1080px, 프로필 사진은 320×320px를 사용하세요.
+            </p>
+            <p className="text-brand-mid leading-relaxed mb-6">
+              피드·스토리·릴스·프로필별 상세 규격과 잘림·화질 저하 방지 팁은{" "}
+              <Link
+                href="/blog/instagram-image-size"
+                className="text-brand-accent hover:underline font-medium"
+              >
+                인스타그램 사진 크기 총정리
+              </Link>
+              에서 더 자세히 다룹니다.
+            </p>
 
             {/* 유튜브 */}
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
