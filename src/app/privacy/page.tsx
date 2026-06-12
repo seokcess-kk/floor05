@@ -68,7 +68,9 @@ export default function PrivacyPage() {
                   (페이지뷰, 방문 시간 등)
                 </li>
                 <li>
-                  <strong>Google AdSense</strong>: 맞춤형 광고 제공을 위한 쿠키 사용
+                  <strong>Google AdSense</strong>: 광고 제공을 위한 쿠키 사용.
+                  동의 시 맞춤형(개인화) 광고가, 동의하지 않으면 비개인화 광고가
+                  제공됩니다.
                 </li>
               </ul>
               <p className="text-brand-mid leading-relaxed mt-4">

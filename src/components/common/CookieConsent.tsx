@@ -24,7 +24,16 @@ export default function CookieConsent() {
     }
   }, []);
 
-  // "쿠키 설정" 재진입: 동의 초기화 → 배너 다시 표시 + 광고 중단
+  // 개인화 여부를 AdSense에 전달한다.
+  // 동의(accepted) → 개인화 광고, 그 외(pending/declined) → 비개인화 광고(NPA).
+  // requestNonPersonalizedAds는 배열 속성으로 보존되어, 각 AdSlot의 push() 시 적용된다.
+  useEffect(() => {
+    if (!mounted) return;
+    const ads = (window.adsbygoogle = window.adsbygoogle || []);
+    ads.requestNonPersonalizedAds = status === "accepted" ? 0 : 1;
+  }, [mounted, status]);
+
+  // "쿠키 설정" 재진입: 동의 초기화 → 배너 다시 표시 (광고는 비개인화로 계속 노출)
   useEffect(() => {
     const handleReset = () => {
       setStatus("pending");
@@ -60,9 +69,11 @@ export default function CookieConsent() {
 
   const handleScriptLoad = () => {
     setScriptLoaded(true);
-    // 스크립트 로드 완료 후 이벤트 발생
+    // 스크립트 로드 완료 후 이벤트 발생 (개인화 여부는 현재 동의 상태 기준)
     window.dispatchEvent(
-      new CustomEvent(CONSENT_CHANGE_EVENT, { detail: { accepted: true, scriptLoaded: true } })
+      new CustomEvent(CONSENT_CHANGE_EVENT, {
+        detail: { accepted: status === "accepted", scriptLoaded: true },
+      })
     );
   };
 
@@ -71,8 +82,9 @@ export default function CookieConsent() {
 
   return (
     <>
-      {/* 동의한 경우에만 AdSense 로드 */}
-      {status === "accepted" && (
+      {/* AdSense 스크립트는 동의와 무관하게 로드한다.
+          개인화 여부는 requestNonPersonalizedAds 플래그로 제어 (미동의 시 NPA). */}
+      {ADSENSE_ID && (
         <Script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`}
@@ -90,7 +102,8 @@ export default function CookieConsent() {
               {/* 텍스트 */}
               <div className="flex-1">
                 <p className="text-brand-paper text-sm leading-relaxed">
-                  광고 제공을 위해 쿠키를 사용합니다.{" "}
+                  맞춤 광고를 위해 쿠키를 사용합니다. 동의하지 않아도 광고는
+                  표시되며, 이 경우 비개인화 광고로 제공됩니다.{" "}
                   <a
                     href="/privacy"
                     className="text-brand-accent hover:underline"
@@ -136,14 +149,12 @@ export function useCookieConsent(): { consented: boolean; scriptReady: boolean }
   useEffect(() => {
     // 초기 상태 로드
     const saved = localStorage.getItem(CONSENT_KEY);
-    const isAccepted = saved === "accepted";
-    setConsented(isAccepted);
+    setConsented(saved === "accepted");
 
-    // 이미 스크립트가 로드되어 있는지 확인
-    if (isAccepted && typeof window !== "undefined") {
-      if (window.adsbygoogle) {
-        setScriptReady(true);
-      }
+    // 스크립트가 이미 로드되어 있으면 준비 완료로 처리 (동의 여부와 무관).
+    // adsbygoogle 큐는 라이브러리 로드 전 push도 안전하게 버퍼링한다.
+    if (typeof window !== "undefined" && window.adsbygoogle) {
+      setScriptReady(true);
     }
 
     // 커스텀 이벤트 리스닝 (동의 변경 시)

@@ -11,7 +11,9 @@ import {
 
 declare global {
   interface Window {
-    adsbygoogle: Record<string, unknown>[];
+    adsbygoogle: Record<string, unknown>[] & {
+      requestNonPersonalizedAds?: number;
+    };
   }
 }
 
@@ -34,14 +36,16 @@ const SLOT_CONFIG: Record<
 export default function AdSlot({ slot, className = "" }: AdSlotProps) {
   const adRef = useRef<HTMLDivElement>(null);
   const [adPushed, setAdPushed] = useState(false);
-  const { consented, scriptReady } = useCookieConsent();
+  const { scriptReady } = useCookieConsent();
   const isDev = process.env.NODE_ENV === "development";
 
   const config = SLOT_CONFIG[slot] || SLOT_CONFIG["tool-below"];
 
   useEffect(() => {
-    // AdSense 광고 로드 (동의 + 스크립트 준비 + 슬롯 ID 설정 시에만)
-    if (!isDev && consented && scriptReady && ADSENSE_SLOT_ID && adRef.current && !adPushed) {
+    // AdSense 광고 로드 (스크립트 준비 + 슬롯 ID 설정 시).
+    // 개인화 여부(NPA)는 CookieConsent가 전역 플래그로 제어하므로, 동의와 무관하게
+    // 광고를 노출한다. 미동의 시에는 자동으로 비개인화 광고가 게재된다.
+    if (!isDev && scriptReady && ADSENSE_SLOT_ID && adRef.current && !adPushed) {
       try {
         const adsbygoogle = window.adsbygoogle || [];
         adsbygoogle.push({});
@@ -50,7 +54,7 @@ export default function AdSlot({ slot, className = "" }: AdSlotProps) {
         // 광고 로드 실패 시 무시
       }
     }
-  }, [isDev, consented, scriptReady, adPushed]);
+  }, [isDev, scriptReady, adPushed]);
 
   // 개발 환경: 플레이스홀더 표시
   if (isDev) {
@@ -75,11 +79,6 @@ export default function AdSlot({ slot, className = "" }: AdSlotProps) {
         </div>
       </div>
     );
-  }
-
-  // 동의하지 않은 경우: 아무것도 렌더링하지 않음
-  if (!consented) {
-    return null;
   }
 
   // AdSense (슬롯 ID가 설정된 경우 우선)
