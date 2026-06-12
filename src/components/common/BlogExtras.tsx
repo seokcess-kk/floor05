@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BlogAd from "./BlogAd";
 import { buildBlogPostingSchema, getRelatedPosts } from "@/lib/common/blog";
 
 /**
@@ -21,6 +22,10 @@ export default function BlogExtras({ slug }: { slug: string }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       )}
+
+      {/* 본문 종료 직후 인콘텐츠 광고 (마무리 CTA 다음, 관련 글 위).
+          장문 글이라 콘텐츠-광고 비율이 넉넉해 정책상 안전한 위치다. */}
+      <BlogAd className="mt-16" />
 
       {related.length > 0 && (
         <aside className="mt-16 pt-8 border-t border-brand-light/20">

@@ -22,15 +22,23 @@ interface AdSlotProps {
   className?: string;
 }
 
-// 슬롯별 설정 (Adfit 대체 노출 시 사용할 크기 포함)
+// 슬롯별 설정 (Adfit 대체 노출 시 사용할 크기 + CLS 방지용 예약 높이 포함)
+// reserveClass: AdSense 로드 전 공간을 미리 확보해 레이아웃 점프(CLS)를 막는다.
+// height(고정)가 아닌 min-height를 써서 실제 광고가 더 커도 잘리지 않게 한다.
 const SLOT_CONFIG: Record<
   string,
-  { height: string; format: string; adfitWidth: number; adfitHeight: number }
+  {
+    height: string;
+    format: string;
+    adfitWidth: number;
+    adfitHeight: number;
+    reserveClass: string;
+  }
 > = {
-  "tool-below": { height: "h-24", format: "horizontal", adfitWidth: 320, adfitHeight: 100 },
-  "cta-below": { height: "h-24", format: "horizontal", adfitWidth: 320, adfitHeight: 100 },
-  "footer-above": { height: "h-20", format: "horizontal", adfitWidth: 320, adfitHeight: 50 },
-  "blog-inline": { height: "h-32", format: "rectangle", adfitWidth: 300, adfitHeight: 250 },
+  "tool-below": { height: "h-24", format: "horizontal", adfitWidth: 320, adfitHeight: 100, reserveClass: "min-h-[90px]" },
+  "cta-below": { height: "h-24", format: "horizontal", adfitWidth: 320, adfitHeight: 100, reserveClass: "min-h-[90px]" },
+  "footer-above": { height: "h-20", format: "horizontal", adfitWidth: 320, adfitHeight: 50, reserveClass: "min-h-[90px]" },
+  "blog-inline": { height: "h-32", format: "rectangle", adfitWidth: 300, adfitHeight: 250, reserveClass: "min-h-[250px]" },
 };
 
 export default function AdSlot({ slot, className = "" }: AdSlotProps) {
@@ -84,7 +92,7 @@ export default function AdSlot({ slot, className = "" }: AdSlotProps) {
   // AdSense (슬롯 ID가 설정된 경우 우선)
   if (ADSENSE_SLOT_ID) {
     return (
-      <div ref={adRef} role="complementary" aria-label="광고" className={`min-h-[90px] ${className}`}>
+      <div ref={adRef} role="complementary" aria-label="광고" className={`${config.reserveClass} ${className}`}>
         <ins
           className="adsbygoogle"
           style={{ display: "block" }}
