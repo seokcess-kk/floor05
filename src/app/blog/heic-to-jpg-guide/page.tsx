@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import BlogExtras from "@/components/common/BlogExtras";
+import BlogInlineCTA from "@/components/common/BlogInlineCTA";
 
 export const metadata: Metadata = {
   title: "아이폰 HEIC 사진 JPG 변환 방법 - 가장 쉬운 무료 변환",
@@ -161,6 +162,10 @@ export default function HeicToJpgGuidePage() {
             </p>
 
             {/* 섹션 2 */}
+            <BlogInlineCTA href="/tools/image/heic-to-jpg" label="HEIC → JPG 변환 →">
+              아이폰 사진을 지금 JPG로 바꿔야 한다면.
+            </BlogInlineCTA>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               HEIC를 JPG로 변환하는 방법
             </h2>

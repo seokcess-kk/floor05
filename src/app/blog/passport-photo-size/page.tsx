@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import BlogExtras from "@/components/common/BlogExtras";
+import BlogInlineCTA from "@/components/common/BlogInlineCTA";
 
 export const metadata: Metadata = {
   title: "증명사진 용량 줄이기 - 200KB, 500KB 맞추는 방법",
@@ -197,6 +198,10 @@ export default function PassportPhotoSizePage() {
             </p>
 
             {/* 줄이는 방법 */}
+            <BlogInlineCTA href="/tools/image/compress" label="용량 줄이기 →">
+              제한 용량을 확인했다면, 증명사진을 바로 줄여보세요.
+            </BlogInlineCTA>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               2. 증명사진 용량 줄이는 방법
             </h2>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import BlogExtras from "@/components/common/BlogExtras";
+import BlogInlineCTA from "@/components/common/BlogInlineCTA";
 import { buildBlogMetadata } from "@/lib/common/blog";
 
 export const metadata: Metadata = {
@@ -173,6 +174,10 @@ export default function ImageMergeGuidePage() {
             </ul>
 
             {/* 섹션 3 */}
+            <BlogInlineCTA href="/tools/image/merge" label="사진 합치기 →">
+              방향까지 정했다면, 바로 합쳐봐도 됩니다.
+            </BlogInlineCTA>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               3. 크기가 다른 사진을 합칠 때
             </h2>

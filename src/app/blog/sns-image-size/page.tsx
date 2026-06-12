@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import BlogExtras from "@/components/common/BlogExtras";
+import BlogInlineCTA from "@/components/common/BlogInlineCTA";
 
 export const metadata: Metadata = {
   title: "SNS별 이미지 크기 총정리 - 2026년 최신",
@@ -215,6 +216,10 @@ export default function SNSImageSizePage() {
             </div>
 
             {/* 트위터(X) */}
+            <BlogInlineCTA href="/tools/image/resize" label="이미지 리사이즈 →">
+              플랫폼별 크기는 확인했고, 맞추는 건 1분이면 됩니다.
+            </BlogInlineCTA>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               4. X (트위터)
             </h2>

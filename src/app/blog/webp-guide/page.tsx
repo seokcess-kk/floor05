@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import BlogExtras from "@/components/common/BlogExtras";
+import BlogInlineCTA from "@/components/common/BlogInlineCTA";
 
 export const metadata: Metadata = {
   title: "WebP 포맷 완벽 가이드 - 장점, 단점, 변환 방법",
@@ -166,6 +167,10 @@ export default function WebPGuidePage() {
             </p>
 
             {/* 단점 */}
+            <BlogInlineCTA href="/tools/image/convert" label="WebP로 변환 →">
+              장점이 끌렸다면, JPG·PNG를 WebP로 바로 바꿔보세요.
+            </BlogInlineCTA>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               3. WebP의 단점
             </h2>

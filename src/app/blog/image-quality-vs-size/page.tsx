@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import BlogExtras from "@/components/common/BlogExtras";
+import BlogInlineCTA from "@/components/common/BlogInlineCTA";
 
 export const metadata: Metadata = {
   title: "사진 화질 높이기 vs 용량 줄이기 - 차이점과 올바른 선택",
@@ -234,6 +235,10 @@ export default function ImageQualityVsSizePage() {
             </div>
 
             {/* 용량 줄이기 방법 */}
+            <BlogInlineCTA href="/tools/image/compress" label="이미지 압축 →">
+              용량을 줄이는 쪽이라면, 여기서 바로 처리할 수 있습니다.
+            </BlogInlineCTA>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               5. 용량 줄이는 방법 (floor05에서 가능)
             </h2>

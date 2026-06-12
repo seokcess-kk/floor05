@@ -82,6 +82,23 @@ export default function BrowserImageToolsPrivacyPage() {
               처리 방식에 따라 답이 달라집니다.
             </p>
 
+            {/* CTA 박스 */}
+            <div className="bg-brand-paper rounded-lg p-6 mb-10 border border-brand-light/20">
+              <p className="font-medium text-brand-black mb-3">
+                💡 민감한 사진일수록, 서버를 안 거치는 게 안전합니다
+              </p>
+              <p className="text-brand-mid text-sm mb-4">
+                floor05 이미지 도구는 전부 브라우저에서 처리됩니다. 파일이 서버로
+                전송되지 않고, 회원가입도 필요 없습니다.
+              </p>
+              <Link
+                href="/tools/image/compress"
+                className="inline-block bg-brand-accent text-brand-white px-4 py-2 rounded-md text-sm font-medium hover:bg-brand-accent-light transition-colors"
+              >
+                이미지 압축 도구 사용하기 →
+              </Link>
+            </div>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               1. 대부분의 온라인 도구는 &lsquo;업로드&rsquo;한다
             </h2>

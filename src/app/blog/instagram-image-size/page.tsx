@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import BlogExtras from "@/components/common/BlogExtras";
+import BlogInlineCTA from "@/components/common/BlogInlineCTA";
 
 export const metadata: Metadata = {
   title: "인스타그램 사진 크기 총정리 - 2026년 최신 규격",
@@ -210,6 +211,10 @@ export default function InstagramImageSizePage() {
             </p>
 
             {/* 릴스 */}
+            <BlogInlineCTA href="/tools/image/resize" label="이미지 리사이즈 →">
+              피드·스토리 크기는 확인했고, 이제 맞추기만 하면 됩니다.
+            </BlogInlineCTA>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               3. 인스타그램 릴스 크기
             </h2>

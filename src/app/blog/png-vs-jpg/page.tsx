@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import BlogExtras from "@/components/common/BlogExtras";
+import BlogInlineCTA from "@/components/common/BlogInlineCTA";
 
 export const metadata: Metadata = {
   title: "PNG vs JPG 차이점 - 언제 어떤 포맷을 써야 할까?",
@@ -212,6 +213,10 @@ export default function PngVsJpgPage() {
             </p>
 
             {/* 용량 */}
+            <BlogInlineCTA href="/tools/image/convert" label="포맷 변환 →">
+              PNG든 JPG든, 정했다면 바로 바꿀 수 있습니다.
+            </BlogInlineCTA>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               3. 용량이 중요하면 JPG
             </h2>
