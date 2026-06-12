@@ -4,7 +4,7 @@
  * - Header, Footer, ToolLayout, 메인 페이지에서 공통 사용
  */
 
-export type ToolCategory = "image" | "text";
+export type ToolCategory = "image" | "text" | "calc";
 
 export interface Tool {
   name: string;
@@ -64,6 +64,20 @@ export const TOOLS: Tool[] = [
     shortDescription: "글자수·바이트",
     category: "text",
   },
+  {
+    name: "연봉 실수령액",
+    href: "/tools/calc/salary",
+    description: "2026년 4대보험·세금을 떼고 매달 통장에 찍히는 금액. 부양가족까지 반영.",
+    shortDescription: "월 실수령액",
+    category: "calc",
+  },
+  {
+    name: "퇴직금 계산기",
+    href: "/tools/calc/severance",
+    description: "입사일·퇴사일과 월급으로 퇴직금을 바로. 평균임금·상여·연차수당 반영.",
+    shortDescription: "퇴직금",
+    category: "calc",
+  },
 ];
 
 /**
@@ -86,6 +100,12 @@ export const TOOL_CATEGORIES: {
     room: "Room 02",
     label: "Text Tools",
     tagline: "붙여넣으면 바로. 입력 내용은 저장·전송되지 않습니다.",
+  },
+  {
+    id: "calc",
+    room: "Room 03",
+    label: "Calculator",
+    tagline: "복잡한 세금·요율은 우리가. 숫자만 넣으면 바로 계산됩니다.",
   },
 ];
 

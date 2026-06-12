@@ -29,6 +29,44 @@ export interface BlogPost {
 export const POSTS: BlogPost[] = [
   // ── 신규 (2026-06-12) ───────────────────────────────────────────
   {
+    slug: "salary-net-pay-guide",
+    title: "2026년 연봉 실수령액 계산하는 법",
+    description:
+      "4대보험과 소득세를 떼면 통장에 실제로 얼마가 들어올까요? 2026년 요율 기준 연봉별 실수령액과 공제 항목을 정리했습니다.",
+    keywords: [
+      "연봉 실수령액",
+      "실수령액 계산",
+      "연봉 실수령액 표",
+      "4대보험 공제",
+      "월급 실수령액",
+      "세후 연봉",
+      "2026 연봉 실수령액",
+    ],
+    datePublished: "2026-06-12",
+    dateModified: "2026-06-12",
+    readTime: "6분",
+    related: ["severance-pay-guide", "character-count-guide"],
+  },
+  {
+    slug: "severance-pay-guide",
+    title: "퇴직금 계산하는 법",
+    description:
+      "평균임금으로 퇴직금을 계산하는 공식과, 상여금·연차수당까지 반영하는 방법, 1년 미만·세금 처리까지 한 번에 정리했습니다.",
+    keywords: [
+      "퇴직금 계산",
+      "퇴직금 계산 방법",
+      "평균임금",
+      "퇴직금 계산기",
+      "1년 퇴직금",
+      "퇴직금 세금",
+      "퇴직금 산정",
+    ],
+    datePublished: "2026-06-12",
+    dateModified: "2026-06-12",
+    readTime: "6분",
+    related: ["salary-net-pay-guide", "character-count-guide"],
+  },
+  {
     slug: "character-count-guide",
     title: "자소서 글자수 세는 법",
     description:
