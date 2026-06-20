@@ -29,6 +29,25 @@ export interface BlogPost {
 export const POSTS: BlogPost[] = [
   // ── 신규 (2026-06-20) ───────────────────────────────────────────
   {
+    slug: "prevent-photo-theft",
+    title: "사진 도용 막는 법",
+    description:
+      "블로그·중고거래·SNS에 올린 사진이 무단 도용되는 걸 줄이는 현실적인 방법 — 워터마크, 업로드 크기 조절, 출처 표기까지 한 번에 정리했습니다.",
+    keywords: [
+      "사진 도용 방지",
+      "사진 도용",
+      "이미지 도용 방지",
+      "사진 무단 사용",
+      "블로그 사진 도용",
+      "사진 저작권 보호",
+      "사진 워터마크",
+    ],
+    datePublished: "2026-06-20",
+    dateModified: "2026-06-20",
+    readTime: "5분",
+    related: ["image-watermark-guide", "browser-image-tools-privacy", "photo-editing-without-photoshop"],
+  },
+  {
     slug: "image-watermark-guide",
     title: "사진에 워터마크 넣는 법",
     description:
@@ -45,7 +64,7 @@ export const POSTS: BlogPost[] = [
     datePublished: "2026-06-20",
     dateModified: "2026-06-20",
     readTime: "5분",
-    related: ["image-merge-guide", "browser-image-tools-privacy", "image-crop-guide"],
+    related: ["prevent-photo-theft", "image-merge-guide", "browser-image-tools-privacy"],
   },
 
   // ── 신규 (2026-06-12) ───────────────────────────────────────────
