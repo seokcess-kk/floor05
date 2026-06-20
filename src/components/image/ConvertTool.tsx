@@ -22,6 +22,7 @@ import {
 } from "@/lib/image/convert";
 import { convertImageSmart } from "@/lib/image/processPool";
 import { useBeforeUnload, useMaxBatchSize } from "@/lib/common/hooks";
+import { trackToolUse } from "@/lib/common/analytics";
 
 const ACCEPT_CONVERT =
   "image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif";
@@ -42,7 +43,12 @@ const BACKGROUND_COLORS = [
   { value: "#F5F5F5", label: "밝은 회색", class: "bg-gray-100" },
 ];
 
-export default function ConvertTool() {
+interface ConvertToolProps {
+  // 트래킹 식별자. HEIC 전용 랜딩은 "heic"로 구분 (기본 "convert")
+  toolId?: string;
+}
+
+export default function ConvertTool({ toolId = "convert" }: ConvertToolProps = {}) {
   // 상태
   const [images, setImages] = useState<ProcessedImage[]>([]);
   const [outputFormat, setOutputFormat] = useState<OutputFormat>("image/jpeg");
@@ -187,6 +193,7 @@ export default function ConvertTool() {
 
     // 병렬 처리 (워커 풀이 파이프라인 처리, 미지원 시 메인 스레드 폴백)
     let completed = 0;
+    let succeeded = 0;
     await Promise.all(
       images.map(async (img) => {
         try {
@@ -198,6 +205,7 @@ export default function ConvertTool() {
 
           // 이전 결과 URL 해제 (재변환 시 누수 방지)
           revokeObjectUrl(img.result?.dataUrl);
+          succeeded++;
           setImages((prev) =>
             prev.map((item) =>
               item.id === img.id
@@ -227,8 +235,11 @@ export default function ConvertTool() {
       })
     );
 
+    if (succeeded > 0) {
+      trackToolUse(toolId, { count: succeeded, to: getExtension(outputFormat) });
+    }
     setIsProcessing(false);
-  }, [images, outputFormat, quality, backgroundColor, isProcessing]);
+  }, [images, outputFormat, quality, backgroundColor, isProcessing, toolId]);
 
   // 다운로드용 파일 목록
   const downloadFiles = useMemo(() => {
@@ -608,6 +619,7 @@ export default function ConvertTool() {
               <div className="flex justify-center">
                 {downloadFiles.length === 1 ? (
                   <DownloadButton
+                    tool={toolId}
                     fileName={downloadFiles[0].name}
                     fileBlob={downloadFiles[0].blob}
                     variant="primary"
@@ -616,6 +628,7 @@ export default function ConvertTool() {
                   />
                 ) : (
                   <DownloadButton
+                    tool={toolId}
                     files={downloadFiles}
                     zipFileName="floor05-converted-images.zip"
                     variant="primary"

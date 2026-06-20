@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { calcSeverance } from "@/lib/calc/severance";
+import { trackToolUse } from "@/lib/common/analytics";
 
 const won = (n: number) => n.toLocaleString("ko-KR");
 
@@ -24,6 +25,22 @@ export default function SeveranceTool() {
       }),
     [joinDate, leaveDate, wageManwon, bonusManwon, leaveAllowManwon],
   );
+
+  // 기본 예시값에서 입력을 바꾼 순간 = 실제 사용 (세션당 1회만 집계)
+  const usedRef = useRef(false);
+  useEffect(() => {
+    if (usedRef.current) return;
+    if (
+      joinDate !== "2022-01-01" ||
+      leaveDate !== "2025-01-01" ||
+      wageManwon !== 300 ||
+      bonusManwon !== 0 ||
+      leaveAllowManwon !== 0
+    ) {
+      usedRef.current = true;
+      trackToolUse("severance");
+    }
+  }, [joinDate, leaveDate, wageManwon, bonusManwon, leaveAllowManwon]);
 
   return (
     <div className="space-y-6">

@@ -22,6 +22,7 @@ import {
 import { compressImageSmart } from "@/lib/image/processPool";
 import { compressPng } from "@/lib/image/pngCompress";
 import { useBeforeUnload, useMaxBatchSize } from "@/lib/common/hooks";
+import { trackToolUse } from "@/lib/common/analytics";
 
 const ACCEPT_IMAGE = "image/jpeg,image/png,image/webp";
 
@@ -231,6 +232,7 @@ export default function CompressTool() {
 
     // 병렬 처리 (워커 풀이 파이프라인 처리, 미지원 시 메인 스레드 폴백)
     let completed = 0;
+    let succeeded = 0;
     await Promise.all(
       images.map(async (img) => {
         try {
@@ -248,6 +250,7 @@ export default function CompressTool() {
 
           // 이전 결과 URL 해제 (재압축 시 누수 방지)
           revokeObjectUrl(img.result?.dataUrl);
+          succeeded++;
           setImages((prev) =>
             prev.map((item) =>
               item.id === img.id
@@ -277,6 +280,7 @@ export default function CompressTool() {
       })
     );
 
+    if (succeeded > 0) trackToolUse("compress", { count: succeeded, mode });
     setIsProcessing(false);
   }, [images, mode, quality, targetSizeKB, outputMode, isProcessing]);
 
@@ -709,6 +713,7 @@ export default function CompressTool() {
               <div className="flex justify-center">
                 {downloadFiles.length === 1 ? (
                   <DownloadButton
+                    tool="compress"
                     fileName={downloadFiles[0].name}
                     fileBlob={downloadFiles[0].blob}
                     variant="primary"
@@ -717,6 +722,7 @@ export default function CompressTool() {
                   />
                 ) : (
                   <DownloadButton
+                    tool="compress"
                     files={downloadFiles}
                     zipFileName="floor05-compressed-images.zip"
                     variant="primary"

@@ -18,6 +18,7 @@ import {
   MergeSizeStrategy,
 } from "@/lib/image/merge";
 import { useBeforeUnload, useMaxBatchSize } from "@/lib/common/hooks";
+import { trackToolUse } from "@/lib/common/analytics";
 
 const ACCEPT_IMAGE = "image/jpeg,image/png,image/webp";
 type OutputFormat = "image/jpeg" | "image/png";
@@ -149,6 +150,7 @@ export default function MergeTool() {
         }
       );
       setResult(res);
+      trackToolUse("merge", { count: images.length, direction });
     } catch (e) {
       setResult(null);
       setError(e instanceof Error ? e.message : "이미지 합치기에 실패했습니다.");
@@ -465,6 +467,7 @@ export default function MergeTool() {
 
                 <div className="flex justify-center">
                   <DownloadButton
+                    tool="merge"
                     fileName={downloadName}
                     fileBlob={result.blob}
                     variant="primary"

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import {
   analyzeText,
   manuscriptSheets,
   CountMode,
 } from "@/lib/text/count";
+import { trackToolUse } from "@/lib/common/analytics";
 
 const STORAGE_KEY = "floor05_text_counter";
 const GOAL_PRESETS = [500, 1000, 1500];
@@ -41,6 +42,16 @@ export default function CounterTool() {
     }, 400);
     return () => clearTimeout(timer);
   }, [text, restored]);
+
+  // 의미 있는 분량을 입력하면 = 실제 사용 (세션당 1회만 집계)
+  const usedRef = useRef(false);
+  useEffect(() => {
+    if (usedRef.current) return;
+    if (text.trim().length >= 10) {
+      usedRef.current = true;
+      trackToolUse("counter");
+    }
+  }, [text]);
 
   const stats = useMemo(() => analyzeText(text, mode), [text, mode]);
   const manuscript = useMemo(

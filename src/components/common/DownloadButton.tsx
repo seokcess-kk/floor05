@@ -1,8 +1,12 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { trackDownload } from "@/lib/common/analytics";
 
 interface DownloadButtonProps {
+  // 트래킹용 도구 식별자 (예: "compress"). 지정 시 다운로드 이벤트 집계
+  tool?: string;
+
   // 단일 파일 다운로드
   fileName?: string;
   fileUrl?: string;
@@ -34,6 +38,7 @@ interface DownloadButtonProps {
  * - 다중 파일 ZIP 다운로드 (JSZip 필요)
  */
 export default function DownloadButton({
+  tool,
   fileName,
   fileUrl,
   fileBlob,
@@ -79,6 +84,8 @@ export default function DownloadButton({
       link.click();
       document.body.removeChild(link);
 
+      if (tool) trackDownload(tool, "single");
+
       // Blob URL 해제
       if (fileBlob) {
         URL.revokeObjectURL(url);
@@ -86,7 +93,7 @@ export default function DownloadButton({
     } catch {
       handleError("다운로드에 실패했습니다. 다시 시도해주세요.");
     }
-  }, [fileName, fileUrl, fileBlob, handleError]);
+  }, [tool, fileName, fileUrl, fileBlob, handleError]);
 
   // ZIP 다운로드 (다중 파일)
   const downloadZip = useCallback(async () => {
@@ -128,12 +135,14 @@ export default function DownloadButton({
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
+
+      if (tool) trackDownload(tool, "zip", { count: files.length });
     } catch {
       handleError("ZIP 파일 생성에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsDownloading(false);
     }
-  }, [files, zipFileName, handleError]);
+  }, [tool, files, zipFileName, handleError]);
 
   // 다운로드 핸들러
   const handleClick = useCallback(() => {

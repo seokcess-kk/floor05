@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { calcSalary } from "@/lib/calc/salary";
+import { trackToolUse } from "@/lib/common/analytics";
 
 const won = (n: number) => n.toLocaleString("ko-KR");
 
@@ -25,6 +26,16 @@ export default function SalaryTool() {
       }),
     [salaryManwon, nonTaxManwon, dependents, children],
   );
+
+  // 기본값에서 입력을 바꾼 순간 = 실제 사용 (세션당 1회만 집계)
+  const usedRef = useRef(false);
+  useEffect(() => {
+    if (usedRef.current) return;
+    if (salaryManwon !== 3600 || dependents !== 1 || children !== 0 || nonTaxManwon !== 20) {
+      usedRef.current = true;
+      trackToolUse("salary");
+    }
+  }, [salaryManwon, dependents, children, nonTaxManwon]);
 
   const d = result.deductions;
   const breakdown = [

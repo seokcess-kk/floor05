@@ -20,6 +20,7 @@ import {
 } from "@/lib/image/resize";
 import { resizeImageSmart } from "@/lib/image/processPool";
 import { useBeforeUnload, useMaxBatchSize } from "@/lib/common/hooks";
+import { trackToolUse } from "@/lib/common/analytics";
 
 const ACCEPT_IMAGE = "image/jpeg,image/png,image/webp";
 
@@ -215,6 +216,7 @@ export default function ResizeTool() {
 
     // 병렬 처리 (워커 풀이 파이프라인 처리, 미지원 시 메인 스레드 폴백)
     let completed = 0;
+    let succeeded = 0;
     await Promise.all(
       images.map(async (img) => {
         try {
@@ -250,6 +252,7 @@ export default function ResizeTool() {
 
           // 이전 결과 URL 해제 (재리사이즈 시 누수 방지)
           revokeObjectUrl(img.result?.dataUrl);
+          succeeded++;
           setImages((prev) =>
             prev.map((item) =>
               item.id === img.id
@@ -279,6 +282,7 @@ export default function ResizeTool() {
       })
     );
 
+    if (succeeded > 0) trackToolUse("resize", { count: succeeded, mode });
     setIsProcessing(false);
   }, [
     images,
@@ -760,6 +764,7 @@ export default function ResizeTool() {
               <div className="flex justify-center">
                 {downloadFiles.length === 1 ? (
                   <DownloadButton
+                    tool="resize"
                     fileName={downloadFiles[0].name}
                     fileBlob={downloadFiles[0].blob}
                     variant="primary"
@@ -768,6 +773,7 @@ export default function ResizeTool() {
                   />
                 ) : (
                   <DownloadButton
+                    tool="resize"
                     files={downloadFiles}
                     zipFileName="floor05-resized-images.zip"
                     variant="primary"

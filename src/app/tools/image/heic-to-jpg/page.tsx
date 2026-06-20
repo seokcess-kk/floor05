@@ -124,7 +124,7 @@ export default function HeicToJpgPage() {
       relatedPostSlugs={["heic-to-jpg-guide", "browser-image-tools-privacy"]}
       schemas={schemas}
     >
-      <ConvertTool />
+      <ConvertTool toolId="heic" />
     </ToolLayout>
   );
 }

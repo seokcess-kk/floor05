@@ -22,6 +22,7 @@ import {
   CropResult,
 } from "@/lib/image/crop";
 import { useBeforeUnload } from "@/lib/common/hooks";
+import { trackToolUse } from "@/lib/common/analytics";
 
 const ACCEPT_IMAGE = "image/jpeg,image/png,image/webp";
 
@@ -394,6 +395,7 @@ export default function CropTool() {
       });
 
       setResult(cropResult);
+      trackToolUse("crop", { circle });
     } catch (err) {
       const message = err instanceof Error ? err.message : "이미지 크롭에 실패했습니다. 다시 시도해주세요.";
       setError(message);
@@ -816,6 +818,7 @@ export default function CropTool() {
 
               <div className="flex justify-center">
                 <DownloadButton
+                  tool="crop"
                   fileName={createNewFileName(imageData.file.name, "_cropped", mimeToExtension(result.blob.type))}
                   fileBlob={result.blob}
                   variant="primary"
