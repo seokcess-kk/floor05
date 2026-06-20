@@ -1,6 +1,6 @@
 # floor05 트래픽 성장 계획
 
-> 최종 갱신: 2026-06-11
+> 최종 갱신: 2026-06-20
 > 이 문서는 검색 트래픽을 키우기 위한 실행 기준이다. 새 도구·블로그를 추가하거나 분기 점검 시 이 문서를 함께 갱신한다.
 
 ## 1. 목표와 현황
@@ -106,9 +106,11 @@ Google AI Overview·Perplexity 등에서 인용되도록:
 
 ## 9. 측정 (KPI)
 
-- **공통 지표**: 페이지뷰, 유입 키워드, 체류 시간, 광고 수익. (Vercel Analytics → 트래픽 발생 후 GA4 추가)
+- **공통 지표**: 페이지뷰, 유입 키워드, 체류 시간, 광고 수익. (Vercel Analytics)
 - **도구 고유**: 사용 완료율, 워크플로우 전환율, 재방문율.
-- **GA4 이벤트(예정)**: 공통 `tool_use_start`/`tool_use_complete`, 도구별 `image_download` 등(SPEC §5.1). 트래픽 발생 후 도입.
+- **커스텀 이벤트(구현됨, Vercel Analytics)**: `tool_use`(도구 실사용 — 이미지 처리 완료 / 계산기·카운터 입력 시작), `download`(결과물 다운로드, `type`=single|zip). 도구 식별자 `tool` 속성으로 분해하며 HEIC는 `heic`로 별도 집계. 헬퍼: `lib/common/analytics.ts`. **대시보드: Vercel → Analytics → Events.**
+  - ⚠️ Vercel Web Analytics는 Hobby 무료지만 **월 이벤트 한도**가 있고 페이지뷰+커스텀 이벤트가 그 한도를 공유한다. 한도 도달 시 그 달 수집 중단(Hobby, 자동과금 없음) → GA4 전환 신호. 현재 한도는 Vercel Usage에서 확인.
+- **GA4(예정)**: 리텐션·퍼널·세그먼트 등 Vercel로 안 되는 분석이 필요해지거나 위 이벤트 한도에 닿으면 도입. 쿠키 동의(`CookieConsent`) 게이팅 필요. (SPEC §5.1 2~3단계)
 - **점검 주기**: 월 1회 Search Console 쿼리 검토 → 순위 오른 키워드는 도구/글 강화, 노출 대비 클릭 낮은 페이지는 title/description 개선.
 
 ## 10. 이번 작업 요약 / 다음 할 일
@@ -124,4 +126,4 @@ Google AI Overview·Perplexity 등에서 인용되도록:
 1. 배포 후 Search Console에 신규 URL 색인 요청 + 성능 추적
 2. 콘텐츠 캘린더 상위 4편(카톡 용량, 줌 배경, 네이버 이미지, 카톡 프로필) 작성
 3. 워터마크 도구 추가(다음 키워드 클러스터)
-4. 트래픽 임계 도달 시 GA4 + 커스텀 이벤트 도입
+4. 커스텀 이벤트(`tool_use`/`download`)는 Vercel Analytics로 도입 완료(2026-06). 이벤트 한도 도달·심층 분석(리텐션/퍼널) 필요 시 GA4 추가.
