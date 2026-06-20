@@ -27,6 +27,27 @@ export interface BlogPost {
  * datePublished/dateModified는 검색엔진 신선도 신호(BlogPosting)로 사용된다.
  */
 export const POSTS: BlogPost[] = [
+  // ── 신규 (2026-06-20) ───────────────────────────────────────────
+  {
+    slug: "image-watermark-guide",
+    title: "사진에 워터마크 넣는 법",
+    description:
+      "텍스트·로고 워터마크를 사진에 넣는 방법. 위치·투명도·전체 반복으로 도용을 막고, 여러 장에 일괄로 넣는 법까지 정리했습니다.",
+    keywords: [
+      "워터마크 넣기",
+      "사진 워터마크",
+      "이미지 워터마크",
+      "워터마크 만들기",
+      "사진 로고 넣기",
+      "사진 도용 방지",
+      "저작권 표시",
+    ],
+    datePublished: "2026-06-20",
+    dateModified: "2026-06-20",
+    readTime: "5분",
+    related: ["image-merge-guide", "browser-image-tools-privacy", "image-crop-guide"],
+  },
+
   // ── 신규 (2026-06-12) ───────────────────────────────────────────
   {
     slug: "salary-net-pay-guide",
@@ -157,11 +178,12 @@ export const POSTS: BlogPost[] = [
       "브라우저 사진 편집",
     ],
     datePublished: "2026-06-11",
-    dateModified: "2026-06-11",
+    dateModified: "2026-06-20",
     readTime: "7분",
     related: [
       "image-compression-guide",
       "image-merge-guide",
+      "image-watermark-guide",
       "browser-image-tools-privacy",
     ],
   },

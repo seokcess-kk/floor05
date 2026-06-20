@@ -58,6 +58,13 @@ export const TOOLS: Tool[] = [
     category: "image",
   },
   {
+    name: "워터마크 넣기",
+    href: "/tools/image/watermark",
+    description: "텍스트·로고를 사진 위에. 위치·투명도·반복까지, 여러 장 일괄.",
+    shortDescription: "워터마크 삽입",
+    category: "image",
+  },
+  {
     name: "글자수 세기",
     href: "/tools/text/counter",
     description: "공백·바이트·원고지·자소서 글자수를 한 번에. 붙여넣으면 바로 계산.",
