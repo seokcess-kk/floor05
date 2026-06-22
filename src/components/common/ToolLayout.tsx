@@ -12,6 +12,18 @@ interface FAQ {
   answer: string;
 }
 
+// 도구 본문 해설(아티클) — 서버 렌더링되는 고유 콘텐츠
+export interface GuideSection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+}
+
+export interface ToolGuide {
+  intro?: string;
+  sections: GuideSection[];
+}
+
 interface WorkflowCTA {
   message: string;
   tools: Array<{
@@ -36,6 +48,9 @@ interface ToolLayoutProps {
   // 도구 본체 (children)
   children: React.ReactNode;
 
+  // 본문 해설 아티클 (도구 본체 아래, 서버 렌더링 고유 콘텐츠)
+  guide?: ToolGuide;
+
   // 사용 가이드 (FAQ 형태)
   faqs?: FAQ[];
 
@@ -59,6 +74,7 @@ export default function ToolLayout({
   title,
   description,
   children,
+  guide,
   faqs = [],
   workflowCTA,
   currentToolHref,
@@ -107,6 +123,43 @@ export default function ToolLayout({
             </ErrorBoundary>
           </div>
         </section>
+
+        {/* 3-1. 본문 해설 아티클 (고유 콘텐츠) */}
+        {guide && (
+          <section className="pt-4 pb-8">
+            <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+              {guide.intro && (
+                <p className="text-brand-mid text-lg leading-relaxed mb-10">
+                  {guide.intro}
+                </p>
+              )}
+              {guide.sections.map((section, index) => (
+                <div key={index} className={index === 0 ? "" : "mt-10"}>
+                  <h2 className="text-2xl font-bold text-brand-black mb-4">
+                    {section.heading}
+                  </h2>
+                  {section.paragraphs?.map((paragraph, pIndex) => (
+                    <p
+                      key={pIndex}
+                      className="text-brand-mid leading-relaxed mb-4"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                  {section.bullets && (
+                    <ul className="list-disc pl-5 text-brand-mid space-y-2 mb-4 marker:text-brand-accent">
+                      {section.bullets.map((bullet, bIndex) => (
+                        <li key={bIndex} className="leading-relaxed">
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </article>
+          </section>
+        )}
 
         {/* 4. 광고 슬롯 1 */}
         <section className="py-6">

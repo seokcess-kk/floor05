@@ -2,6 +2,59 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import ToolCard from "@/components/common/ToolCard";
 import { TOOL_CATEGORIES, getToolsByCategory } from "@/lib/common/tools";
+import { SITE_URL } from "@/lib/common/constants";
+
+// 홈 화면 소개 + FAQ (서버 렌더링되는 고유 콘텐츠)
+const homeFaqs = [
+  {
+    question: "floor05는 무료인가요?",
+    answer:
+      "네, 모든 도구가 무료입니다. 회원가입도 로그인도 필요 없습니다. 이미지 장수나 파일 용량에 따른 유료 전환도 없습니다. 운영은 페이지 한쪽의 광고로 충당합니다.",
+  },
+  {
+    question: "올린 파일은 서버에 저장되나요?",
+    answer:
+      "아니요. 이미지 압축·변환·크롭 같은 처리는 100% 여러분의 브라우저 안에서 이루어집니다. 파일이 floor05 서버로 전송되거나 저장되지 않습니다. 신분증, 계약서, 가족 사진처럼 민감한 파일도 안심하고 다룰 수 있습니다.",
+  },
+  {
+    question: "설치해야 하나요? 모바일에서도 되나요?",
+    answer:
+      "설치할 것은 없습니다. 크롬, 사파리, 엣지 등 최신 브라우저만 있으면 PC와 스마트폰 모두에서 바로 동작합니다. 앱 설치나 확장 프로그램이 필요 없습니다.",
+  },
+  {
+    question: "어떤 도구가 있나요?",
+    answer:
+      "이미지 압축·리사이즈·포맷 변환·크롭·합치기·워터마크·HEIC 변환 같은 이미지 도구와, 글자수 세기, 연봉 실수령액·퇴직금 계산기를 제공합니다. 필요한 도구는 검색해서 바로 들어와 쓰면 됩니다.",
+  },
+];
+
+const homeSchemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "floor05",
+    url: SITE_URL,
+    description:
+      "파일을 서버로 보내지 않고 브라우저에서 바로 처리하는 무료 온라인 도구 모음. 이미지 압축·변환·크롭부터 글자수 세기, 연봉·퇴직금 계산까지.",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "floor05",
+    url: SITE_URL,
+    description:
+      "존재하지 않는 0.5층 컨셉의 니치 유틸리티 도구 플랫폼. 모든 처리는 브라우저에서 이루어지며 파일이 서버로 전송되지 않습니다.",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: homeFaqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  },
+];
 
 // Hero 섹션의 모션 그래픽 (CSS 애니메이션)
 function HeroAnimation() {
@@ -41,6 +94,14 @@ function HeroAnimation() {
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
+      {homeSchemas.map((schema, index) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+
       <Header />
 
       <main className="flex-1">
@@ -99,6 +160,42 @@ export default function Home() {
           </div>
         </section>
 
+        {/* 서비스 소개 (고유 콘텐츠) */}
+        <section className="py-16 sm:py-20 border-t border-brand-light/20">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-black mb-6">
+              파일을 서버에 올리지 않는 도구 모음
+            </h2>
+            <div className="space-y-5 text-brand-mid leading-relaxed">
+              <p>
+                대부분의 온라인 변환·압축 사이트는 여러분의 파일을 자기 서버로
+                업로드한 뒤 처리합니다. 빠르고 편하지만, 신분증이나 계약서처럼
+                남에게 보이고 싶지 않은 파일까지 누군가의 서버를 거쳐 간다는
+                뜻이기도 합니다. floor05는 그 방식을 쓰지 않습니다.
+              </p>
+              <p>
+                이미지 압축, 리사이즈, 포맷 변환, 크롭, 합치기, 워터마크처럼
+                파일을 다루는 모든 작업은 여러분의{" "}
+                <strong className="text-brand-black">브라우저 안에서</strong>{" "}
+                끝납니다. 사진은 floor05 서버로 한 번도 전송되지 않고, 당연히
+                저장되지도 않습니다. 인터넷이 잠깐 끊겨도 작업이 이어지는 이유가
+                여기 있습니다.
+              </p>
+              <p>
+                회원가입이나 로그인은 필요 없습니다. 하루에 몇 장을 처리하든,
+                파일이 몇 MB든 제한을 두지 않았습니다. 필요한 도구를 검색해서
+                바로 들어와, 할 일을 끝내고, 나가면 됩니다. 운영비는 페이지
+                한쪽의 광고로 충당하기 때문에 도구 자체는 계속 무료입니다.
+              </p>
+              <p>
+                이미지뿐 아니라 글자수 세기, 연봉 실수령액·퇴직금 계산처럼 자주
+                찾게 되는 작은 도구들도 같은 원칙으로 만들고 있습니다. 화려하지
+                않아도 정확하게, 한 가지 일을 제대로 하는 도구를 지향합니다.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* 브랜드 철학 섹션 */}
         <section className="py-16 sm:py-20 bg-brand-paper">
           <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -151,6 +248,28 @@ export default function Home() {
                   <p className="text-brand-mid text-sm leading-relaxed">
                     {value.description}
                   </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 자주 묻는 질문 */}
+        <section className="py-16 sm:py-20 bg-brand-paper">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="font-mono text-xs text-brand-accent uppercase tracking-widest mb-8 text-center">
+              자주 묻는 질문
+            </h2>
+            <div className="space-y-6">
+              {homeFaqs.map((faq) => (
+                <div
+                  key={faq.question}
+                  className="border-b border-brand-light/30 pb-6 last:border-b-0"
+                >
+                  <h3 className="text-lg font-semibold text-brand-black mb-2">
+                    {faq.question}
+                  </h3>
+                  <p className="text-brand-mid leading-relaxed">{faq.answer}</p>
                 </div>
               ))}
             </div>
