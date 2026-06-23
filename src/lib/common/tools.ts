@@ -32,8 +32,8 @@ export const TOOLS: Tool[] = [
   {
     name: "포맷 변환",
     href: "/tools/image/convert",
-    description: "PNG, JPG, WebP 자유롭게 변환. 투명 배경 처리까지.",
-    shortDescription: "PNG, JPG, WebP",
+    description: "PNG, JPG, WebP, AVIF 자유롭게 변환. BMP·GIF·SVG·HEIC 입력까지, 투명 배경 처리도.",
+    shortDescription: "PNG, JPG, WebP, AVIF",
     category: "image",
   },
   {

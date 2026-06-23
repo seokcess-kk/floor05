@@ -3,6 +3,40 @@
 import { useCallback, useState } from "react";
 import { fileMatchesAccept, formatFileSize } from "@/lib/common/fileUtils";
 
+// accept 문자열을 사람이 읽기 좋은 "JPG, PNG, WebP … 지원" 문구로 변환.
+// 확장자 토큰(.heic 등)은 MIME과 중복되므로 제외하고, 포맷명을 보기 좋게 매핑·중복 제거한다.
+const FORMAT_LABELS: Record<string, string> = {
+  jpeg: "JPG",
+  jpg: "JPG",
+  png: "PNG",
+  webp: "WebP",
+  avif: "AVIF",
+  bmp: "BMP",
+  "x-ms-bmp": "BMP",
+  gif: "GIF",
+  "svg+xml": "SVG",
+  heic: "HEIC",
+  heif: "HEIF",
+};
+
+function formatAcceptLabel(accept: string): string {
+  if (!accept || accept === "image/*") return "JPG, PNG, WebP, HEIC 지원";
+
+  const seen = new Set<string>();
+  const names: string[] = [];
+  for (const token of accept.split(",").map((t) => t.trim()).filter(Boolean)) {
+    if (token.startsWith(".")) continue; // 확장자 토큰은 MIME과 중복
+    const key = token.replace("image/", "").toLowerCase();
+    const label = FORMAT_LABELS[key] || key.toUpperCase();
+    if (!seen.has(label)) {
+      seen.add(label);
+      names.push(label);
+    }
+  }
+
+  return names.length > 0 ? `${names.join(", ")} 지원` : "이미지 파일 지원";
+}
+
 interface FileDropzoneProps {
   onFilesSelected: (files: File[]) => void;
   accept?: string;
@@ -191,12 +225,7 @@ export default function FileDropzone({
 
         {/* 지원 포맷 */}
         <p className="text-xs text-brand-mid mt-2">
-          {accept === "image/*"
-            ? "JPG, PNG, WebP, HEIC 지원"
-            : accept
-                .replace(/image\//g, "")
-                .replace(/,/g, ", ")
-                .toUpperCase() + " 지원"}
+          {formatAcceptLabel(accept)}
         </p>
       </div>
 

@@ -6,21 +6,31 @@ import { SITE_URL } from "@/lib/common/constants";
 const PAGE_URL = `${SITE_URL}/tools/image/convert`;
 
 export const metadata: Metadata = {
-  title: "이미지 포맷 변환 - PNG, JPG, WebP 자유자재로",
+  title: "이미지 포맷 변환 - PNG·JPG·WebP·AVIF 다 되는 변환기",
   description:
-    "PNG를 JPG로, HEIC를 JPG로, WebP로. 아이폰 사진도 브라우저에서 바로 변환. 파일이 서버로 전송되지 않습니다.",
-  keywords: ["이미지 변환", "PNG JPG 변환", "WebP 변환", "HEIC JPG 변환", "포맷 변환"],
+    "PNG, JPG, WebP, AVIF로 자유롭게 변환. BMP·GIF·SVG·HEIC 입력까지 한 곳에서. 아이폰 사진도 브라우저에서 바로, 파일이 서버로 전송되지 않습니다.",
+  keywords: [
+    "이미지 변환",
+    "PNG JPG 변환",
+    "WebP 변환",
+    "AVIF 변환",
+    "HEIC JPG 변환",
+    "BMP 변환",
+    "GIF 변환",
+    "SVG PNG 변환",
+    "포맷 변환",
+  ],
   openGraph: {
-    title: "이미지 포맷 변환 - PNG, JPG, WebP 자유자재로",
-    description: "PNG를 JPG로, HEIC를 JPG로. 브라우저에서 바로 변환.",
+    title: "이미지 포맷 변환 - PNG·JPG·WebP·AVIF 다 되는 변환기",
+    description: "PNG, JPG, WebP, AVIF 변환. BMP·GIF·SVG·HEIC 입력까지. 브라우저에서 바로.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "이미지 포맷 변환 - PNG, JPG, WebP 자유자재로",
-    description: "PNG를 JPG로, HEIC를 JPG로. 브라우저에서 바로 변환.",
+    title: "이미지 포맷 변환 - PNG·JPG·WebP·AVIF 다 되는 변환기",
+    description: "PNG, JPG, WebP, AVIF 변환. BMP·GIF·SVG·HEIC 입력까지. 브라우저에서 바로.",
   },
   alternates: {
     canonical: PAGE_URL,
@@ -58,11 +68,26 @@ const faqs = [
     answer:
       "최신 크롬, 엣지, 파이어폭스, 사파리에서 WebP 변환을 지원합니다. WebP를 지원하지 않는 브라우저에서는 WebP 옵션이 자동으로 비활성화되고 안내가 표시되니, JPG나 PNG를 이용하세요.",
   },
+  {
+    question: "AVIF는 무엇이고, 어떨 때 쓰나요?",
+    answer:
+      "AVIF는 WebP보다도 더 작은 용량에 좋은 화질을 담는 차세대 이미지 포맷입니다. 웹사이트 로딩 속도를 더 줄이고 싶을 때 유리합니다. AVIF 출력(인코딩)은 크롬·엣지 등 일부 브라우저에서만 지원되어, 지원하지 않는 브라우저에서는 AVIF 버튼이 자동으로 비활성화됩니다. 반대로 'AVIF를 JPG·PNG로 여는' 변환은 대부분의 최신 브라우저에서 됩니다.",
+  },
+  {
+    question: "BMP, GIF, SVG, AVIF 파일도 올릴 수 있나요?",
+    answer:
+      "네. JPG, PNG, WebP, HEIC에 더해 BMP, GIF, SVG, AVIF를 입력으로 받아 JPG·PNG·WebP(·AVIF)로 변환할 수 있습니다. 웹에서 받은 AVIF·WebP가 안 열릴 때, 오래된 BMP를 가볍게 줄일 때, GIF의 한 장면을 이미지로 뽑을 때(움직이는 GIF는 첫 프레임만 변환됩니다) 쓰면 됩니다.",
+  },
+  {
+    question: "SVG를 PNG·JPG로 바꾸면 크기는 어떻게 되나요?",
+    answer:
+      "SVG는 벡터라 정해진 크기가 없어서, 변환 옵션에서 '출력 가로(px)'를 입력하면 그 크기로 또렷하게 변환됩니다. 세로는 비율에 맞춰 자동 계산됩니다. 아이콘이나 로고를 원하는 해상도의 PNG로 내보낼 때 유용합니다. 단, 외부 폰트를 참조하는 SVG는 폰트가 빠진 채 그려질 수 있습니다.",
+  },
 ];
 
 const guide = {
   intro:
-    "PNG, JPG, WebP는 각자 잘하는 일이 다릅니다. 어떤 포맷을 골라야 할지, 변환할 때 무엇이 달라지는지 짚어 두었습니다. 모든 변환은 브라우저 안에서 끝나기 때문에 파일이 서버로 전송되지 않습니다.",
+    "PNG, JPG, WebP, AVIF는 각자 잘하는 일이 다릅니다. 어떤 포맷을 골라야 할지, 변환할 때 무엇이 달라지는지 짚어 두었습니다. BMP·GIF·SVG·HEIC 같은 형식도 올려서 바꿀 수 있고, 모든 변환은 브라우저 안에서 끝나기 때문에 파일이 서버로 전송되지 않습니다.",
   sections: [
     {
       heading: "PNG·JPG·WebP, 언제 무엇을 쓰나",
@@ -88,6 +113,19 @@ const guide = {
       paragraphs: [
         "용량만 보면 보통 WebP가 가장 작고, JPG가 그다음, PNG가 가장 큽니다. 다만 WebP는 비교적 최신 포맷이라 아주 오래된 환경에서는 열리지 않을 수 있습니다. 메일 첨부나 외부 공유처럼 호환성이 중요하면 JPG가 무난하고, 웹사이트에 올린다면 WebP가 로딩 속도에 유리합니다.",
         "아이폰 사진의 HEIC도 JPG·PNG·WebP로 바꿀 수 있고, 형식이 섞여 있어도 한 번에 올려 같은 포맷으로 일괄 변환한 뒤 ZIP으로 받을 수 있습니다. 품질을 90% 안팎으로 두면 용량은 줄이면서 눈에 띄는 화질 저하 없이 변환됩니다.",
+      ],
+    },
+    {
+      heading: "AVIF, 그리고 다양한 형식 입력",
+      paragraphs: [
+        "AVIF는 WebP보다도 한 단계 더 효율적인 차세대 포맷입니다. 같은 화질을 더 작은 용량에 담아 웹사이트 로딩 속도를 한 번 더 줄이고 싶을 때 좋습니다. 다만 AVIF로 '내보내는' 인코딩은 아직 크롬·엣지 같은 일부 브라우저에서만 되기 때문에, 지원하지 않는 브라우저에서는 AVIF 버튼이 자동으로 비활성화됩니다. 반대로 웹에서 받은 AVIF나 WebP가 안 열릴 때, 그 파일을 올려 JPG·PNG로 바꾸는 건 대부분의 최신 브라우저에서 됩니다.",
+        "입력으로는 JPG·PNG·WebP·HEIC에 더해 BMP, GIF, SVG, AVIF도 받습니다. 오래되고 용량 큰 BMP를 가볍게 줄이거나, 움직이는 GIF에서 한 장면을 이미지로 뽑거나(움짤은 첫 프레임만 변환됩니다), 벡터 SVG 아이콘을 원하는 해상도의 PNG로 내보낼 수 있습니다. SVG는 정해진 크기가 없어 변환 옵션에서 '출력 가로(px)'를 정하면 그 크기로 또렷하게 래스터화됩니다.",
+      ],
+      bullets: [
+        "AVIF 출력: 크롬·엣지 등 지원 브라우저에서만 (그 외에는 버튼 비활성화)",
+        "AVIF·WebP 입력 → JPG·PNG 출력: 최신 브라우저에서 대부분 가능 (안 열리는 파일 열기)",
+        "GIF 입력: 움직이는 GIF는 첫 프레임만 변환",
+        "SVG 입력: 출력 가로(px)를 지정해 원하는 해상도로 변환 (세로 자동)",
       ],
     },
   ],
@@ -122,7 +160,8 @@ const schemas = [
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "PNG, JPG, WebP, HEIC 포맷 변환. 무제한 무료.",
+    description:
+      "PNG, JPG, WebP, AVIF 변환. BMP·GIF·SVG·HEIC 입력 지원. 100% 브라우저 처리, 무제한 무료.",
   },
   {
     "@context": "https://schema.org",
@@ -132,6 +171,17 @@ const schemas = [
       name: faq.question,
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
     })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "이미지 포맷을 변환하는 방법",
+    step: [
+      { "@type": "HowToStep", name: "파일 업로드", text: "변환할 이미지를 드래그앤드롭하거나 클릭해서 올립니다. JPG·PNG·WebP·AVIF·BMP·GIF·SVG·HEIC를 받습니다." },
+      { "@type": "HowToStep", name: "출력 포맷 선택", text: "JPG, PNG, WebP, AVIF 중 변환할 포맷을 고르고 필요하면 품질을 조절합니다." },
+      { "@type": "HowToStep", name: "변환", text: "변환 버튼을 누르면 브라우저에서 바로 변환됩니다. 여러 장도 한 번에 처리됩니다." },
+      { "@type": "HowToStep", name: "다운로드", text: "변환된 파일을 내려받습니다. 여러 장이면 ZIP으로 한 번에 받을 수 있습니다." },
+    ],
   },
 ];
 
@@ -144,7 +194,7 @@ export default function ConvertPage() {
       faqs={faqs}
       workflowCTA={workflowCTA}
       currentToolHref="/tools/image/convert"
-      relatedPostSlugs={["png-vs-jpg", "webp-guide", "transparent-background"]}
+      relatedPostSlugs={["avif-guide", "webp-guide", "png-vs-jpg"]}
       schemas={schemas}
     >
       <ConvertTool />

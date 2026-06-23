@@ -6,13 +6,24 @@
 
 import { loadImage, fileToDataUrl, canvasToBlob } from "../common/fileUtils";
 
-export type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
+export type OutputFormat = "image/jpeg" | "image/png" | "image/webp" | "image/avif";
 
 export interface ConvertOptions {
   outputFormat: OutputFormat;
-  quality?: number; // 0.01 ~ 1.0 (JPG, WebP만 적용)
-  backgroundColor?: string; // PNG→JPG 변환 시 투명 배경 대체 색상
+  quality?: number; // 0.01 ~ 1.0 (JPG, WebP, AVIF만 적용)
+  backgroundColor?: string; // 출력이 JPG일 때 투명 배경 대체 색상
+  svgWidth?: number; // SVG 입력 래스터화 시 출력 가로 px (세로는 비율 자동)
 }
+
+/**
+ * 변환기가 받는 입력 포맷(드롭존 accept + 검증 단일 진실 공급원).
+ * 디코드는 브라우저 네이티브 범위가 넓어 입력은 출력보다 폭넓게 받는다.
+ * - JPG/PNG/WebP/AVIF/BMP/GIF/SVG: createImageBitmap·<img> 네이티브 디코드(SVG는 래스터화)
+ * - HEIC/HEIF: heic2any로 메인스레드 디코드(동적 로드)
+ * MIME이 비어 오는 경우(HEIC 등)를 위해 확장자 토큰도 함께 둔다.
+ */
+export const CONVERT_INPUT_ACCEPT =
+  "image/jpeg,image/png,image/webp,image/avif,image/bmp,image/x-ms-bmp,image/gif,image/svg+xml,image/heic,image/heif,.avif,.bmp,.gif,.svg,.heic,.heif";
 
 export interface ConvertResult {
   blob: Blob;
@@ -32,6 +43,11 @@ export function getFormatName(mimeType: string): string {
     "image/jpg": "JPG",
     "image/png": "PNG",
     "image/webp": "WebP",
+    "image/avif": "AVIF",
+    "image/bmp": "BMP",
+    "image/x-ms-bmp": "BMP",
+    "image/gif": "GIF",
+    "image/svg+xml": "SVG",
     "image/heic": "HEIC",
     "image/heif": "HEIF",
   };
@@ -46,8 +62,35 @@ export function getExtension(format: OutputFormat): string {
     "image/jpeg": "jpg",
     "image/png": "png",
     "image/webp": "webp",
+    "image/avif": "avif",
   };
   return extMap[format];
+}
+
+/**
+ * SVG 파일인지 확인 (벡터라 출력 크기를 별도로 받아 래스터화한다)
+ */
+export function isSvgFile(file: File): boolean {
+  return (
+    file.type === "image/svg+xml" || file.name.toLowerCase().endsWith(".svg")
+  );
+}
+
+/**
+ * 브라우저가 요청한 포맷을 인코딩하지 못하면 canvas.toBlob은 조용히 PNG로 폴백한다.
+ * WebP·AVIF 출력 시 결과 MIME이 다르면(=미지원) 잘못된 확장자의 파일이 나가므로
+ * 친절한 한국어 에러로 막는다. (JPG는 사실상 전 브라우저 지원, PNG는 폴백 대상이라 제외)
+ */
+export function assertEncodedFormat(blob: Blob, outputFormat: OutputFormat): void {
+  if (
+    (outputFormat === "image/webp" || outputFormat === "image/avif") &&
+    blob.type !== outputFormat
+  ) {
+    const name = getFormatName(outputFormat);
+    throw new Error(
+      `이 브라우저에서는 ${name} 출력을 지원하지 않습니다. JPG나 PNG로 변환해 주세요.`
+    );
+  }
 }
 
 /**
@@ -75,6 +118,21 @@ export function isWebPSupported(): boolean {
   canvas.height = 1;
 
   return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
+}
+
+/**
+ * AVIF 인코딩(출력) 지원 여부 확인.
+ * 디코딩(입력)은 더 넓게 지원되지만, canvas 인코딩은 Chromium 124+(Chrome/Edge)만 가능하고
+ * Firefox·Safari는 조용히 PNG로 폴백한다. WebP와 동일하게 toDataURL로 감지한다.
+ */
+export function isAvifSupported(): boolean {
+  if (typeof document === "undefined") return false;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = 1;
+  canvas.height = 1;
+
+  return canvas.toDataURL("image/avif").indexOf("data:image/avif") === 0;
 }
 
 // heic2any 모듈 캐싱
@@ -117,6 +175,7 @@ export async function convertImage(
     outputFormat,
     quality = 0.92,
     backgroundColor = "#FFFFFF",
+    svgWidth,
   } = options;
 
   let dataUrl: string;
@@ -139,24 +198,39 @@ export async function convertImage(
   // 이미지 로드
   const img = await loadImage(dataUrl);
 
+  // 출력 캔버스 크기 결정.
+  // 래스터 입력은 원본 크기 그대로, SVG는 벡터라 본질 크기가 없을 수 있어
+  // 출력 가로(px)를 받아 비율을 유지하며 임의 해상도로 래스터화한다.
+  let outWidth = img.width;
+  let outHeight = img.height;
+  if (isSvgFile(file)) {
+    const targetWidth = svgWidth && svgWidth > 0 ? svgWidth : 1024;
+    const ratio = img.width > 0 && img.height > 0 ? img.width / img.height : 1;
+    outWidth = Math.max(1, Math.round(targetWidth));
+    outHeight = Math.max(1, Math.round(targetWidth / ratio));
+  }
+
   // Canvas에 그리기
   const canvas = document.createElement("canvas");
-  canvas.width = img.width;
-  canvas.height = img.height;
+  canvas.width = outWidth;
+  canvas.height = outHeight;
 
   const ctx = canvas.getContext("2d");
   if (!ctx) {
     throw new Error("Canvas 컨텍스트를 생성할 수 없습니다.");
   }
 
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+
   // 투명 배경 처리 (JPG는 알파를 지원하지 않으므로 출력이 JPG면 항상 배경을 채운다.
-  // PNG뿐 아니라 투명 WebP 등도 검은 배경이 되지 않도록 함)
+  // PNG뿐 아니라 투명 WebP·AVIF 등도 검은 배경이 되지 않도록 함)
   if (outputFormat === "image/jpeg") {
     ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, img.width, img.height);
+    ctx.fillRect(0, 0, outWidth, outHeight);
   }
 
-  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(img, 0, 0, outWidth, outHeight);
 
   // Blob 생성
   const blob = await canvasToBlob(
@@ -165,14 +239,16 @@ export async function convertImage(
     quality,
     "이미지 변환에 실패했습니다."
   );
+  // 미지원 포맷이 PNG로 조용히 폴백됐는지 검증 (확장자 불일치 방지)
+  assertEncodedFormat(blob, outputFormat);
 
   // Blob에서 URL 생성 (toDataURL 중복 호출 방지)
   const convertedDataUrl = URL.createObjectURL(blob);
 
   return {
     blob,
-    width: img.width,
-    height: img.height,
+    width: outWidth,
+    height: outHeight,
     originalFormat,
     outputFormat,
     dataUrl: convertedDataUrl,
@@ -187,6 +263,10 @@ export function getAvailableFormats(): OutputFormat[] {
 
   if (isWebPSupported()) {
     formats.push("image/webp");
+  }
+
+  if (isAvifSupported()) {
+    formats.push("image/avif");
   }
 
   return formats;

@@ -27,6 +27,27 @@ export interface BlogPost {
  * datePublished/dateModified는 검색엔진 신선도 신호(BlogPosting)로 사용된다.
  */
 export const POSTS: BlogPost[] = [
+  // ── 신규 (2026-06-23) ───────────────────────────────────────────
+  {
+    slug: "avif-guide",
+    title: "AVIF란? WebP·JPG와 비교 + 변환 방법",
+    description:
+      "차세대 이미지 포맷 AVIF의 장단점, WebP·JPG와의 차이, 브라우저 지원 현황과 변환 방법까지. 웹에서 받은 AVIF가 안 열릴 때 여는 법도 정리했습니다.",
+    keywords: [
+      "AVIF",
+      "AVIF 변환",
+      "AVIF란",
+      "AVIF JPG 변환",
+      "AVIF WebP 차이",
+      "AVIF 안열림",
+      "차세대 이미지 포맷",
+    ],
+    datePublished: "2026-06-23",
+    dateModified: "2026-06-23",
+    readTime: "5분",
+    related: ["webp-guide", "png-vs-jpg", "image-compression-guide"],
+  },
+
   // ── 신규 (2026-06-20) ───────────────────────────────────────────
   {
     slug: "prevent-photo-theft",
@@ -341,9 +362,9 @@ export const POSTS: BlogPost[] = [
       "PNG to WebP",
     ],
     datePublished: "2026-03-10",
-    dateModified: "2026-06-11",
+    dateModified: "2026-06-23",
     readTime: "5분",
-    related: ["png-vs-jpg", "transparent-background", "image-quality-vs-size"],
+    related: ["avif-guide", "png-vs-jpg", "transparent-background"],
   },
   {
     slug: "instagram-image-size",
@@ -379,9 +400,9 @@ export const POSTS: BlogPost[] = [
       "사진 포맷 비교",
     ],
     datePublished: "2026-03-10",
-    dateModified: "2026-06-11",
+    dateModified: "2026-06-23",
     readTime: "5분",
-    related: ["webp-guide", "transparent-background", "image-quality-vs-size"],
+    related: ["webp-guide", "avif-guide", "transparent-background"],
   },
   {
     slug: "image-compression-guide",

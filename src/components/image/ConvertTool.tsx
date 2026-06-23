@@ -16,7 +16,10 @@ import {
   getFormatName,
   getExtension,
   isHeicFile,
+  isSvgFile,
   isWebPSupported,
+  isAvifSupported,
+  CONVERT_INPUT_ACCEPT,
   OutputFormat,
   ConvertResult,
 } from "@/lib/image/convert";
@@ -24,8 +27,7 @@ import { convertImageSmart } from "@/lib/image/processPool";
 import { useBeforeUnload, useMaxBatchSize } from "@/lib/common/hooks";
 import { trackToolUse } from "@/lib/common/analytics";
 
-const ACCEPT_CONVERT =
-  "image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif";
+const ACCEPT_CONVERT = CONVERT_INPUT_ACCEPT;
 
 interface ProcessedImage {
   id: string;
@@ -44,21 +46,28 @@ const BACKGROUND_COLORS = [
 ];
 
 interface ConvertToolProps {
-  // 트래킹 식별자. HEIC 전용 랜딩은 "heic"로 구분 (기본 "convert")
+  // 트래킹 식별자. HEIC 전용 랜딩은 "heic", 변환쌍 랜딩은 "webp-to-jpg" 등으로 구분 (기본 "convert")
   toolId?: string;
+  // 진입 시 기본 선택 출력 포맷 (변환쌍 랜딩 페이지용, 기본 JPG)
+  defaultFormat?: OutputFormat;
 }
 
-export default function ConvertTool({ toolId = "convert" }: ConvertToolProps = {}) {
+export default function ConvertTool({
+  toolId = "convert",
+  defaultFormat = "image/jpeg",
+}: ConvertToolProps = {}) {
   // 상태
   const [images, setImages] = useState<ProcessedImage[]>([]);
-  const [outputFormat, setOutputFormat] = useState<OutputFormat>("image/jpeg");
+  const [outputFormat, setOutputFormat] = useState<OutputFormat>(defaultFormat);
   const [quality, setQuality] = useState(90);
   const [backgroundColor, setBackgroundColor] = useState("#FFFFFF");
+  const [svgWidth, setSvgWidth] = useState(1024);
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingIndex, setProcessingIndex] = useState(0);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [batchNotice, setBatchNotice] = useState<string | null>(null);
   const [webpSupported, setWebpSupported] = useState(true);
+  const [avifSupported, setAvifSupported] = useState(true);
 
   // 최신 images 스냅샷 (객체 URL 정리/언마운트용)
   const imagesRef = useRef<ProcessedImage[]>([]);
@@ -71,9 +80,10 @@ export default function ConvertTool({ toolId = "convert" }: ConvertToolProps = {
     };
   }, []);
 
-  // WebP 지원 확인
+  // WebP / AVIF 출력 지원 확인 (미지원 브라우저는 해당 버튼 비활성화)
   useEffect(() => {
     setWebpSupported(isWebPSupported());
+    setAvifSupported(isAvifSupported());
   }, []);
 
   // 처리 중 페이지 이탈 경고
@@ -98,6 +108,12 @@ export default function ConvertTool({ toolId = "convert" }: ConvertToolProps = {
   // HEIC 파일 포함 여부
   const hasHeicFiles = useMemo(
     () => images.some((img) => isHeicFile(img.file)),
+    [images]
+  );
+
+  // SVG 파일 포함 여부 (출력 크기 입력 노출용)
+  const hasSvgFiles = useMemo(
+    () => images.some((img) => isSvgFile(img.file)),
     [images]
   );
 
@@ -201,6 +217,7 @@ export default function ConvertTool({ toolId = "convert" }: ConvertToolProps = {
             outputFormat,
             quality: quality / 100,
             backgroundColor,
+            svgWidth: Math.min(8192, Math.max(16, svgWidth || 1024)),
           });
 
           // 이전 결과 URL 해제 (재변환 시 누수 방지)
@@ -239,7 +256,7 @@ export default function ConvertTool({ toolId = "convert" }: ConvertToolProps = {
       trackToolUse(toolId, { count: succeeded, to: getExtension(outputFormat) });
     }
     setIsProcessing(false);
-  }, [images, outputFormat, quality, backgroundColor, isProcessing, toolId]);
+  }, [images, outputFormat, quality, backgroundColor, svgWidth, isProcessing, toolId]);
 
   // 다운로드용 파일 목록
   const downloadFiles = useMemo(() => {
@@ -417,7 +434,7 @@ export default function ConvertTool({ toolId = "convert" }: ConvertToolProps = {
             <div className="bg-brand-accent/10 border border-brand-accent/30 rounded-lg p-4">
               <p className="text-sm text-brand-black">
                 <span className="font-medium">HEIC 파일 감지됨.</span>{" "}
-                아이폰 사진을 JPG, PNG, WebP로 변환할 수 있습니다.
+                아이폰 사진을 JPG, PNG, WebP, AVIF로 변환할 수 있습니다.
               </p>
             </div>
           )}
@@ -429,21 +446,23 @@ export default function ConvertTool({ toolId = "convert" }: ConvertToolProps = {
               <label className="text-sm font-medium text-brand-black">
                 출력 포맷
               </label>
-              <div className="flex gap-3">
+              <div className="grid grid-cols-4 gap-2 sm:gap-3">
                 {[
                   { format: "image/jpeg" as OutputFormat, label: "JPG" },
                   { format: "image/png" as OutputFormat, label: "PNG" },
                   { format: "image/webp" as OutputFormat, label: "WebP" },
+                  { format: "image/avif" as OutputFormat, label: "AVIF" },
                 ].map(({ format, label }) => {
                   const isDisabled =
-                    format === "image/webp" && !webpSupported;
+                    (format === "image/webp" && !webpSupported) ||
+                    (format === "image/avif" && !avifSupported);
                   return (
                     <button
                       key={format}
                       onClick={() => !isDisabled && setOutputFormat(format)}
                       disabled={isDisabled}
                       className={`
-                        flex-1 py-3 px-4 rounded-lg font-medium transition-all
+                        py-3 px-2 sm:px-4 rounded-lg font-medium transition-all
                         ${
                           isDisabled
                             ? "bg-brand-light/50 text-brand-mid cursor-not-allowed"
@@ -461,12 +480,40 @@ export default function ConvertTool({ toolId = "convert" }: ConvertToolProps = {
                   );
                 })}
               </div>
-              {!webpSupported && (
+              {(!webpSupported || !avifSupported) && (
                 <p className="text-xs text-brand-mid">
-                  이 브라우저에서는 WebP를 지원하지 않습니다. JPG 또는 PNG를 이용해주세요.
+                  이 브라우저에서는{" "}
+                  {[!webpSupported && "WebP", !avifSupported && "AVIF"]
+                    .filter(Boolean)
+                    .join(", ")}{" "}
+                  출력을 지원하지 않습니다. JPG 또는 PNG를 이용해주세요.
                 </p>
               )}
             </div>
+
+            {/* SVG 출력 크기 (SVG 입력이 있을 때만) */}
+            {hasSvgFiles && (
+              <div className="space-y-3">
+                <label className="text-sm font-medium text-brand-black">
+                  SVG 출력 크기
+                </label>
+                <p className="text-xs text-brand-mid">
+                  SVG는 벡터라 원하는 크기로 변환됩니다. 가로 기준 픽셀을 입력하면 세로는 비율에 맞춰 자동 계산됩니다.
+                </p>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    min={16}
+                    max={8192}
+                    value={svgWidth}
+                    onChange={(e) => setSvgWidth(Number(e.target.value))}
+                    aria-label="SVG 출력 가로 픽셀"
+                    className="w-32 px-3 py-2 rounded-lg border border-brand-light bg-brand-white text-brand-black focus:outline-none focus:ring-2 focus:ring-brand-accent"
+                  />
+                  <span className="text-sm text-brand-mid">px (가로)</span>
+                </div>
+              </div>
+            )}
 
             {/* 품질 설정 (JPG, WebP) */}
             {outputFormat !== "image/png" && (

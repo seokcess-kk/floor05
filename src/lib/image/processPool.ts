@@ -9,6 +9,8 @@ import {
   ConvertOptions,
   ConvertResult,
   isHeicFile,
+  isSvgFile,
+  assertEncodedFormat,
 } from "./convert";
 
 interface RenderResult {
@@ -170,14 +172,14 @@ export async function resizeImageSmart(
 }
 
 /**
- * 포맷 변환. HEIC는 heic2any가 필요하므로 메인 스레드에서 처리.
- * 그 외는 워커 우선, 실패 시 메인 스레드 폴백.
+ * 포맷 변환. HEIC는 heic2any(메인스레드), SVG는 출력 크기를 적용한 래스터화가 필요해
+ * 메인 스레드에서 처리한다. 그 외 래스터 입력은 워커 우선, 실패 시 메인 스레드 폴백.
  */
 export async function convertImageSmart(
   file: File,
   options: ConvertOptions
 ): Promise<ConvertResult> {
-  if (isHeicFile(file)) {
+  if (isHeicFile(file) || isSvgFile(file)) {
     return convertImage(file, options);
   }
 
@@ -192,6 +194,8 @@ export async function convertImageSmart(
           ? options.backgroundColor || "#FFFFFF"
           : undefined,
     });
+    // 미지원 포맷이 PNG로 조용히 폴백됐으면 메인스레드 폴백으로 넘긴다(거기서도 동일 검증).
+    assertEncodedFormat(r.blob, outputFormat);
     return {
       blob: r.blob,
       width: r.width,
