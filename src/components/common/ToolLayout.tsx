@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import AdSlot from "./AdSlot";
 import ToolCard from "./ToolCard";
 import ErrorBoundary from "./ErrorBoundary";
-import { getOtherTools } from "@/lib/common/tools";
+import { getOtherTools, getToolByHref } from "@/lib/common/tools";
 import { getPostsBySlugs } from "@/lib/common/blog";
 
 interface FAQ {
@@ -84,6 +84,9 @@ export default function ToolLayout({
 }: ToolLayoutProps) {
   // 현재 도구를 제외한 다른 도구들
   const otherTools = getOtherTools(currentToolHref);
+
+  // 현재 도구 (피드백 링크 prefill용)
+  const currentTool = getToolByHref(currentToolHref);
 
   // 관련 블로그 글 (도구→블로그 내부링크)
   const relatedPosts = getPostsBySlugs(relatedPostSlugs);
@@ -190,6 +193,26 @@ export default function ToolLayout({
             </div>
           </section>
         )}
+
+        {/* 5-1. 피드백 진입점 (가이드 아래 작은 링크) */}
+        <section className="pt-2 pb-4">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-sm text-brand-mid">
+              {currentTool ? `${currentTool.name} 도구가 ` : "도구가 "}
+              불편하셨거나 이런 기능이 있으면 좋겠다 싶으신가요?{" "}
+              <Link
+                href={
+                  currentToolHref
+                    ? `/contact?tool=${encodeURIComponent(currentToolHref)}&type=problem`
+                    : "/contact"
+                }
+                className="font-medium text-brand-accent hover:underline"
+              >
+                피드백 남기기
+              </Link>
+            </p>
+          </div>
+        </section>
 
         {/* 6. 워크플로우 CTA */}
         {workflowCTA && (

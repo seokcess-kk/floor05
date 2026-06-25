@@ -30,3 +30,12 @@ export const ADSENSE_SLOT_ID =
 // Kakao Adfit 광고 단위 ID (예: "DAN-xxxxxxxx").
 // 설정 시 AdSense 슬롯이 없을 때 대체 노출. 미설정이면 Adfit을 렌더링하지 않는다.
 export const ADFIT_UNIT_ID = process.env.NEXT_PUBLIC_ADFIT_UNIT_ID || "";
+
+// 문의 폼 — Web3Forms access key.
+// https://web3forms.com 에서 수신할 구글 메일로 발급받아 입력하면,
+// 폼 제출 내용이 그 메일로 바로 전송된다(서버 불필요, 운영비 $0 유지).
+// 미설정이면 폼 대신 이메일 안내로 폴백한다(잘못된 제출 방지).
+export const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
+
+// 문의 수신/안내용 이메일 (폼 폴백 및 직접 연락처 노출)
+export const CONTACT_EMAIL = "assagaori00@gmail.com";

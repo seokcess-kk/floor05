@@ -130,3 +130,11 @@ export function getOtherTools(currentHref?: string): Tool[] {
   if (!currentHref) return TOOLS;
   return TOOLS.filter((tool) => tool.href !== currentHref);
 }
+
+/**
+ * href로 도구 조회 (문의 폼 prefill 등에 사용)
+ */
+export function getToolByHref(href?: string | null): Tool | undefined {
+  if (!href) return undefined;
+  return TOOLS.find((tool) => tool.href === href);
+}
