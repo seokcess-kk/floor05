@@ -4,7 +4,7 @@
  * - Header, Footer, ToolLayout, 메인 페이지에서 공통 사용
  */
 
-export type ToolCategory = "image" | "text" | "calc" | "date";
+export type ToolCategory = "image" | "text" | "calc" | "date" | "health";
 
 export interface Tool {
   name: string;
@@ -106,6 +106,34 @@ export const TOOLS: Tool[] = [
     shortDescription: "음력↔양력",
     category: "date",
   },
+  {
+    name: "BMI 계산기",
+    href: "/tools/health/bmi",
+    description: "키·몸무게로 체질량지수와 비만도를. 대한비만학회 기준 구간·표준체중 범위까지.",
+    shortDescription: "체질량지수·비만도",
+    category: "health",
+  },
+  {
+    name: "기초대사량 계산기",
+    href: "/tools/health/bmr",
+    description: "기초대사량(BMR)과 하루 권장 칼로리(TDEE). 감량·유지·증량 목표 칼로리까지.",
+    shortDescription: "BMR·TDEE",
+    category: "health",
+  },
+  {
+    name: "배란일 계산기",
+    href: "/tools/health/ovulation",
+    description: "마지막 생리일과 주기로 배란 예정일·가임기·다음 생리일을. 입력은 저장되지 않습니다.",
+    shortDescription: "배란일·가임기",
+    category: "health",
+  },
+  {
+    name: "임신 주수 계산기",
+    href: "/tools/health/pregnancy",
+    description: "마지막 생리일로 현재 임신 주수와 출산예정일을. 삼분기·진행률까지.",
+    shortDescription: "임신주수·출산예정일",
+    category: "health",
+  },
 ];
 
 /**
@@ -140,6 +168,12 @@ export const TOOL_CATEGORIES: {
     room: "Room 04",
     label: "Date Tools",
     tagline: "날짜만 넣으면 끝. 입력은 저장·전송되지 않습니다.",
+  },
+  {
+    id: "health",
+    room: "Room 05",
+    label: "Health Tools",
+    tagline: "참고용 추정치예요. 입력은 저장·전송되지 않습니다.",
   },
 ];
 

@@ -29,6 +29,25 @@ export interface BlogPost {
 export const POSTS: BlogPost[] = [
   // ── 신규 (2026-06-29) ───────────────────────────────────────────
   {
+    slug: "bmi-obesity-guide",
+    title: "BMI 계산법과 비만도 기준",
+    description:
+      "체질량지수(BMI) 계산법과 한국(대한비만학회)·WHO 비만도 기준의 차이, 정상 체중 범위, 그리고 BMI로 알 수 없는 것까지 한 번에 정리했습니다.",
+    keywords: [
+      "BMI 계산법",
+      "비만도 기준",
+      "BMI 정상 범위",
+      "체질량지수",
+      "대한비만학회 기준",
+      "표준체중",
+      "BMI 계산",
+    ],
+    datePublished: "2026-06-29",
+    dateModified: "2026-06-29",
+    readTime: "5분",
+    related: ["mannai-age-guide", "salary-net-pay-guide"],
+  },
+  {
     slug: "mannai-age-guide",
     title: "만 나이 계산하는 법",
     description:
