@@ -93,6 +93,20 @@ export const TOOLS: Tool[] = [
     category: "image",
   },
   {
+    name: "EXIF 삭제",
+    href: "/tools/image/exif-remove",
+    description: "사진의 위치·촬영정보(EXIF)를 제거. 올리기 전에 GPS·기기 정보를 지웁니다.",
+    shortDescription: "위치정보 삭제",
+    category: "image",
+  },
+  {
+    name: "파비콘 만들기",
+    href: "/tools/image/favicon",
+    description: "이미지로 favicon.ico와 각 사이즈 아이콘·매니페스트를 한 번에. ZIP으로.",
+    shortDescription: "favicon 생성",
+    category: "image",
+  },
+  {
     name: "글자수 세기",
     href: "/tools/text/counter",
     description: "공백·바이트·원고지·자소서 글자수를 한 번에. 붙여넣으면 바로 계산.",
