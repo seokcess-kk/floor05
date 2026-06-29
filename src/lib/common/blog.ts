@@ -29,6 +29,25 @@ export interface BlogPost {
 export const POSTS: BlogPost[] = [
   // ── 신규 (2026-06-29) ───────────────────────────────────────────
   {
+    slug: "pyeong-conversion-guide",
+    title: "평수 계산법과 전용·분양면적 차이",
+    description:
+      "평과 제곱미터(㎡) 변환법, 84㎡가 몇 평인지, 그리고 전용면적·공급(분양)면적·공용면적이 어떻게 다른지 한 번에 정리했습니다.",
+    keywords: [
+      "평수 계산법",
+      "제곱미터 평 변환",
+      "84제곱미터 평",
+      "전용면적 분양면적 차이",
+      "공급면적",
+      "평수 변환",
+      "전용면적 평수",
+    ],
+    datePublished: "2026-06-29",
+    dateModified: "2026-06-29",
+    readTime: "5분",
+    related: ["bmi-obesity-guide", "salary-net-pay-guide"],
+  },
+  {
     slug: "bmi-obesity-guide",
     title: "BMI 계산법과 비만도 기준",
     description:

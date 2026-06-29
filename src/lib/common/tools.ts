@@ -4,7 +4,7 @@
  * - Header, Footer, ToolLayout, 메인 페이지에서 공통 사용
  */
 
-export type ToolCategory = "image" | "text" | "calc" | "date" | "health";
+export type ToolCategory = "image" | "text" | "calc" | "date" | "health" | "unit";
 
 export interface Tool {
   name: string;
@@ -134,6 +134,27 @@ export const TOOLS: Tool[] = [
     shortDescription: "임신주수·출산예정일",
     category: "health",
   },
+  {
+    name: "평수 변환",
+    href: "/tools/unit/pyeong",
+    description: "평을 제곱미터(㎡)로, ㎡를 평으로 양방향 즉시 변환. 분양·전용면적 안내까지.",
+    shortDescription: "평↔㎡",
+    category: "unit",
+  },
+  {
+    name: "길이 변환",
+    href: "/tools/unit/length",
+    description: "cm·인치·m·피트·mm·km를 한 화면에서 즉시 변환. 어느 칸에 넣어도 바로.",
+    shortDescription: "cm·인치·m",
+    category: "unit",
+  },
+  {
+    name: "온도 변환",
+    href: "/tools/unit/temperature",
+    description: "섭씨·화씨·켈빈을 양방향 즉시 변환. 화씨 100도가 몇 도인지 바로.",
+    shortDescription: "섭씨·화씨·켈빈",
+    category: "unit",
+  },
 ];
 
 /**
@@ -174,6 +195,12 @@ export const TOOL_CATEGORIES: {
     room: "Room 05",
     label: "Health Tools",
     tagline: "참고용 추정치예요. 입력은 저장·전송되지 않습니다.",
+  },
+  {
+    id: "unit",
+    room: "Room 06",
+    label: "Unit Tools",
+    tagline: "어느 칸에 넣어도 나머지가 바로. 양방향 즉시 변환.",
   },
 ];
 
