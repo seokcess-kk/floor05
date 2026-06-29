@@ -29,6 +29,25 @@ export interface BlogPost {
 export const POSTS: BlogPost[] = [
   // ── 신규 (2026-06-29) ───────────────────────────────────────────
   {
+    slug: "weekly-holiday-pay-guide",
+    title: "주휴수당 계산법과 조건",
+    description:
+      "주휴수당을 받는 조건(주 15시간·개근), 계산 공식, 2026년 최저시급 기준 월급, 그리고 알바가 놓치기 쉬운 점까지 한 번에 정리했습니다.",
+    keywords: [
+      "주휴수당 계산법",
+      "주휴수당 조건",
+      "주휴수당",
+      "알바 주휴수당",
+      "주 15시간 주휴수당",
+      "최저시급 월급",
+      "2026 최저임금",
+    ],
+    datePublished: "2026-06-29",
+    dateModified: "2026-06-29",
+    readTime: "5분",
+    related: ["salary-net-pay-guide", "severance-pay-guide"],
+  },
+  {
     slug: "pyeong-conversion-guide",
     title: "평수 계산법과 전용·분양면적 차이",
     description:

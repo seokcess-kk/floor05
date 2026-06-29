@@ -142,6 +142,30 @@ export function childTaxCreditMonthly(children: number): number {
   return 29_160 + (children - 2) * 25_000;
 }
 
+/** 부가가치세율 (일반과세 10%) */
+export const VAT_RATE = 0.1;
+
+/**
+ * 이자소득세율 — 소득세 14% + 지방소득세 1.4% = 15.4%.
+ * 예·적금 이자에 원천징수된다(세금우대·비과세 상품 제외).
+ */
+export const INTEREST_INCOME_TAX_RATE = 0.154;
+
+/**
+ * 최저임금 — 2026년 적용 (2026.1.1~).
+ * [출처] 고용노동부 고시. 2025년 10,030원 → 2026년 10,320원(+2.9%).
+ * 월 환산 209시간 = (주 40시간 + 주휴 8시간) × 4.345주.
+ */
+export const MINIMUM_WAGE = {
+  /** 시급(원) */
+  hourly: 10_320,
+  /** 월 소정근로시간(주휴 포함, 209시간) */
+  monthlyHours: 209,
+} as const;
+
+/** 주→월 환산 평균 주수 (52.14주 ÷ 12개월) */
+export const WEEKS_PER_MONTH = 4.345;
+
 /** 퇴직금 — 법정 산식 상수 */
 export const SEVERANCE = {
   /** 1일 평균임금 × 30일분이 1년치 */
