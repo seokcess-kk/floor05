@@ -29,6 +29,25 @@ export interface BlogPost {
 export const POSTS: BlogPost[] = [
   // ── 신규 (2026-06-29) ───────────────────────────────────────────
   {
+    slug: "random-picker-guide",
+    title: "사다리타기·룰렛으로 공정하게 정하기",
+    description:
+      "점심 메뉴, 내기, 당첨자를 정할 때 사다리타기와 룰렛을 쓰는 법과, 결과가 정말 공정한지(난수·확률)까지 한 번에 정리했습니다.",
+    keywords: [
+      "사다리타기",
+      "룰렛 돌리기",
+      "돌림판",
+      "점심 메뉴 정하기",
+      "랜덤 뽑기",
+      "공정한 추첨",
+      "제비뽑기",
+    ],
+    datePublished: "2026-06-29",
+    dateModified: "2026-06-29",
+    related: ["weekly-holiday-pay-guide", "mannai-age-guide", "pyeong-conversion-guide"],
+    readTime: "4분",
+  },
+  {
     slug: "color-code-guide",
     title: "HEX·RGB·HSL 색상 코드 차이와 변환",
     description:

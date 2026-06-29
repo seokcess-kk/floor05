@@ -4,7 +4,7 @@
  * - Header, Footer, ToolLayout, 메인 페이지에서 공통 사용
  */
 
-export type ToolCategory = "image" | "text" | "calc" | "date" | "health" | "unit" | "pdf" | "color";
+export type ToolCategory = "image" | "text" | "calc" | "date" | "health" | "unit" | "pdf" | "color" | "random";
 
 export interface Tool {
   name: string;
@@ -197,6 +197,20 @@ export const TOOLS: Tool[] = [
     shortDescription: "그라데이션 코드",
     category: "color",
   },
+  {
+    name: "사다리타기",
+    href: "/tools/random/ladder",
+    description: "이름과 결과를 넣고 한 번에. 경로 애니메이션으로 공정하게, 조작 없이.",
+    shortDescription: "사다리 게임",
+    category: "random",
+  },
+  {
+    name: "룰렛 돌리기",
+    href: "/tools/random/roulette",
+    description: "점심 메뉴·벌칙·당첨자를 돌림판으로. 항목만 넣으면 바로, 가중치도.",
+    shortDescription: "돌림판",
+    category: "random",
+  },
 ];
 
 /**
@@ -255,6 +269,12 @@ export const TOOL_CATEGORIES: {
     room: "Room 08",
     label: "Color Tools",
     tagline: "색을 고르면 코드가 바로. HEX·RGB·CSS 즉시 복사.",
+  },
+  {
+    id: "random",
+    room: "Room 09",
+    label: "Random Picker",
+    tagline: "결과는 브라우저에서 즉석 생성. 조작 없이 공정하게.",
   },
 ];
 
