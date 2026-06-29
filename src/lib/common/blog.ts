@@ -29,6 +29,25 @@ export interface BlogPost {
 export const POSTS: BlogPost[] = [
   // ── 신규 (2026-06-29) ───────────────────────────────────────────
   {
+    slug: "image-to-pdf-guide",
+    title: "사진을 PDF로 만들고 합치는 법",
+    description:
+      "휴대폰으로 찍은 서류 사진을 한 PDF로 묶고, 여러 PDF를 하나로 합치고, 필요한 페이지만 분할하는 법 — 서버에 올리지 않고 브라우저에서 하는 방법을 정리했습니다.",
+    keywords: [
+      "사진 pdf 만들기",
+      "jpg pdf 변환",
+      "이미지 pdf 변환",
+      "pdf 합치기",
+      "pdf 분할",
+      "여러 사진 pdf",
+      "서류 pdf 만들기",
+    ],
+    datePublished: "2026-06-29",
+    dateModified: "2026-06-29",
+    readTime: "5분",
+    related: ["browser-image-tools-privacy", "image-merge-guide", "photo-editing-without-photoshop"],
+  },
+  {
     slug: "weekly-holiday-pay-guide",
     title: "주휴수당 계산법과 조건",
     description:

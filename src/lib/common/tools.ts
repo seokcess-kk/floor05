@@ -4,7 +4,7 @@
  * - Header, Footer, ToolLayout, 메인 페이지에서 공통 사용
  */
 
-export type ToolCategory = "image" | "text" | "calc" | "date" | "health" | "unit";
+export type ToolCategory = "image" | "text" | "calc" | "date" | "health" | "unit" | "pdf";
 
 export interface Tool {
   name: string;
@@ -155,6 +155,27 @@ export const TOOLS: Tool[] = [
     shortDescription: "섭씨·화씨·켈빈",
     category: "unit",
   },
+  {
+    name: "이미지 PDF 변환",
+    href: "/tools/pdf/image-to-pdf",
+    description: "여러 사진을 한 PDF로. 순서 조정, 용지(A4)·여백 옵션까지. 서버 전송 없이.",
+    shortDescription: "사진→PDF",
+    category: "pdf",
+  },
+  {
+    name: "PDF 합치기",
+    href: "/tools/pdf/merge",
+    description: "여러 PDF를 하나로 병합. 순서를 바꿔가며. 파일이 서버로 전송되지 않습니다.",
+    shortDescription: "PDF 병합",
+    category: "pdf",
+  },
+  {
+    name: "PDF 분할",
+    href: "/tools/pdf/split",
+    description: "원하는 페이지만 추출하거나, 모든 페이지를 낱장으로. ZIP 일괄 다운로드.",
+    shortDescription: "PDF 나누기",
+    category: "pdf",
+  },
 ];
 
 /**
@@ -201,6 +222,12 @@ export const TOOL_CATEGORIES: {
     room: "Room 06",
     label: "Unit Tools",
     tagline: "어느 칸에 넣어도 나머지가 바로. 양방향 즉시 변환.",
+  },
+  {
+    id: "pdf",
+    room: "Room 07",
+    label: "PDF Tools",
+    tagline: "서버에 올리지 않고 브라우저에서 바로. 파일이 전송되지 않습니다.",
   },
 ];
 
