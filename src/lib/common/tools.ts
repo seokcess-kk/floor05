@@ -4,7 +4,7 @@
  * - Header, Footer, ToolLayout, 메인 페이지에서 공통 사용
  */
 
-export type ToolCategory = "image" | "text" | "calc";
+export type ToolCategory = "image" | "text" | "calc" | "date";
 
 export interface Tool {
   name: string;
@@ -85,6 +85,27 @@ export const TOOLS: Tool[] = [
     shortDescription: "퇴직금",
     category: "calc",
   },
+  {
+    name: "만 나이 계산기",
+    href: "/tools/date/age",
+    description: "생년월일만 넣으면 만 나이·연 나이·띠를 바로. 다음 생일 D-Day까지.",
+    shortDescription: "만 나이·띠",
+    category: "date",
+  },
+  {
+    name: "D-Day 계산기",
+    href: "/tools/date/dday",
+    description: "목표일까지 며칠 남았는지, 그날부터 며칠 지났는지. 100일·1000일·기념일까지.",
+    shortDescription: "디데이·기념일",
+    category: "date",
+  },
+  {
+    name: "음력 양력 변환",
+    href: "/tools/date/lunar",
+    description: "음력 생일을 올해 양력으로, 양력을 음력으로. 윤달·간지까지 반영.",
+    shortDescription: "음력↔양력",
+    category: "date",
+  },
 ];
 
 /**
@@ -113,6 +134,12 @@ export const TOOL_CATEGORIES: {
     room: "Room 03",
     label: "Calculator",
     tagline: "복잡한 세금·요율은 우리가. 숫자만 넣으면 바로 계산됩니다.",
+  },
+  {
+    id: "date",
+    room: "Room 04",
+    label: "Date Tools",
+    tagline: "날짜만 넣으면 끝. 입력은 저장·전송되지 않습니다.",
   },
 ];
 

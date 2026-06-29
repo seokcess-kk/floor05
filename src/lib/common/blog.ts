@@ -27,6 +27,27 @@ export interface BlogPost {
  * datePublished/dateModified는 검색엔진 신선도 신호(BlogPosting)로 사용된다.
  */
 export const POSTS: BlogPost[] = [
+  // ── 신규 (2026-06-29) ───────────────────────────────────────────
+  {
+    slug: "mannai-age-guide",
+    title: "만 나이 계산하는 법",
+    description:
+      "2023년 만 나이 통일법 이후 만 나이·연 나이·세는 나이의 차이, 계산법, 그리고 띠와 음력 생일까지 헷갈리는 나이 셈을 한 번에 정리했습니다.",
+    keywords: [
+      "만나이 계산",
+      "만 나이 계산법",
+      "만나이 통일",
+      "연 나이",
+      "세는 나이",
+      "만나이 계산기",
+      "나이 계산",
+    ],
+    datePublished: "2026-06-29",
+    dateModified: "2026-06-29",
+    readTime: "5분",
+    related: ["salary-net-pay-guide", "character-count-guide"],
+  },
+
   // ── 신규 (2026-06-23) ───────────────────────────────────────────
   {
     slug: "avif-guide",
