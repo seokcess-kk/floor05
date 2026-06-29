@@ -29,6 +29,25 @@ export interface BlogPost {
 export const POSTS: BlogPost[] = [
   // ── 신규 (2026-06-29) ───────────────────────────────────────────
   {
+    slug: "color-code-guide",
+    title: "HEX·RGB·HSL 색상 코드 차이와 변환",
+    description:
+      "HEX·RGB·HSL·CMYK가 각각 무엇이고 어떻게 변환하는지, 그리고 글자 가독성을 위한 색상 대비(WCAG)까지 — 색을 코드로 다루는 기본을 정리했습니다.",
+    keywords: [
+      "색상 코드",
+      "hex rgb 변환",
+      "rgb hex 변환",
+      "hsl 색상",
+      "cmyk 변환",
+      "색상 대비",
+      "웹 색상 코드",
+    ],
+    datePublished: "2026-06-29",
+    dateModified: "2026-06-29",
+    related: ["transparent-background", "png-vs-jpg", "image-to-pdf-guide"],
+    readTime: "5분",
+  },
+  {
     slug: "image-to-pdf-guide",
     title: "사진을 PDF로 만들고 합치는 법",
     description:

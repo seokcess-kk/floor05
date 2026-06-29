@@ -4,7 +4,7 @@
  * - Header, Footer, ToolLayout, 메인 페이지에서 공통 사용
  */
 
-export type ToolCategory = "image" | "text" | "calc" | "date" | "health" | "unit" | "pdf";
+export type ToolCategory = "image" | "text" | "calc" | "date" | "health" | "unit" | "pdf" | "color";
 
 export interface Tool {
   name: string;
@@ -176,6 +176,27 @@ export const TOOLS: Tool[] = [
     shortDescription: "PDF 나누기",
     category: "pdf",
   },
+  {
+    name: "색상 코드 변환",
+    href: "/tools/color/converter",
+    description: "HEX·RGB·HSL·CMYK를 양방향 즉시 변환. 색을 고르면 코드가 바로, 복사도 한 번에.",
+    shortDescription: "HEX·RGB·HSL",
+    category: "color",
+  },
+  {
+    name: "색상 대비 검사",
+    href: "/tools/color/contrast",
+    description: "두 색의 명도 대비를 WCAG 기준으로. 글자 가독성·웹접근성 AA·AAA 통과 여부까지.",
+    shortDescription: "WCAG 대비",
+    category: "color",
+  },
+  {
+    name: "CSS 그라데이션",
+    href: "/tools/color/gradient",
+    description: "색을 고르면 CSS 그라데이션 코드를. 방향·색 정지점 조절, 실시간 미리보기.",
+    shortDescription: "그라데이션 코드",
+    category: "color",
+  },
 ];
 
 /**
@@ -228,6 +249,12 @@ export const TOOL_CATEGORIES: {
     room: "Room 07",
     label: "PDF Tools",
     tagline: "서버에 올리지 않고 브라우저에서 바로. 파일이 전송되지 않습니다.",
+  },
+  {
+    id: "color",
+    room: "Room 08",
+    label: "Color Tools",
+    tagline: "색을 고르면 코드가 바로. HEX·RGB·CSS 즉시 복사.",
   },
 ];
 
