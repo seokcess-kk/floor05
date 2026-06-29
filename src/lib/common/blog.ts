@@ -29,6 +29,25 @@ export interface BlogPost {
 export const POSTS: BlogPost[] = [
   // ── 신규 (2026-06-29) ───────────────────────────────────────────
   {
+    slug: "photo-mosaic-guide",
+    title: "사진 모자이크로 개인정보 가리는 법",
+    description:
+      "중고거래·SNS에 올릴 사진에서 얼굴·차량 번호판·주소를 안전하게 가리는 법. 모자이크와 블러의 차이, 복원 위험까지 서버에 올리지 않고 처리하는 방법을 정리했습니다.",
+    keywords: [
+      "사진 모자이크",
+      "얼굴 모자이크",
+      "개인정보 가리기",
+      "번호판 가리기",
+      "사진 블러",
+      "모자이크 처리",
+      "사진 가리기",
+    ],
+    datePublished: "2026-06-29",
+    dateModified: "2026-06-29",
+    related: ["browser-image-tools-privacy", "prevent-photo-theft", "image-watermark-guide"],
+    readTime: "5분",
+  },
+  {
     slug: "random-picker-guide",
     title: "사다리타기·룰렛으로 공정하게 정하기",
     description:
