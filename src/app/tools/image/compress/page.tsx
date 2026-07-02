@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "이미지 압축 - 서버 전송 없이 브라우저에서 바로",
-    description: "파일이 내 기기를 떠나지 않습니다. 회원가입 없이 무제한 무료.",
+    description: "압축은 브라우저 몫, 사진은 내 기기에. 목표 용량 설정과 일괄 압축까지 무료.",
   },
   alternates: {
     canonical: PAGE_URL,
@@ -31,7 +31,7 @@ const faqs = [
   {
     question: "파일이 서버로 전송되나요?",
     answer:
-      "아니요, 모든 이미지 처리는 100% 브라우저에서 이루어집니다. 파일이 서버로 전송되지 않아 개인정보가 완벽하게 보호됩니다.",
+      "아니요. 압축 연산은 전부 지금 쓰고 있는 브라우저가 합니다. 원본을 올리고 결과를 내려받는 왕복이 없어 처리가 빠르고, 사진은 처음부터 끝까지 내 기기에만 있습니다.",
   },
   {
     question: "한 번에 몇 장까지 압축할 수 있나요?",
@@ -126,7 +126,7 @@ const schemas = [
       price: "0",
       priceCurrency: "KRW",
     },
-    description: "서버 전송 없이 브라우저에서 바로 이미지 압축. 무제한 무료.",
+    description: "브라우저에서 바로 이미지를 압축하는 무료 도구. 목표 용량 설정, 일괄 압축, Before/After 비교 지원.",
   },
   {
     "@context": "https://schema.org",

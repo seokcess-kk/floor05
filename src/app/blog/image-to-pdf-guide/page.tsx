@@ -38,6 +38,14 @@ const faqSchema = {
         text: "PDF 분할 도구의 '페이지 추출'에서 1-3, 5처럼 입력하면 해당 페이지만 담은 새 PDF가 만들어집니다.",
       },
     },
+    {
+      "@type": "Question",
+      name: "만들어진 PDF 용량이 너무 커요. 어떻게 줄이나요?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "사진 해상도가 그대로 PDF에 들어가기 때문입니다. 변환 전에 이미지 압축 도구로 사진 용량을 줄인 뒤 PDF로 만들면, 제출 사이트의 업로드 용량 제한도 맞추기 쉽습니다.",
+      },
+    },
   ],
 };
 
@@ -109,8 +117,39 @@ export default function ImageToPdfGuidePage() {
               <li>&lsquo;PDF로 변환&rsquo;을 누르면 한 파일로 저장됩니다.</li>
             </ol>
             <p className="text-brand-mid leading-relaxed mb-4">
-              세로로 찍힌 사진은 회전 정보를 반영해 바로 세워 넣습니다. 인쇄할 거라면 여백을 &lsquo;좁게&rsquo;나
-              &lsquo;넓게&rsquo;로 주는 게 좋습니다.
+              세로로 찍힌 사진은 회전 정보를 반영해 바로 세워 넣습니다. 용지와 여백 설정이 결과물을
+              꽤 좌우하는데, 기준은 간단합니다. 화면으로만 볼 문서라면 &lsquo;이미지 맞춤&rsquo;이
+              사진 비율 그대로 담겨 깔끔하고, 인쇄하거나 공식 서류로 낼 문서라면 &lsquo;A4&rsquo;를
+              선택하는 게 안전합니다. 여백 없이 꽉 채우면 프린터에 따라 가장자리가 잘릴 수 있으니,
+              인쇄용은 여백을 &lsquo;좁게&rsquo; 이상으로 주는 게 좋습니다.
+            </p>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              제출 상황별 팁
+            </h2>
+            <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
+              <li>
+                <strong>관공서·정부 사이트 제출</strong> — A4 세로에 여백을 주고 만드세요. 업로드
+                용량 제한(수 MB)이 있는 곳이 많아, 사진이 크면{" "}
+                <Link href="/tools/image/compress" className="text-brand-accent hover:underline">
+                  이미지 압축
+                </Link>
+                으로 먼저 줄인 뒤 변환하는 게 빠릅니다.
+              </li>
+              <li>
+                <strong>입사지원·포트폴리오</strong> — 올린 순서가 그대로 페이지 순서가 됩니다.
+                파일명 앞에 01, 02처럼 번호를 붙여 두면 순서 맞추기가 쉽습니다. 작품 사진은
+                &lsquo;이미지 맞춤&rsquo;으로 비율을 살리는 편이 보기 좋습니다.
+              </li>
+              <li>
+                <strong>계약서·증빙 서류</strong> — 변환 후 PDF를 열어 글자가 읽히는지 확대해서 한 번
+                확인하세요. 원본 사진이 흔들렸다면 PDF에서도 흐릿합니다.
+              </li>
+            </ul>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              휴대폰 스캔 앱과 비교하면, 브라우저 도구는 설치가 필요 없고 무료 스캔 앱에 흔한
+              워터마크나 페이지 수 제한이 없습니다. 이미 찍어 둔 사진을 PDF로 묶는 용도라면 앱을
+              새로 깔 이유가 없습니다.
             </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">여러 PDF를 하나로 합치기</h2>
@@ -161,12 +200,21 @@ export default function ImageToPdfGuidePage() {
                   아니요. 변환·병합·분할 모두 브라우저 안에서 이루어지며 서버로 전송되지 않습니다.
                 </p>
               </div>
-              <div className="pb-6">
+              <div className="border-b border-brand-light/20 pb-6">
                 <h3 className="text-lg font-semibold text-brand-black mb-2">
                   Q. 아이폰 HEIC 사진도 되나요?
                 </h3>
                 <p className="text-brand-mid">
                   JPG·PNG·WebP를 지원합니다. HEIC는 포맷 변환 도구로 JPG로 바꾼 뒤 사용하세요.
+                </p>
+              </div>
+              <div className="pb-6">
+                <h3 className="text-lg font-semibold text-brand-black mb-2">
+                  Q. 만들어진 PDF 용량이 너무 커요.
+                </h3>
+                <p className="text-brand-mid">
+                  사진 해상도가 그대로 들어가서 그렇습니다. 변환 전에 이미지 압축으로 사진 용량을
+                  줄이면 제출 사이트의 용량 제한도 맞추기 쉽습니다.
                 </p>
               </div>
             </div>

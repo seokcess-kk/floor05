@@ -8,11 +8,11 @@ const PAGE_URL = `${SITE_URL}/tools/image/webp-to-jpg`;
 export const metadata: Metadata = {
   title: "WebP를 JPG로 변환 - 안 열리는 WebP 바로 열기",
   description:
-    "웹에서 받은 WebP가 안 열리나요? WebP를 JPG로 브라우저에서 바로 변환하세요. PNG로도 변환 가능. 파일이 서버로 전송되지 않습니다.",
+    "웹에서 받은 WebP가 안 열리나요? WebP를 JPG로 브라우저에서 바로 변환하세요. PNG로도 변환 가능. 안 열리는 파일 때문에 왔는데 또 어딘가에 업로드할 필요는 없습니다.",
   keywords: ["WebP JPG 변환", "webp 변환", "webp 안열림", "webp jpg", "WebP PNG 변환"],
   openGraph: {
     title: "WebP를 JPG로 변환 - 안 열리는 WebP 바로 열기",
-    description: "WebP를 JPG·PNG로 브라우저에서 바로 변환. 서버 전송 없이 안전하게.",
+    description: "안 열리는 WebP를 JPG·PNG로. 업로드 없이 브라우저에서 바로.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "WebP를 JPG로 변환 - 안 열리는 WebP 바로 열기",
-    description: "WebP를 JPG·PNG로 브라우저에서 바로 변환. 서버 전송 없이 안전하게.",
+    description: "그림판에서 안 열리는 WebP, JPG로 바꿔서 여세요.",
   },
   alternates: {
     canonical: PAGE_URL,
@@ -36,7 +36,7 @@ const faqs = [
   {
     question: "WebP가 그림판이나 일부 프로그램에서 안 열려요.",
     answer:
-      "구형 윈도우 사진 뷰어, 일부 편집 프로그램, 오래된 문서 도구는 WebP를 지원하지 않습니다. 이럴 때 WebP를 JPG로 변환하면 어디서든 열 수 있습니다. 이 도구는 변환을 100% 브라우저에서 처리하므로 파일이 서버로 올라가지 않습니다.",
+      "구형 윈도우 사진 뷰어, 일부 편집 프로그램, 오래된 문서 도구는 WebP를 지원하지 않습니다. 이럴 때 WebP를 JPG로 변환하면 어디서든 열 수 있습니다. 이 도구는 WebP를 잘 읽는 브라우저의 힘을 빌려 변환하므로, 프로그램 설치도 파일 업로드도 필요 없습니다.",
   },
   {
     question: "WebP를 JPG로 바꾸면 화질이 떨어지나요?",
@@ -57,7 +57,7 @@ const faqs = [
 
 const guide = {
   intro:
-    "요즘 웹사이트에서 이미지를 저장하면 .webp 확장자로 받아지는 경우가 많습니다. 보기엔 멀쩡한 이미지인데 그림판이나 오래된 프로그램에서 안 열려 당황하기 쉽죠. 이 도구는 그 WebP 파일을 어디서나 열리는 JPG로 바꿔줍니다. 변환은 전부 브라우저 안에서 끝나고, 파일이 서버로 올라가는 일은 없습니다.",
+    "요즘 웹사이트에서 이미지를 저장하면 .webp 확장자로 받아지는 경우가 많습니다. 보기엔 멀쩡한 이미지인데 그림판이나 오래된 프로그램에서 안 열려 당황하기 쉽죠. 이 도구는 그 WebP 파일을 어디서나 열리는 JPG로 바꿔줍니다. 다른 프로그램은 WebP를 못 열어도 브라우저만은 잘 읽는다는 점을 그대로 이용한 도구라, 파일을 어디에 올리지 않고 이 자리에서 변환이 끝납니다.",
   sections: [
     {
       heading: "WebP는 왜 자꾸 받아질까",
@@ -110,7 +110,7 @@ const schemas = [
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "WebP를 JPG·PNG로 변환. 100% 브라우저 처리, 무제한 무료.",
+    description: "안 열리는 WebP를 JPG·PNG로 바꾸는 무료 도구. 브라우저가 직접 읽고 변환합니다.",
   },
   {
     "@context": "https://schema.org",
@@ -138,7 +138,7 @@ export default function WebpToJpgPage() {
   return (
     <ToolLayout
       title="WebP → JPG 변환"
-      description="안 열리는 WebP를 JPG로 브라우저에서 바로. 서버 전송 없이 안전하게."
+      description="안 열리는 WebP를 JPG로. 업로드 없이 브라우저에서 바로 변환."
       guide={guide}
       faqs={faqs}
       workflowCTA={workflowCTA}

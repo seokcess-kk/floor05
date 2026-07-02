@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/image/color-picker`;
 export const metadata: Metadata = {
   title: "이미지 색상 추출 - 사진에서 HEX 코드 뽑기",
   description:
-    "사진을 클릭해 그 지점의 색을 추출하고, 이미지의 대표 색 팔레트와 HEX 코드를 뽑습니다. 클릭 한 번으로 복사까지. 서버 전송 없이 브라우저에서, 회원가입 없이 무료입니다.",
+    "사진을 클릭해 그 지점의 색을 추출하고, 이미지의 대표 색 팔레트와 HEX 코드를 뽑습니다. 포토샵 스포이드가 필요했던 일을 브라우저에서 클릭 한 번으로.",
   keywords: [
     "이미지 색상 추출",
     "사진 색상 코드",
@@ -44,6 +44,25 @@ const guide = {
         "특정 지점의 색이 궁금하면 사진의 그 부분을 클릭하세요. 클릭한 픽셀의 정확한 색이 HEX와 RGB로 표시되고, 복사 버튼으로 바로 가져올 수 있습니다. 추출한 코드는 색상 변환 도구에서 다른 형식으로 바꿀 수도 있습니다.",
       ],
     },
+    {
+      heading: "클릭한 색이 눈으로 본 색과 다르게 나올 때",
+      paragraphs: [
+        "사진 속 색은 생각보다 균일하지 않습니다. 파란 하늘도 픽셀 단위로 보면 수십 가지 파랑이 섞여 있고, JPG 압축 노이즈까지 더해져 바로 옆 픽셀끼리도 값이 다릅니다. 클릭할 때마다 코드가 조금씩 다르게 나온다면 그 때문입니다. 단색 영역이라면 가장자리보다 한가운데를 클릭하는 편이 의도한 색에 가깝습니다.",
+        "조명도 변수입니다. 같은 제품 사진이라도 촬영 조명에 따라 실제 브랜드 컬러보다 노랗거나 파랗게 기록됩니다. 사진에서 뽑은 색은 '그 사진 안에서의 색'이라는 점을 감안하고, 정확한 브랜드 컬러가 필요하면 공식 가이드라인의 코드와 비교해 보정하는 것이 안전합니다.",
+      ],
+    },
+    {
+      heading: "뽑은 색, 이렇게 써먹습니다",
+      paragraphs: [
+        "추출한 HEX 코드는 CSS·피그마·파워포인트 어디든 붙여넣어 쓸 수 있습니다. 대표 팔레트는 색 조합의 출발점으로 쓰기 좋습니다. 좋아하는 영화 포스터나 브랜드 화보에서 팔레트를 뽑아 보면, 잘 만든 색 조합이 어떤 비율로 구성되는지도 보입니다.",
+      ],
+      bullets: [
+        "블로그·발표자료의 포인트 컬러를 사진 분위기에 맞추기",
+        "쇼핑몰 상세페이지 배경색을 제품 사진에서 뽑기",
+        "웹 디자인에서 참고 이미지의 색 조합 분석하기",
+        "뽑은 색의 글자 가독성은 색상 대비 검사 도구로 확인하기",
+      ],
+    },
   ],
 };
 
@@ -64,9 +83,14 @@ const faqs = [
       "HEX 코드를 복사해 색상 코드 변환 도구에 넣으면 RGB·HSL·CMYK로 바꿀 수 있습니다.",
   },
   {
+    question: "클릭할 때마다 색 코드가 조금씩 다르게 나와요.",
+    answer:
+      "사진은 압축 노이즈 때문에 바로 옆 픽셀끼리도 색값이 미세하게 다릅니다. 단색처럼 보이는 영역이라도 한가운데를 클릭하는 것이 의도한 색에 가장 가깝습니다.",
+  },
+  {
     question: "사진이 서버에 올라가나요?",
     answer:
-      "아니요. 모든 처리는 브라우저 안에서 이루어지며 사진이 서버로 전송되거나 저장되지 않습니다.",
+      "아니요. 색 추출은 브라우저가 이미지의 픽셀 값을 읽는 것만으로 끝나는 작업이라, 사진을 어딘가로 보낼 이유가 없습니다. 유출이 걱정되는 시안·화보에서도 마음 놓고 색을 뽑으세요.",
   },
 ];
 
@@ -91,6 +115,27 @@ const schemas = [
   },
 ];
 
+const workflowCTA = {
+  message: "색을 뽑았다면, 다음은 이런 작업입니다.",
+  tools: [
+    {
+      name: "색상 코드 변환",
+      href: "/tools/color/converter",
+      description: "HEX를 RGB·HSL·CMYK로",
+    },
+    {
+      name: "색상 대비 검사",
+      href: "/tools/color/contrast",
+      description: "글자색으로 써도 되는지 확인",
+    },
+    {
+      name: "CSS 그라데이션",
+      href: "/tools/color/gradient",
+      description: "뽑은 색으로 그라데이션 만들기",
+    },
+  ],
+};
+
 export default function ColorPickerPage() {
   return (
     <ToolLayout
@@ -98,6 +143,7 @@ export default function ColorPickerPage() {
       description="사진을 클릭해 색을. 대표 색 팔레트와 HEX 코드까지, 클릭 한 번 복사."
       guide={guide}
       faqs={faqs}
+      workflowCTA={workflowCTA}
       currentToolHref="/tools/image/color-picker"
       relatedPostSlugs={["color-code-guide"]}
       schemas={schemas}

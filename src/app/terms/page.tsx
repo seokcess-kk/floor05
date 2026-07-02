@@ -5,10 +5,10 @@ import Footer from "@/components/common/Footer";
 
 export const metadata: Metadata = {
   title: "이용약관",
-  description: "floor05 이용약관",
-  robots: {
-    index: false,
-    follow: false,
+  description:
+    "floor05 서비스 이용에 관한 약관입니다. 서비스 제공 범위와 이용자의 권리·책임을 안내합니다.",
+  alternates: {
+    canonical: "/terms",
   },
 };
 

@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import ToolCard from "@/components/common/ToolCard";
 import { TOOL_CATEGORIES, getToolsByCategory } from "@/lib/common/tools";
 import { SITE_URL } from "@/lib/common/constants";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: SITE_URL,
+  },
+};
 
 // 홈 화면 소개 + FAQ (서버 렌더링되는 고유 콘텐츠)
 const homeFaqs = [
@@ -24,7 +31,7 @@ const homeFaqs = [
   {
     question: "어떤 도구가 있나요?",
     answer:
-      "이미지 압축·리사이즈·포맷 변환·크롭·합치기·워터마크·HEIC 변환 같은 이미지 도구와, 글자수 세기, 연봉 실수령액·퇴직금 계산기를 제공합니다. 필요한 도구는 검색해서 바로 들어와 쓰면 됩니다.",
+      "이미지 압축·리사이즈·포맷 변환·크롭·워터마크 같은 이미지 도구, PDF 합치기·분할, 글자수 세기, 연봉·퇴직금·대출이자 계산기, 만 나이·D-Day 같은 날짜 도구, 단위·색상 변환, 사다리타기까지 40여 개를 제공합니다. 필요한 도구는 검색해서 바로 들어와 쓰면 됩니다.",
   },
 ];
 

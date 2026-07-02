@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/health/pregnancy`;
 export const metadata: Metadata = {
   title: "임신 주수 계산기 - 출산예정일·삼분기까지",
   description:
-    "마지막 생리 시작일(LMP)만 넣으면 현재 임신 주수와 출산 예정일, 삼분기, 진행률을 바로 계산합니다. Naegele 법칙 기준. 회원가입 없이 무료, 입력값은 저장·전송되지 않습니다.",
+    "마지막 생리 시작일(LMP)만 넣으면 현재 임신 주수와 출산 예정일, 삼분기, 진행률을 바로 계산합니다. Naegele 법칙 기준. 입력한 날짜는 계산에만 쓰고 남기지 않습니다.",
   keywords: [
     "임신주수 계산기",
     "임신 주수 계산",

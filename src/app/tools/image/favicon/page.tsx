@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/image/favicon`;
 export const metadata: Metadata = {
   title: "파비콘 만들기 - 이미지로 favicon.ico 생성",
   description:
-    "이미지 한 장으로 favicon.ico와 16·32·48px 아이콘, 모바일·PWA용 PNG, site.webmanifest를 한 번에 만들어 ZIP으로 받습니다. 붙여넣을 HTML 코드까지. 서버 전송 없이 무료입니다.",
+    "이미지 한 장으로 favicon.ico와 16·32·48px 아이콘, 모바일·PWA용 PNG, site.webmanifest를 한 번에 만들어 ZIP으로 받습니다. 붙여넣을 HTML 코드까지. 공개 전인 로고도 업로드 없이 브라우저에서 바로 만들 수 있고, 무료입니다.",
   keywords: [
     "파비콘 만들기",
     "favicon 생성",
@@ -53,7 +53,7 @@ const guide = {
       heading: "만들고 적용하기",
       paragraphs: [
         "정사각형에 가까운 이미지(로고 등)를 올리면 중앙을 정사각형으로 잘라 각 크기를 만듭니다. '파비콘 생성'을 누르면 위 파일들이 ZIP으로 다운로드됩니다. 압축을 풀어 사이트 루트 폴더에 그대로 올리세요.",
-        "마지막으로 함께 제공되는 HTML 코드를 페이지의 <head>에 붙여넣으면 끝입니다. 티스토리·워드프레스 등에서도 같은 파일과 코드를 쓰면 됩니다. 모든 처리는 브라우저에서 이루어집니다.",
+        "마지막으로 함께 제공되는 HTML 코드를 페이지의 <head>에 붙여넣으면 끝입니다. 티스토리·워드프레스 등에서도 같은 파일과 코드를 쓰면 됩니다. 아이콘 리사이즈와 ICO 인코딩은 전부 브라우저가 처리하니, 아직 공개하지 않은 로고를 어딘가에 올릴 걱정도 없습니다.",
       ],
     },
   ],
@@ -76,9 +76,9 @@ const faqs = [
       "ZIP을 풀어 나온 파일을 사이트 루트 폴더에 올리고, 함께 제공되는 HTML 코드를 페이지의 <head>에 붙여넣으면 됩니다.",
   },
   {
-    question: "이미지가 서버에 올라가나요?",
+    question: "로고 이미지가 서버에 올라가나요?",
     answer:
-      "아니요. 모든 처리는 브라우저 안에서 이루어지며 이미지가 서버로 전송되거나 저장되지 않습니다.",
+      "아니요. 크기별 리사이즈부터 ICO·manifest 생성까지 전부 브라우저 안에서 처리합니다. 출시 전 서비스의 로고처럼 아직 공개하면 안 되는 이미지도 안심하고 쓸 수 있습니다.",
   },
 ];
 
@@ -91,7 +91,7 @@ const schemas = [
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
     description:
-      "이미지로 favicon.ico와 각 사이즈 아이콘·site.webmanifest를 만들어 ZIP으로 받는 무료 도구. 서버 전송 없이 브라우저에서 처리.",
+      "이미지로 favicon.ico와 각 사이즈 아이콘·site.webmanifest를 만들어 ZIP으로 받는 무료 도구. 아이콘 생성은 브라우저 안에서 끝납니다.",
   },
   {
     "@context": "https://schema.org",

@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/image/crop`;
 export const metadata: Metadata = {
   title: "이미지 크롭 - 원하는 부분만 깔끔하게",
   description:
-    "드래그로 간편하게 사진 자르기. 증명사진 규격·원형 크롭·고정 크기 출력, 1:1·16:9 비율 프리셋. 파일이 서버로 전송되지 않습니다.",
+    "드래그로 간편하게 사진 자르기. 증명사진 규격·원형 크롭·고정 크기 출력, 1:1·16:9 비율 프리셋. 얼굴이 담긴 증명사진도 업로드 없이 기기 안에서만 잘립니다.",
   keywords: [
     "이미지 크롭",
     "사진 자르기",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "이미지 크롭 - 원하는 부분만 깔끔하게",
-    description: "드래그로 간편하게 사진 자르기. 비율 프리셋 지원.",
+    description: "증명사진 규격부터 원형 크롭까지, 브라우저에서 바로 자르기.",
   },
   alternates: {
     canonical: PAGE_URL,
@@ -81,7 +81,7 @@ const faqs = [
 
 const guide = {
   intro:
-    "사진에서 필요 없는 부분을 잘라내고 원하는 영역만 남기는 도구입니다. 비율 프리셋, 원형 크롭, 증명사진 규격, 고정 픽셀 출력까지 한 화면에서 처리합니다. 업로드한 이미지는 브라우저 안에서만 처리되며 서버로 전송되지 않습니다.",
+    "사진에서 필요 없는 부분을 잘라내고 원하는 영역만 남기는 도구입니다. 비율 프리셋, 원형 크롭, 증명사진 규격, 고정 픽셀 출력까지 한 화면에서 처리합니다. 증명사진처럼 얼굴이 그대로 담긴 사진을 다루는 도구인 만큼, 자르기는 기기 안 브라우저에서만 이루어지고 어떤 서버에도 사진이 닿지 않습니다.",
   sections: [
     {
       heading: "용도별로 비율을 고르세요",
@@ -141,7 +141,7 @@ const schemas = [
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "드래그로 간편하게 사진 자르기. 무제한 무료.",
+    description: "드래그로 사진을 자르는 무료 도구. 증명사진 규격·원형 크롭·비율 프리셋 지원.",
   },
   {
     "@context": "https://schema.org",

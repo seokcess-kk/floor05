@@ -38,6 +38,22 @@ const faqSchema = {
         text: "이미지 압축으로 용량을 줄이면 됩니다. 1280×720 정도 크기라면 품질을 약간만 낮춰도 2MB 이하로 충분히 들어갑니다.",
       },
     },
+    {
+      "@type": "Question",
+      name: "쇼츠 썸네일도 따로 올릴 수 있나요?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "쇼츠는 별도 이미지를 올리는 대신 업로드할 때 영상의 한 장면을 골라 썸네일로 쓰는 방식이 기본입니다. 세로 9:16(1080×1920) 화면 기준으로 첫 장면을 구성해 두는 게 요령입니다.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "커스텀 썸네일 업로드 버튼이 안 보여요.",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "커스텀 썸네일은 전화번호 인증(중급 기능 사용 설정)을 마친 계정에서만 올릴 수 있습니다. 유튜브 스튜디오의 채널 설정에서 기능 사용 자격을 확인해 보세요.",
+      },
+    },
   ],
 };
 
@@ -157,7 +173,61 @@ export default function YoutubeThumbnailSizePage() {
             </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
-              3. 무료로 썸네일 크기 맞추기
+              3. 썸네일만 있는 게 아니다 — 배치별 규격
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              유튜브에는 썸네일 말고도 크기를 맞춰야 할 이미지가 몇 가지 더
+              있습니다. 자주 찾게 되는 규격을 한 표에 모았습니다.
+            </p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">용도</th>
+                    <th className="py-2 pr-4 text-brand-black">권장 크기</th>
+                    <th className="py-2 text-brand-black">비고</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4 font-medium text-brand-black">동영상 썸네일</td>
+                    <td className="py-2 pr-4 font-mono">1280×720</td>
+                    <td className="py-2">16:9, 2MB 이하</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4 font-medium text-brand-black">쇼츠 화면</td>
+                    <td className="py-2 pr-4 font-mono">1080×1920</td>
+                    <td className="py-2">세로 9:16</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4 font-medium text-brand-black">커뮤니티 게시물</td>
+                    <td className="py-2 pr-4 font-mono">1080×1080</td>
+                    <td className="py-2">정사각형이 무난</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4 font-medium text-brand-black">채널 배너</td>
+                    <td className="py-2 pr-4 font-mono">2560×1440</td>
+                    <td className="py-2">안전 영역 1546×423</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium text-brand-black">프로필 사진</td>
+                    <td className="py-2 pr-4 font-mono">800×800</td>
+                    <td className="py-2">원형으로 잘려 표시</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              쇼츠는 별도 이미지를 올리는 대신 업로드할 때 영상의 한 장면을
+              썸네일로 고르는 방식이 기본입니다. 첫 1~2초 화면을
+              &lsquo;썸네일이다&rsquo; 생각하고 구성해 두면 편합니다. 채널
+              배너는 TV·PC·모바일에서 잘리는 범위가 제각각이라, 로고와 문구는
+              반드시 중앙의 안전 영역(1546×423) 안에 넣어야 어느 기기에서든
+              보입니다.
+            </p>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              4. 무료로 썸네일 크기 맞추기
             </h2>
             <p className="text-brand-mid leading-relaxed mb-4">
               포토샵 없이 브라우저에서 세 단계면 끝납니다.
@@ -185,17 +255,59 @@ export default function YoutubeThumbnailSizePage() {
             </ol>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
-              4. 클릭을 부르는 썸네일 팁
+              5. 2MB 제한에 걸렸다면
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              고해상도 캡처나 PNG로 저장한 썸네일은 2MB를 훌쩍 넘기기 쉽습니다.
+              업로드가 거부됐다면 순서대로 시도해 보세요.
+            </p>
+            <ol className="list-decimal list-inside text-brand-mid space-y-2 mb-6">
+              <li>
+                <strong>크기부터 확인</strong> — 4K 캡처라면 1280×720으로
+                줄이는 것만으로 용량이 크게 떨어집니다.
+              </li>
+              <li>
+                <strong>형식 바꾸기</strong> — 사진 위주 썸네일은 PNG보다
+                JPG가 훨씬 가볍습니다. 같은 그림도 몇 배씩 차이가 납니다.
+              </li>
+              <li>
+                <strong>품질 조절</strong> — JPG 품질을 80~85% 정도로 낮추면
+                눈으로는 구분하기 어려운 수준에서 용량이 크게 줍니다.
+              </li>
+            </ol>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              참고로 커스텀 썸네일 업로드는 전화번호 인증(중급 기능 사용
+              설정)을 마친 계정에서만 가능합니다. 크기를 다 맞췄는데 업로드
+              버튼 자체가 없다면 계정 설정을 먼저 확인하세요.
+            </p>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              6. 클릭을 부르는 썸네일 팁
             </h2>
             <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
               <li>
-                텍스트는 굵고 크게. 모바일에서는 썸네일이 아주 작게 보입니다.
+                텍스트는 굵고 크게, 3~5단어 이내로. 모바일 목록에서 썸네일은
+                엄지손톱만 하게 보입니다. 그 크기에서 안 읽히면 없는 글자입니다.
               </li>
               <li>
-                중요한 요소는 가장자리를 피해 가운데로. 잘려도 살아남습니다.
+                오른쪽 아래 모서리는 비워두세요. 재생 시간 표시가 그 자리를
+                덮습니다.
+              </li>
+              <li>
+                중요한 요소는 가장자리를 피해 가운데로. 화면에 따라 살짝
+                잘려도 살아남습니다.
               </li>
               <li>
                 배경과 글자의 명암 대비를 확실히. 작아도 읽혀야 합니다.
+              </li>
+              <li>
+                제목과 같은 문구를 썸네일에 반복하지 마세요. 썸네일 옆에는
+                항상 제목이 함께 보이므로, 그 공간은 다른 정보에 쓰는 게
+                이득입니다.
+              </li>
+              <li>
+                시리즈물은 색·글꼴·레이아웃을 통일하세요. 목록에서 한눈에
+                &lsquo;그 채널&rsquo;로 보입니다.
               </li>
             </ul>
 
@@ -221,13 +333,32 @@ export default function YoutubeThumbnailSizePage() {
                   또는 16:9 비율로 맞추면 잘리지 않습니다.
                 </p>
               </div>
-              <div className="pb-6">
+              <div className="border-b border-brand-light/20 pb-6">
                 <h3 className="text-lg font-semibold text-brand-black mb-2">
                   Q. 용량이 2MB를 넘으면요?
                 </h3>
                 <p className="text-brand-mid">
                   압축으로 줄이면 됩니다. 1280×720 크기라면 품질을 약간만 낮춰도
                   2MB 이하로 충분히 들어갑니다.
+                </p>
+              </div>
+              <div className="border-b border-brand-light/20 pb-6">
+                <h3 className="text-lg font-semibold text-brand-black mb-2">
+                  Q. 쇼츠 썸네일도 따로 올릴 수 있나요?
+                </h3>
+                <p className="text-brand-mid">
+                  쇼츠는 별도 이미지 대신 업로드할 때 영상의 한 장면을 골라
+                  쓰는 방식이 기본입니다. 세로 9:16 화면 기준으로 첫 장면을
+                  구성해 두세요.
+                </p>
+              </div>
+              <div className="pb-6">
+                <h3 className="text-lg font-semibold text-brand-black mb-2">
+                  Q. 커스텀 썸네일 업로드 버튼이 안 보여요.
+                </h3>
+                <p className="text-brand-mid">
+                  전화번호 인증(중급 기능 사용 설정)을 마친 계정에서만 올릴 수
+                  있습니다. 유튜브 스튜디오의 채널 설정을 확인해 보세요.
                 </p>
               </div>
             </div>

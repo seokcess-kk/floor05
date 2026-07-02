@@ -30,6 +30,14 @@ const faqSchema = {
         text: "WCAG AA 기준으로 일반 텍스트는 4.5 : 1, 큰 텍스트는 3 : 1 이상이어야 합니다. 한국 웹접근성(KWCAG)도 본문 4.5 : 1 이상을 권장합니다.",
       },
     },
+    {
+      "@type": "Question",
+      name: "투명한 색은 어떻게 표기하나요?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "rgba(196, 92, 44, 0.5)처럼 네 번째 값으로 투명도(0~1)를 적거나, 8자리 HEX(#C45C2C80)로 뒤 두 자리에 투명도를 적습니다. 두 표기 모두 최신 브라우저에서 지원됩니다.",
+      },
+    },
   ],
 };
 
@@ -125,6 +133,86 @@ export default function ColorCodeGuidePage() {
               밝기만 낮추거나 채도만 올리는 식의 조정에 편합니다.
             </p>
 
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              실무에서는 뭘 쓸까
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              어느 하나가 우월한 게 아니라 상황별로 편한 표기가 다릅니다.
+            </p>
+            <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
+              <li>
+                <strong>HEX</strong> — 디자이너와 개발자가 색을 주고받을 때 표준처럼 쓰입니다.
+                짧고, 복사 한 번이면 끝이라 오해가 없습니다.
+              </li>
+              <li>
+                <strong>RGB(RGBA)</strong> — 투명도가 필요할 때. rgba(196, 92, 44, 0.5)처럼 네
+                번째 값(0~1)으로 반투명 오버레이나 그림자를 만듭니다. 8자리 HEX(#C45C2C80)도 같은
+                역할을 합니다.
+              </li>
+              <li>
+                <strong>HSL</strong> — 한 색의 변형을 만들 때. 버튼의 hover 색이 필요하면 색상(H)과
+                채도(S)는 그대로 두고 명도(L)만 10%p 올리면 톤이 맞는 밝은 색이 나옵니다. 디자인
+                시스템에서 색 단계(50~900)를 짤 때도 같은 원리를 씁니다.
+              </li>
+            </ul>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              참고로 CSS에는 red, tomato처럼 이름으로 부르는 색도 140여 개 있습니다. 간단한 테스트엔
+              편하지만, 미묘한 톤을 지정할 수 없어 실무에서는 코드 표기를 쓰는 게 안전합니다.
+            </p>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">자주 찾는 색 코드</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              검색창에 자주 입력되는 기본 색들입니다. 외울 필요는 없고, 흰색과 검정 정도만 기억해도
+              충분합니다.
+            </p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">색</th>
+                    <th className="py-2 pr-4 text-brand-black">HEX</th>
+                    <th className="py-2 text-brand-black">RGB</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">흰색</td>
+                    <td className="py-2 pr-4 font-mono">#FFFFFF</td>
+                    <td className="py-2 font-mono">rgb(255, 255, 255)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">검정</td>
+                    <td className="py-2 pr-4 font-mono">#000000</td>
+                    <td className="py-2 font-mono">rgb(0, 0, 0)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">회색</td>
+                    <td className="py-2 pr-4 font-mono">#808080</td>
+                    <td className="py-2 font-mono">rgb(128, 128, 128)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">빨강</td>
+                    <td className="py-2 pr-4 font-mono">#FF0000</td>
+                    <td className="py-2 font-mono">rgb(255, 0, 0)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">파랑</td>
+                    <td className="py-2 pr-4 font-mono">#0000FF</td>
+                    <td className="py-2 font-mono">rgb(0, 0, 255)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">주황</td>
+                    <td className="py-2 pr-4 font-mono">#FFA500</td>
+                    <td className="py-2 font-mono">rgb(255, 165, 0)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              참고로 순수한 검정(#000000)과 흰색(#FFFFFF)은 대비가 너무 강해 눈이 쉽게 피로해집니다.
+              실제 서비스들은 #0A0A0A나 #FAFAFA처럼 살짝 톤을 뺀 값을 쓰는 경우가 많습니다.
+            </p>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">CMYK는 근사값이다</h2>
             <p className="text-brand-mid leading-relaxed mb-4">
               화면은 빛을 더하는 RGB, 인쇄는 잉크를 섞는 CMYK라 변환은 항상 근사입니다. 같은 CMYK
@@ -139,6 +227,14 @@ export default function ColorCodeGuidePage() {
               색 코드를 다룰 때 자주 놓치는 게 가독성입니다. 글자색과 배경색의 명도 대비가 약하면
               읽기 어렵고, 웹접근성 기준에도 못 미칩니다. WCAG는 일반 텍스트에 4.5 : 1 이상을
               요구하고, 한국 웹접근성(KWCAG)도 같은 수준을 권장합니다.
+            </p>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              감으로 잡기 어려운 영역이라 숫자로 확인하는 게 빠릅니다. 예를 들어 흰 배경에서 회색
+              글자는 #767676 정도가 4.5 : 1을 겨우 통과하는 경계선입니다. 그보다 밝은 회색을 본문에
+              쓰면 &lsquo;은은해 보이지만 읽기 힘든&rsquo; 글이 됩니다. 브랜드 색을 버튼 배경으로
+              쓸 때도 흰 글자와의 대비를 확인해야 하고요. 한 가지 주의할 점 — HSL의 명도(L)는 사람
+              눈이 느끼는 밝기와 정확히 일치하지 않아서, 같은 L값이라도 노랑은 밝고 파랑은 어둡게
+              보입니다. 최종 판단은 대비 검사기로 하세요.
             </p>
             <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
               <li>
@@ -179,12 +275,21 @@ export default function ColorCodeGuidePage() {
                   화면 기준의 근사값입니다. 실제 인쇄 색은 용지·잉크·프로파일에 따라 달라집니다.
                 </p>
               </div>
-              <div className="pb-6">
+              <div className="border-b border-brand-light/20 pb-6">
                 <h3 className="text-lg font-semibold text-brand-black mb-2">
                   Q. 색상 대비는 얼마 이상이어야 하나요?
                 </h3>
                 <p className="text-brand-mid">
                   WCAG AA 기준 일반 텍스트 4.5 : 1, 큰 텍스트 3 : 1 이상입니다.
+                </p>
+              </div>
+              <div className="pb-6">
+                <h3 className="text-lg font-semibold text-brand-black mb-2">
+                  Q. 투명한 색은 어떻게 적나요?
+                </h3>
+                <p className="text-brand-mid">
+                  rgba(196, 92, 44, 0.5)처럼 네 번째 값으로 투명도를 적거나, 8자리
+                  HEX(#C45C2C80)를 씁니다.
                 </p>
               </div>
             </div>

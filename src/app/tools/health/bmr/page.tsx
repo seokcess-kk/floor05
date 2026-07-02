@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/health/bmr`;
 export const metadata: Metadata = {
   title: "기초대사량 계산기 - BMR·하루 권장 칼로리(TDEE)",
   description:
-    "성별·나이·키·몸무게로 기초대사량(BMR)과 활동량을 반영한 하루 권장 칼로리(TDEE)를 계산합니다. 감량·유지·증량 목표 칼로리까지. 회원가입 없이 무료, 입력값은 저장·전송되지 않습니다.",
+    "성별·나이·키·몸무게로 기초대사량(BMR)과 활동량을 반영한 하루 권장 칼로리(TDEE)를 계산합니다. 감량·유지·증량 목표 칼로리까지. 내 몸 정보는 입력한 화면에만 머뭅니다.",
   keywords: [
     "기초대사량 계산기",
     "BMR 계산기",

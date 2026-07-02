@@ -6,11 +6,14 @@ import Footer from "@/components/common/Footer";
 export const metadata: Metadata = {
   title: "소개 - floor05",
   description:
-    "floor05는 브라우저에서 바로 동작하는 무료 이미지 도구를 제공합니다. 파일이 서버로 전송되지 않아 안전합니다.",
+    "floor05는 브라우저에서 바로 동작하는 무료 온라인 도구를 제공합니다. 파일이 서버로 전송되지 않아 안전합니다.",
   openGraph: {
     title: "소개 - floor05",
     description:
-      "floor05는 브라우저에서 바로 동작하는 무료 이미지 도구를 제공합니다.",
+      "floor05는 브라우저에서 바로 동작하는 무료 온라인 도구를 제공합니다.",
+  },
+  alternates: {
+    canonical: "/about",
   },
 };
 

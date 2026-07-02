@@ -8,11 +8,11 @@ const PAGE_URL = `${SITE_URL}/tools/image/jpg-to-png`;
 export const metadata: Metadata = {
   title: "JPG를 PNG로 변환 - 무손실·투명 지원 포맷으로",
   description:
-    "JPG를 PNG로 브라우저에서 바로 변환하세요. 무손실 보관, 투명도 지원 포맷이 필요할 때. 파일이 서버로 전송되지 않습니다.",
+    "JPG를 PNG로 브라우저에서 바로 변환하세요. 무손실 보관, 투명도 지원 포맷이 필요할 때. 무손실이라는 이름처럼, 화질도 파일도 잃지 않고 기기 안에서만 처리됩니다.",
   keywords: ["JPG PNG 변환", "jpg를 png로", "JPEG PNG 변환", "png 변환", "이미지 png 변환"],
   openGraph: {
     title: "JPG를 PNG로 변환 - 무손실·투명 지원 포맷으로",
-    description: "JPG를 PNG로 브라우저에서 바로 변환. 서버 전송 없이 안전하게.",
+    description: "JPG를 무손실 PNG로. 화질도 파일도 잃지 않는 변환.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "JPG를 PNG로 변환 - 무손실·투명 지원 포맷으로",
-    description: "JPG를 PNG로 브라우저에서 바로 변환. 서버 전송 없이 안전하게.",
+    description: "재편집·투명도가 필요할 때, JPG를 PNG로 브라우저에서 바로.",
   },
   alternates: {
     canonical: PAGE_URL,
@@ -57,7 +57,7 @@ const faqs = [
 
 const guide = {
   intro:
-    "JPG는 용량이 작아 사진에 좋지만, 무손실 보관이나 투명도가 필요할 때는 PNG가 맞습니다. 이 도구는 JPG(JPEG)를 PNG로 브라우저에서 바로 바꿔줍니다. 변환은 전부 브라우저 안에서 끝나고, 파일이 서버로 올라가는 일은 없습니다.",
+    "JPG는 용량이 작아 사진에 좋지만, 무손실 보관이나 투명도가 필요할 때는 PNG가 맞습니다. 이 도구는 JPG(JPEG)를 PNG로 브라우저에서 바로 바꿔줍니다. 무손실 포맷을 다루는 도구답게 무엇도 잃지 않는 게 원칙입니다. 파일 역시 서버로 흘러가지 않고 브라우저 안에서만 다뤄집니다.",
   sections: [
     {
       heading: "언제 JPG 대신 PNG가 필요한가",
@@ -110,7 +110,7 @@ const schemas = [
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "JPG를 PNG로 변환. 무손실·투명 지원 포맷. 100% 브라우저 처리, 무제한 무료.",
+    description: "JPG를 무손실·투명 지원 PNG로 바꾸는 무료 도구. 변환은 브라우저 안에서만 이루어집니다.",
   },
   {
     "@context": "https://schema.org",
@@ -138,7 +138,7 @@ export default function JpgToPngPage() {
   return (
     <ToolLayout
       title="JPG → PNG 변환"
-      description="JPG를 무손실·투명 지원 PNG로 브라우저에서 바로. 서버 전송 없이 안전하게."
+      description="JPG를 무손실·투명 지원 PNG로. 화질도 파일도 잃지 않는 변환."
       guide={guide}
       faqs={faqs}
       workflowCTA={workflowCTA}

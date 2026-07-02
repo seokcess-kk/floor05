@@ -5,10 +5,10 @@ import Footer from "@/components/common/Footer";
 
 export const metadata: Metadata = {
   title: "개인정보처리방침",
-  description: "floor05 개인정보처리방침",
-  robots: {
-    index: false,
-    follow: false,
+  description:
+    "floor05가 수집하는 정보와 처리 방법을 안내합니다. 파일·입력값은 서버로 전송되지 않으며, 쿠키·광고 관련 사항을 설명합니다.",
+  alternates: {
+    canonical: "/privacy",
   },
 };
 

@@ -30,6 +30,22 @@ const faqSchema = {
         text: "각 항목의 가중치를 키우면 그 항목이 더 자주 나옵니다. 가중치 2는 1보다 두 배 확률입니다. 기본은 모두 1로 공평합니다.",
       },
     },
+    {
+      "@type": "Question",
+      name: "사다리타기와 룰렛 중 뭘 쓰는 게 좋나요?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "참가자 전원에게 역할이나 순서를 나눠야 하면 사다리타기, 여럿 중 하나만 뽑으면 룰렛이 편합니다. 확률을 다르게 주고 싶을 때도 룰렛의 가중치 기능을 쓰면 됩니다.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "같은 사람이 연달아 걸렸는데 조작 아닌가요?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "매번 독립적으로 새 난수를 뽑기 때문에 연속 당첨도 자연스러운 확률 안의 일입니다. 동전을 던져 앞면이 세 번 연속 나오는 것과 같습니다.",
+      },
+    },
   ],
 };
 
@@ -123,12 +139,76 @@ export default function RandomPickerGuidePage() {
             </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              사다리타기 vs 룰렛, 뭘 쓸까
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              둘 다 무작위지만 결과의 모양이 다릅니다. 사다리타기는{" "}
+              <strong>전원에게 결과를 하나씩 배분</strong>하고, 룰렛은{" "}
+              <strong>여럿 중 하나를 뽑습니다</strong>. 상황에 맞춰 고르면
+              됩니다.
+            </p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">상황</th>
+                    <th className="py-2 text-brand-black">추천</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">전원에게 역할·순서를 나눠야 할 때</td>
+                    <td className="py-2 font-medium text-brand-black">사다리타기</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">벌칙 하나에 나머지는 통과일 때</td>
+                    <td className="py-2 font-medium text-brand-black">사다리타기 (꽝 섞기)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">후보 중 하나만 뽑을 때 (메뉴·당첨자)</td>
+                    <td className="py-2 font-medium text-brand-black">룰렛</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">확률을 다르게 주고 싶을 때</td>
+                    <td className="py-2 font-medium text-brand-black">룰렛 (가중치)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">상황별 활용 팁</h2>
+            <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
+              <li>
+                <strong>점심·회식 메뉴</strong> — 후보를 4~6개로 추려서 룰렛에 올리세요. 후보가 열
+                개를 넘으면 뭐가 나와도 아쉬운 법입니다.
+              </li>
+              <li>
+                <strong>청소·당번 정하기</strong> — 사다리타기에 이름을 올리고 결과 칸에 요일이나
+                구역을 적으면 한 번에 배분이 끝납니다.
+              </li>
+              <li>
+                <strong>경품 추첨</strong> — 참가자 이름을 룰렛에 올리고 화면을 공유한 상태에서
+                돌리세요. 뽑히는 과정을 모두가 지켜보면 뒷말이 나오지 않습니다.
+              </li>
+              <li>
+                <strong>발표·게임 순서</strong> — 결과 칸에 1번부터 번호를 적은 사다리타기가
+                깔끔합니다. 출발점이 다르면 도착점도 달라 순서가 겹칠 일이 없습니다.
+              </li>
+            </ul>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               &lsquo;진짜 무작위&rsquo;란
             </h2>
             <p className="text-brand-mid leading-relaxed mb-4">
               두 도구 모두 단순한 의사난수가 아니라 브라우저가 제공하는 암호학적 난수(crypto)를
               씁니다. 그래서 패턴을 예측하거나 결과를 미리 알 수 없습니다. 또 모든 계산이 여러분의
               브라우저 안에서만 이루어져, 입력한 이름이나 항목이 서버로 전송되지 않습니다.
+            </p>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              한 가지 오해도 짚고 갑니다. 같은 사람이 두세 번 연달아 걸리면 조작을 의심하기 쉽지만,
+              매번 독립적으로 난수를 새로 뽑기 때문에 연속 당첨도 정상적인 확률 안의 일입니다. 동전을
+              던져 앞면이 세 번 연속 나올 수 있는 것과 같은 이치죠. 억울하면 한 판 더 돌리는 수밖에
+              없습니다.
             </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-6">자주 묻는 질문</h2>
@@ -150,12 +230,31 @@ export default function RandomPickerGuidePage() {
                   가중치를 키우면 됩니다. 가중치 2는 1보다 두 배 확률입니다.
                 </p>
               </div>
+              <div className="border-b border-brand-light/20 pb-6">
+                <h3 className="text-lg font-semibold text-brand-black mb-2">
+                  Q. 사다리타기와 룰렛 중 뭘 쓰는 게 좋나요?
+                </h3>
+                <p className="text-brand-mid">
+                  전원에게 역할이나 순서를 나눠야 하면 사다리타기, 여럿 중 하나만 뽑으면 룰렛이
+                  편합니다.
+                </p>
+              </div>
+              <div className="border-b border-brand-light/20 pb-6">
+                <h3 className="text-lg font-semibold text-brand-black mb-2">
+                  Q. 같은 사람이 연달아 걸렸는데 조작 아닌가요?
+                </h3>
+                <p className="text-brand-mid">
+                  매번 독립적으로 새 난수를 뽑기 때문에 연속 당첨도 자연스러운 확률 안의 일입니다.
+                  동전 앞면이 세 번 연속 나오는 것과 같습니다.
+                </p>
+              </div>
               <div className="pb-6">
                 <h3 className="text-lg font-semibold text-brand-black mb-2">
                   Q. 입력한 이름이 저장되나요?
                 </h3>
                 <p className="text-brand-mid">
-                  아니요. 모든 처리는 브라우저 안에서 이루어지며 서버로 전송되지 않습니다.
+                  아니요. 입력한 이름은 사다리를 그리는 동안 화면에만 존재하고, 탭을 닫으면
+                  함께 사라집니다. 어디에도 기록이 남지 않습니다.
                 </p>
               </div>
             </div>

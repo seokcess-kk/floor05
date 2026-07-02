@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/color/contrast`;
 export const metadata: Metadata = {
   title: "색상 대비 검사 - 웹접근성 WCAG AA·AAA",
   description:
-    "글자색과 배경색의 명도 대비를 WCAG 기준으로 검사합니다. 대비비와 AA·AAA 통과 여부, 실제 가독성 미리보기까지. 회원가입 없이 무료, 입력값은 저장·전송되지 않습니다.",
+    "글자색과 배경색의 명도 대비를 WCAG 기준으로 검사합니다. 대비비와 AA·AAA 통과 여부, 실제 가독성 미리보기까지. 검사는 브라우저의 명도 계산만으로 끝납니다.",
   keywords: [
     "색상 대비 검사",
     "명도 대비",

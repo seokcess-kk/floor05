@@ -79,6 +79,10 @@ src/
 7. **기술 용어 에러 메시지** — 친절한 한국어로 + 해결 방법 포함
 8. **서버로 파일 전송** — 100% 브라우저 처리 원칙
 9. **과장된 마케팅 문구** — 담백한 브랜드 보이스 유지
+10. **루트 layout.tsx에 사이트 전역 canonical 설정** — 하위 페이지가 전부 홈의 중복으로 색인 제외됨 (애드센스 반려 원인)
+11. **정보·정책 페이지(about/contact/privacy/terms)에 `robots: { index:false }`** — 심사자가 확인하는 페이지, 색인 허용 필수
+12. **"브라우저 처리/무료" 문구를 페이지 간 복붙** — 같은 문장 반복 = 저가치 중복 판정. 도구마다 새로 쓴다
+13. **새 도구 페이지를 tools.ts에 등록 안 함** — 링크 없는 고아/도어웨이 페이지가 됨
 
 ## 반드시 지킬 것
 
@@ -88,6 +92,15 @@ src/
 - **Schema Markup 적용**: SoftwareApplication, HowTo, FAQPage
 - **파일 제한**: 50MB/파일, 일괄 10장(데스크톱)/5장(모바일)
 - **common/ 수정 시 하위 호환 유지**
+
+### 새 페이지 추가 시 (애드센스 thin-content 재발 방지 — 상세는 my-design-rules 스킬)
+
+- **canonical은 페이지마다 자기 것을 직접 설정** (`alternates.canonical`). 도구는 `${SITE_URL}/tools/...`, 블로그는 `buildBlogMetadata`/상대경로
+- **새 도구는 즉시 `src/lib/common/tools.ts`의 `TOOLS`에 등록** → 내비게이션 링크 확보
+- **도구 페이지 최소 분량**: guide 섹션 2개↑(권장 3개), faqs 4개↑, workflowCTA로 내부 링크
+- **프라이버시/무료 문구는 도구별 고유 문장** — FAQ 답변·guide 꼬리말·description·og/twitter·schema 각각 다르게
+- **블로그 본문 1,400자↑**, 수정 시 `blog.ts`의 `dateModified` 갱신
+- **도메인 통일**: SITE_URL = robots Host = sitemap = `https://www.floor05.com`(www). 완료 후 `npm run build`(sitemap 재생성) → `tsc` → `lint`
 
 ## 브랜드 보이스
 

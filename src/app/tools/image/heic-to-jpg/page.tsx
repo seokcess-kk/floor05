@@ -8,11 +8,11 @@ const PAGE_URL = `${SITE_URL}/tools/image/heic-to-jpg`;
 export const metadata: Metadata = {
   title: "아이폰 사진 변환 - HEIC를 JPG로 브라우저에서 바로",
   description:
-    "아이폰에서 찍은 HEIC 사진을 JPG로 변환하세요. 파일이 서버로 전송되지 않습니다. 회원가입 없이 무제한 무료.",
+    "아이폰에서 찍은 HEIC 사진을 JPG로 변환하세요. 사진첩에서 막 옮긴 사진을 업로드 없이 브라우저가 그 자리에서 바꿔줍니다. 몇 번을 써도 가입 없이 무료.",
   keywords: ["HEIC JPG 변환", "아이폰 사진 변환", "HEIC 변환", "아이폰 HEIC", "iOS 사진 변환"],
   openGraph: {
     title: "아이폰 사진 변환 - HEIC를 JPG로 브라우저에서 바로",
-    description: "아이폰 HEIC 사진을 JPG로 변환. 서버 전송 없이 안전하게.",
+    description: "아이폰 HEIC 사진을 JPG로. 사진은 기기에 둔 채 포맷만 바꿉니다.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "아이폰 사진 변환 - HEIC를 JPG로",
-    description: "아이폰 HEIC 사진을 JPG로 변환. 서버 전송 없이 안전하게.",
+    description: "안 열리던 아이폰 사진, 브라우저에서 바로 JPG로.",
   },
   alternates: {
     canonical: PAGE_URL,
@@ -56,13 +56,13 @@ const faqs = [
   {
     question: "맥이나 PC에 프로그램 설치 없이 변환되나요?",
     answer:
-      "네, 웹 브라우저만 있으면 됩니다. 별도 앱이나 확장 프로그램을 설치할 필요가 없고, 사진이 서버로 업로드되지 않아 안전하게 변환할 수 있습니다.",
+      "네, 웹 브라우저만 있으면 됩니다. 별도 앱이나 확장 프로그램을 설치할 필요가 없고, 변환 코드가 페이지와 함께 내려와 기기에서 실행되므로 사진을 어디에 올리지 않고도 바꿀 수 있습니다.",
   },
 ];
 
 const guide = {
   intro:
-    "아이폰에서 찍은 사진을 컴퓨터로 옮겼더니 .heic 확장자라 안 열린 경험, 한 번쯤 있을 겁니다. 이 도구는 그 HEIC 파일을 어디서나 열리는 JPG로 바꿔줍니다. 변환은 전부 브라우저 안에서 끝나고, 사진이 서버로 올라가는 일은 없습니다.",
+    "아이폰에서 찍은 사진을 컴퓨터로 옮겼더니 .heic 확장자라 안 열린 경험, 한 번쯤 있을 겁니다. 이 도구는 그 HEIC 파일을 어디서나 열리는 JPG로 바꿔줍니다. 변환기가 서버가 아니라 이 페이지 안에 실려 있어서, 사진첩에서 꺼낸 사진이 어딘가로 올라가는 일 없이 그 자리에서 JPG가 됩니다.",
   sections: [
     {
       heading: "HEIC가 뭐고, 아이폰은 왜 이걸 쓸까",
@@ -122,7 +122,7 @@ const schemas = [
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "아이폰 HEIC 사진을 JPG로 변환. 무제한 무료.",
+    description: "아이폰 HEIC 사진을 JPG로 바꾸는 무료 도구. 사진은 기기에 둔 채 변환합니다.",
   },
   {
     "@context": "https://schema.org",
@@ -150,7 +150,7 @@ export default function HeicToJpgPage() {
   return (
     <ToolLayout
       title="HEIC → JPG 변환"
-      description="아이폰 사진을 JPG로 브라우저에서 바로. 서버 전송 없이 안전하게."
+      description="아이폰 사진을 JPG로 브라우저에서 바로. 사진은 내 기기에 둔 채로."
       guide={guide}
       faqs={faqs}
       workflowCTA={workflowCTA}

@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     description:
       "floor05 도구에 대한 불편·오류 신고, 기능 건의, 일반 문의를 폼으로 바로 남겨주세요.",
   },
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 export default function ContactPage() {

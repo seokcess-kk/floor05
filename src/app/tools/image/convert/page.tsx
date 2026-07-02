@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/image/convert`;
 export const metadata: Metadata = {
   title: "이미지 포맷 변환 - PNG·JPG·WebP·AVIF 다 되는 변환기",
   description:
-    "PNG, JPG, WebP, AVIF로 자유롭게 변환. BMP·GIF·SVG·HEIC 입력까지 한 곳에서. 아이폰 사진도 브라우저에서 바로, 파일이 서버로 전송되지 않습니다.",
+    "PNG, JPG, WebP, AVIF로 자유롭게 변환. BMP·GIF·SVG·HEIC 입력까지 한 곳에서. 변환 엔진이 서버가 아니라 브라우저에 있어, 업로드를 기다릴 일도 파일이 밖으로 나갈 일도 없습니다.",
   keywords: [
     "이미지 변환",
     "PNG JPG 변환",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "이미지 포맷 변환 - PNG·JPG·WebP·AVIF 다 되는 변환기",
-    description: "PNG, JPG, WebP, AVIF 변환. BMP·GIF·SVG·HEIC 입력까지. 브라우저에서 바로.",
+    description: "8가지 형식을 받아 PNG·JPG·WebP·AVIF로. 변환은 브라우저가 그 자리에서 합니다.",
   },
   alternates: {
     canonical: PAGE_URL,
@@ -41,7 +41,7 @@ const faqs = [
   {
     question: "아이폰에서 찍은 HEIC 사진도 변환할 수 있나요?",
     answer:
-      "네, HEIC/HEIF 파일을 JPG, PNG, WebP로 변환할 수 있습니다. 변환은 100% 브라우저에서 이루어지므로 사진이 서버로 전송되지 않습니다.",
+      "네, HEIC/HEIF 파일을 JPG, PNG, WebP로 변환할 수 있습니다. 업로드라는 단계 자체가 없어서, 아이폰에서 막 옮긴 사진 여러 장도 기다림 없이 기기 안에서 바로 바뀝니다.",
   },
   {
     question: "PNG의 투명 배경은 어떻게 처리되나요?",
@@ -87,7 +87,7 @@ const faqs = [
 
 const guide = {
   intro:
-    "PNG, JPG, WebP, AVIF는 각자 잘하는 일이 다릅니다. 어떤 포맷을 골라야 할지, 변환할 때 무엇이 달라지는지 짚어 두었습니다. BMP·GIF·SVG·HEIC 같은 형식도 올려서 바꿀 수 있고, 모든 변환은 브라우저 안에서 끝나기 때문에 파일이 서버로 전송되지 않습니다.",
+    "PNG, JPG, WebP, AVIF는 각자 잘하는 일이 다릅니다. 어떤 포맷을 골라야 할지, 변환할 때 무엇이 달라지는지 짚어 두었습니다. BMP·GIF·SVG·HEIC 같은 형식도 올려서 바꿀 수 있습니다. 변환 엔진이 지금 쓰는 브라우저 안에 들어 있어서, 파일을 어디로 보내지 않고 그 자리에서 결과를 받습니다.",
   sections: [
     {
       heading: "PNG·JPG·WebP, 언제 무엇을 쓰나",
@@ -161,7 +161,7 @@ const schemas = [
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
     description:
-      "PNG, JPG, WebP, AVIF 변환. BMP·GIF·SVG·HEIC 입력 지원. 100% 브라우저 처리, 무제한 무료.",
+      "PNG·JPG·WebP·AVIF 상호 변환 무료 도구. BMP·GIF·SVG·HEIC 입력 지원, 변환 엔진은 브라우저 안에 있습니다.",
   },
   {
     "@context": "https://schema.org",

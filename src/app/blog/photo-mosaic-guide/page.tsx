@@ -27,7 +27,15 @@ const faqSchema = {
       name: "모자이크와 블러 중 뭐가 안전한가요?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "둘 다 강도를 충분히 높이면 알아보기 어렵습니다. 핵심은 강도이며, 너무 약하면 형태가 드러날 수 있습니다.",
+        text: "둘 다 강도를 충분히 높이면 알아보기 어렵습니다. 핵심은 강도이며, 너무 약하면 형태가 드러날 수 있습니다. 글자·숫자는 모자이크, 얼굴·배경은 블러가 어울립니다.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "스티커나 이모지로 가려도 되나요?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "픽셀을 완전히 덮으면 괜찮지만, 편집 앱에 따라 스티커가 별도 레이어로 남아 나중에 되돌릴 수 있는 경우가 있습니다. 최종 저장본에서 원본 픽셀이 남지 않는 방식인지 확인하세요.",
       },
     },
   ],
@@ -86,12 +94,37 @@ export default function PhotoMosaicGuidePage() {
             </div>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">무엇을 가려야 하나</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              올리기 전에 아래 목록대로 사진을 한 바퀴 훑어보세요. 글자와 숫자를 먼저 찾는 게
+              요령입니다.
+            </p>
             <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
-              <li>사람 얼굴 — 본인·가족·지나가는 행인</li>
-              <li>차량 번호판 — 집·직장 위치가 노출될 수 있음</li>
-              <li>주소·송장 — 택배 상자, 우편물의 이름·전화번호</li>
-              <li>화면·서류 — 모니터에 띄운 개인정보, 신분증·카드</li>
+              <li>
+                <strong>사람 얼굴</strong> — 본인·가족은 물론, 동의 없이 찍힌 행인도
+              </li>
+              <li>
+                <strong>차량 번호판</strong> — 번호만으로 집·직장 주변이 특정될 수 있음
+              </li>
+              <li>
+                <strong>택배 송장</strong> — 이름·전화번호·주소가 한 장에 모인 최악의 조합
+              </li>
+              <li>
+                <strong>명찰·사원증·교복</strong> — 이름과 소속이 그대로 드러남
+              </li>
+              <li>
+                <strong>집이 드러나는 요소</strong> — 아파트 동·호수 표지, 창밖 풍경, 특징적인 간판
+              </li>
+              <li>
+                <strong>화면·서류</strong> — 모니터에 띄운 개인정보, 신분증·카드, 계약서
+              </li>
+              <li>
+                <strong>티켓의 바코드·QR</strong> — 사진만으로 도용될 수 있음
+              </li>
             </ul>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              마지막으로 확대해서 구석까지 확인하세요. 거울이나 유리, 안경알에 비친 반사는 의외의
+              복병입니다.
+            </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               모자이크와 블러의 차이
@@ -101,6 +134,28 @@ export default function PhotoMosaicGuidePage() {
               중요한 건 <strong>강도</strong>입니다. 약하게 처리하면 두 방식 모두 원래 형태가 비쳐
               글자나 얼굴이 읽힐 수 있습니다. 신분증 번호나 얼굴처럼 확실히 가려야 한다면 강도를
               충분히 높이세요.
+            </p>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              고르는 기준은 간단합니다. 번호판·송장처럼 <strong>글자와 숫자</strong>를 가릴 땐 격자로
+              확실히 뭉개지는 모자이크가 낫고, 얼굴이나 배경처럼 사진의 분위기를 살리고 싶은 부분은
+              블러가 자연스럽습니다.
+            </p>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              강도는 어느 정도가 적당할까
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              기준은 하나입니다. <strong>처리한 뒤 화면을 축소해서 봐도 내용을 알아볼 수 없어야
+              합니다.</strong> 사람 눈은 흐릿한 이미지를 작게 볼 때 오히려 잘 읽어내기 때문에, 원본
+              크기에서 안 보인다고 안심하긴 이릅니다.
+            </p>
+            <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
+              <li>글자·숫자 — 획의 구분이 완전히 사라질 만큼</li>
+              <li>얼굴 — 눈·코·입의 위치를 가늠할 수 없을 만큼</li>
+              <li>영역 — 대상에 딱 맞추지 말고 주변까지 여유 있게</li>
+            </ul>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              애매하면 한 단계 더 강하게 하세요. 모자이크는 과해서 문제가 된 적이 없습니다.
             </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
@@ -115,6 +170,11 @@ export default function PhotoMosaicGuidePage() {
               는 가린 영역의 원본 픽셀을 실제로 덮어쓰기 때문에, 그 부분의 정보가 파일에서 사라집니다.
               다만 너무 약하게 처리하면 시각적으로 형태가 남을 수 있으니 강도를 넉넉히 주는 게
               안전합니다.
+            </p>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              펜이나 스티커로 덮는 방법도 흔한데, 편집 앱에 따라 스티커가 별도 레이어로 남아 나중에
+              되돌릴 수 있는 경우가 있습니다. 원본 위에 얹기만 한 건지, 픽셀 자체를 덮어쓴 건지가
+              관건입니다. 최종적으로 내보낸 이미지에서 원본 픽셀이 남아 있지 않아야 안전합니다.
             </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
@@ -139,6 +199,24 @@ export default function PhotoMosaicGuidePage() {
               </div>
               <div className="border-b border-brand-light/20 pb-6">
                 <h3 className="text-lg font-semibold text-brand-black mb-2">
+                  Q. 모자이크와 블러 중 뭐가 안전한가요?
+                </h3>
+                <p className="text-brand-mid">
+                  둘 다 강도가 충분하면 안전합니다. 글자·숫자는 모자이크, 얼굴·배경은 블러가
+                  어울립니다. 약하면 어느 쪽이든 형태가 비칠 수 있습니다.
+                </p>
+              </div>
+              <div className="border-b border-brand-light/20 pb-6">
+                <h3 className="text-lg font-semibold text-brand-black mb-2">
+                  Q. 스티커나 이모지로 가려도 되나요?
+                </h3>
+                <p className="text-brand-mid">
+                  픽셀을 완전히 덮으면 괜찮지만, 앱에 따라 스티커가 레이어로 남아 되돌릴 수 있는
+                  경우가 있습니다. 최종 저장본에서 원본이 남지 않는지 확인하세요.
+                </p>
+              </div>
+              <div className="border-b border-brand-light/20 pb-6">
+                <h3 className="text-lg font-semibold text-brand-black mb-2">
                   Q. 여러 곳을 한 번에 가릴 수 있나요?
                 </h3>
                 <p className="text-brand-mid">네. 가릴 부분을 차례로 드래그하면 여러 곳을 가릴 수 있습니다.</p>
@@ -148,7 +226,8 @@ export default function PhotoMosaicGuidePage() {
                   Q. 사진이 서버에 올라가나요?
                 </h3>
                 <p className="text-brand-mid">
-                  아니요. 모든 처리는 브라우저 안에서 이루어지며 서버로 전송되지 않습니다.
+                  아니요. 모자이크 처리는 브라우저의 캔버스 위에서 이루어지고, 저장 버튼을
+                  누르면 완성본이 곧장 내 기기로 내려옵니다. 가리기 전 원본이 밖으로 나갈 일은 없습니다.
                 </p>
               </div>
             </div>

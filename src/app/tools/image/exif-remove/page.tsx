@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/image/exif-remove`;
 export const metadata: Metadata = {
   title: "EXIF 삭제 - 사진 위치정보·메타데이터 제거",
   description:
-    "사진에 담긴 촬영 위치(GPS), 기기 정보, 촬영 시각 같은 EXIF 메타데이터를 제거합니다. SNS·중고거래에 올리기 전 위치 노출 차단. 서버 전송 없이 브라우저에서, 회원가입 없이 무료입니다.",
+    "사진에 담긴 촬영 위치(GPS), 기기 정보, 촬영 시각 같은 EXIF 메타데이터를 제거합니다. SNS·중고거래에 올리기 전 위치 노출 차단. 지우려던 정보가 다른 서버에 남지 않도록, 판독부터 제거까지 브라우저 안에서 무료로 끝냅니다.",
   keywords: [
     "exif 삭제",
     "사진 위치정보 삭제",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "EXIF 삭제 - 사진 위치정보·메타데이터 제거",
-    description: "촬영 위치(GPS)·기기 정보·촬영 시각을 제거. 서버 전송 없이.",
+    description: "촬영 위치(GPS)·기기 정보·촬영 시각을 제거. 판독부터 삭제까지 브라우저 안에서.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -52,7 +52,7 @@ const guide = {
       heading: "올리기 전에 지우는 습관",
       paragraphs: [
         "사진을 올리면 그 안의 EXIF가 함께 퍼집니다. 일부 SNS는 업로드 시 자동으로 지우기도 하지만, 모든 플랫폼이 그러는 건 아니고 원본 파일을 직접 주고받을 땐 그대로 남습니다. 중고거래, 블로그, 메신저로 사진을 보낼 때 미리 지워 두는 게 안전합니다.",
-        "이 도구는 사진을 다시 인코딩하는 방식으로 EXIF를 포함한 모든 메타데이터를 제거합니다. 여러 장을 한 번에 올리면 ZIP으로 묶어 받을 수 있습니다. 처리는 전부 브라우저 안에서 이루어져 사진이 서버로 전송되지 않습니다.",
+        "이 도구는 사진을 다시 인코딩하는 방식으로 EXIF를 포함한 모든 메타데이터를 제거합니다. 여러 장을 한 번에 올리면 ZIP으로 묶어 받을 수 있습니다. 위치 정보를 지우려고 올린 사진이 다른 서버에 남는다면 모순이겠죠. EXIF 판독과 제거 모두 지금 열려 있는 이 브라우저 탭 안에서 끝납니다.",
       ],
     },
   ],
@@ -75,9 +75,9 @@ const faqs = [
       "일부 플랫폼은 업로드 시 EXIF를 제거하지만 모두 그런 건 아니며, 원본 파일을 직접 주고받을 땐 그대로 남습니다. 미리 지워 두는 게 안전합니다.",
   },
   {
-    question: "사진이 서버에 올라가나요?",
+    question: "위치를 지우려는 사진이 서버에 올라가지는 않나요?",
     answer:
-      "아니요. 모든 처리는 브라우저 안에서 이루어지며 사진이 서버로 전송되거나 저장되지 않습니다.",
+      "아니요. 위치를 지우러 온 사진을 서버에 받아 두는 건 이 도구의 존재 이유와 어긋납니다. EXIF 판독도 제거도 기기 안에서만 이루어지고, 원본과 결과물 모두 어디에도 저장되지 않습니다.",
   },
 ];
 
@@ -89,7 +89,7 @@ const schemas = [
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "사진의 EXIF(위치·기기·시각) 메타데이터를 제거하는 무료 도구. 서버 전송 없이 브라우저에서 처리.",
+    description: "사진의 EXIF(위치·기기·시각) 메타데이터를 제거하는 무료 도구. 판독과 제거 모두 브라우저 안에서 이루어집니다.",
   },
   {
     "@context": "https://schema.org",

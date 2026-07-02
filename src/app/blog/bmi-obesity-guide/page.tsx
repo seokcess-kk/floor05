@@ -38,6 +38,14 @@ const faqSchema = {
         text: "아시아인은 같은 BMI에서도 체지방률이 높고 대사질환 위험이 커, 대한비만학회가 더 낮은 기준을 적용합니다.",
       },
     },
+    {
+      "@type": "Question",
+      name: "복부비만 허리둘레 기준은 얼마인가요?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "대한비만학회 기준 성인 남성 90cm(약 35.4인치), 여성 85cm(약 33.5인치) 이상이면 복부비만입니다. BMI가 정상이어도 허리둘레가 기준을 넘으면 대사질환 위험이 높아집니다.",
+      },
+    },
   ],
 };
 
@@ -106,6 +114,10 @@ export default function BmiObesityGuidePage() {
                 예) 170cm·65kg → 65 ÷ (1.7 × 1.7) ≈ <strong>22.5</strong>
               </p>
             </div>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              거꾸로 자기 키의 경계 몸무게를 알아 두면 편합니다. 170cm라면 정상 상한(BMI 23)이 되는
+              몸무게는 약 66.5kg, 비만 기준(BMI 25)은 약 72.3kg입니다.
+            </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               한국(대한비만학회) 기준
@@ -160,14 +172,37 @@ export default function BmiObesityGuidePage() {
               BMI는 근육과 지방을 구분하지 못합니다.
             </p>
             <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
-              <li>근육량이 많은 사람은 BMI가 높아도 비만이 아닐 수 있습니다.</li>
+              <li>
+                근육량이 많은 사람은 BMI가 높아도 비만이 아닐 수 있습니다. 웨이트 트레이닝을 꾸준히
+                한 사람이 &lsquo;1단계 비만&rsquo;으로 나오는 게 대표적인 오판입니다.
+              </li>
               <li>BMI가 정상이어도 체지방이 많은 &lsquo;마른 비만&rsquo;일 수 있습니다.</li>
               <li>지방이 어디에 붙었는지(복부 비만 여부)는 BMI로 알 수 없습니다.</li>
+              <li>
+                소아·청소년에게는 성인 기준을 그대로 쓰지 않습니다. 같은 성별·나이의 성장도표에서
+                몇 번째 백분위인지로 판정합니다(85백분위 이상 과체중, 95백분위 이상 비만).
+              </li>
             </ul>
             <p className="text-brand-mid leading-relaxed mb-4">
               그래서 BMI는 큰 흐름을 보는 참고 지표로 쓰고, 정확한 건강 상태는 체지방률·허리둘레·혈액
-              검사와 함께 보는 것이 좋습니다. 본격적으로 식단을 조절한다면 하루에 얼마나 먹어야
-              하는지부터 아는 게 순서입니다.
+              검사와 함께 보는 것이 좋습니다.
+            </p>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              허리둘레도 같이 재보세요
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              BMI의 약점을 보완하는 가장 간단한 방법이 허리둘레입니다. 대한비만학회는 성인 남성{" "}
+              <strong>90cm(약 35.4인치)</strong>, 여성 <strong>85cm(약 33.5인치)</strong> 이상을
+              복부비만으로 봅니다. BMI가 정상이어도 허리둘레가 기준을 넘으면 당뇨병·고혈압 같은
+              대사질환 위험이 올라가서, 국가건강검진에서도 BMI와 허리둘레를 함께 잽니다.
+            </p>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              잴 때는 줄자를 배꼽 높이가 아니라 갈비뼈 아래와 골반뼈 위쪽의 중간에 두고, 숨을 편하게
+              내쉰 상태에서 측정합니다. 바지 치수와는 다른 값이 나오는 게 정상이니 벨트 구멍으로
+              판단하지 마세요. 요약하면 이렇습니다 — BMI로 전체 체중의 흐름을 보고, 허리둘레로
+              지방의 위치를 확인하는 것. 둘 다 집에서 1분이면 됩니다. 본격적으로 식단을 조절한다면
+              하루에 얼마나 먹어야 하는지부터 아는 게 순서입니다.
             </p>
             <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
               <li>
@@ -202,12 +237,21 @@ export default function BmiObesityGuidePage() {
                   대한비만학회 기준 18.5 이상 23 미만이 정상입니다. 25 이상부터 비만으로 봅니다.
                 </p>
               </div>
-              <div className="pb-6">
+              <div className="border-b border-brand-light/20 pb-6">
                 <h3 className="text-lg font-semibold text-brand-black mb-2">
                   Q. BMI가 정상인데 살이 쪄 보여요.
                 </h3>
                 <p className="text-brand-mid">
                   BMI는 근육과 지방을 구분하지 못합니다. 체지방률·허리둘레와 함께 보세요.
+                </p>
+              </div>
+              <div className="pb-6">
+                <h3 className="text-lg font-semibold text-brand-black mb-2">
+                  Q. 복부비만 허리둘레 기준은 얼마인가요?
+                </h3>
+                <p className="text-brand-mid">
+                  대한비만학회 기준 성인 남성 90cm, 여성 85cm 이상입니다. BMI가 정상이어도 기준을
+                  넘으면 대사질환 위험이 높아집니다.
                 </p>
               </div>
             </div>

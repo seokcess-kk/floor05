@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/pdf/image-to-pdf`;
 export const metadata: Metadata = {
   title: "이미지 PDF 변환 - 여러 사진을 한 PDF로",
   description:
-    "JPG·PNG 여러 장을 한 PDF로 묶습니다. 순서 조정, A4·여백 옵션까지. 파일을 서버에 올리지 않고 브라우저에서 바로. 회원가입 없이 무료입니다.",
+    "JPG·PNG 여러 장을 한 PDF로 묶습니다. 순서 조정, A4·여백 옵션까지. 휴대폰으로 찍은 계약서·신분증 사진도 기기 안에서만 PDF가 됩니다. 물론 무료.",
   keywords: [
     "이미지 pdf 변환",
     "jpg pdf 변환",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "이미지 PDF 변환 - 여러 사진을 한 PDF로",
-    description: "JPG·PNG 여러 장을 순서대로 한 PDF로. A4·여백 옵션, 서버 전송 없음.",
+    description: "JPG·PNG 여러 장을 순서대로 한 PDF로. A4·여백 옵션, 서류 사진은 기기 안에서만.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -28,14 +28,14 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "이미지 PDF 변환 - 여러 사진을 한 PDF로",
-    description: "JPG·PNG 여러 장을 한 PDF로. 서버 전송 없이 브라우저에서.",
+    description: "찍어 둔 서류 사진, 브라우저에서 바로 한 PDF로.",
   },
   alternates: { canonical: PAGE_URL },
 };
 
 const guide = {
   intro:
-    "과제, 서류, 계약서 사진을 한 파일로 제출해야 할 때 PDF가 가장 무난합니다. 이 도구는 여러 장의 사진을 업로드해 순서를 정하고, 한 개의 PDF로 묶어줍니다. 파일은 서버로 전송되지 않고 브라우저 안에서 변환됩니다.",
+    "과제, 서류, 계약서 사진을 한 파일로 제출해야 할 때 PDF가 가장 무난합니다. 이 도구는 여러 장의 사진을 올려 순서를 정하고, 한 개의 PDF로 묶어줍니다. PDF 조립까지 브라우저가 직접 하니, 서류 사진을 어딘가에 올려 두고 기다릴 필요가 없습니다.",
   sections: [
     {
       heading: "여러 사진을 한 PDF로 묶는 법",
@@ -70,9 +70,9 @@ const faqs = [
       "목록의 위·아래 화살표로 순서를 조정할 수 있습니다. 위에서 아래 순서대로 PDF 페이지가 됩니다.",
   },
   {
-    question: "사진이 서버에 올라가나요?",
+    question: "서류 사진이 서버에 올라가나요?",
     answer:
-      "아니요. 변환은 100% 브라우저 안에서 이루어지며 사진이 서버로 전송되거나 저장되지 않습니다. 신분증·계약서 같은 민감한 서류도 안전합니다.",
+      "아니요. PDF 조립은 이 기기의 브라우저가 직접 합니다. 신분증이나 통장 사본을 낯선 서버에 맡기지 않고 제출용 PDF를 만들 수 있다는 게 이 도구의 요점입니다.",
   },
   {
     question: "어떤 이미지 형식을 지원하나요?",
@@ -89,7 +89,7 @@ const schemas = [
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "JPG·PNG 여러 장을 한 PDF로 묶는 무료 도구. 서버 전송 없이 브라우저에서 처리.",
+    description: "JPG·PNG 여러 장을 한 PDF로 묶는 무료 도구. PDF 조립은 브라우저가 직접 합니다.",
   },
   {
     "@context": "https://schema.org",
@@ -106,7 +106,7 @@ export default function ImageToPdfPage() {
   return (
     <ToolLayout
       title="이미지 PDF 변환"
-      description="여러 사진을 한 PDF로. 순서·용지·여백까지, 서버 전송 없이."
+      description="여러 사진을 한 PDF로. 순서·용지·여백까지 브라우저에서 바로."
       guide={guide}
       faqs={faqs}
       currentToolHref="/tools/pdf/image-to-pdf"

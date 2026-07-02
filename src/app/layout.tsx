@@ -13,28 +13,28 @@ const organizationSchema = {
   url: SITE_URL,
   logo: `${SITE_URL}/og-image.png`,
   description:
-    "서버 전송 없이 브라우저에서 처리하는 무료 이미지 도구 모음. 회원가입 없이 무제한 무료.",
+    "서버 전송 없이 브라우저에서 처리하는 무료 온라인 도구 모음. 이미지·PDF·계산기·변환 도구를 회원가입 없이 무제한 무료로.",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "floor05 - 무료 이미지 도구",
+    default: "floor05 - 무료 온라인 도구 모음",
     template: "%s | floor05",
   },
   description:
-    "서버 전송 없이 브라우저에서 바로 이미지 압축, 리사이즈, 포맷 변환, 크롭. 회원가입 없이 무제한 무료.",
+    "서버 전송 없이 브라우저에서 바로. 이미지 압축·변환·크롭, PDF 합치기, 글자수 세기, 연봉·퇴직금 계산까지 회원가입 없이 무제한 무료.",
   keywords: [
     "이미지 압축",
     "이미지 리사이즈",
     "이미지 변환",
     "HEIC 변환",
-    "JPG 변환",
-    "PNG 변환",
-    "WebP 변환",
     "이미지 크롭",
     "사진 용량 줄이기",
-    "아이폰 사진 변환",
+    "PDF 합치기",
+    "글자수 세기",
+    "연봉 실수령액 계산기",
+    "무료 온라인 도구",
   ],
   authors: [{ name: "floor05" }],
   creator: "floor05",
@@ -61,31 +61,32 @@ export const metadata: Metadata = {
     locale: "ko_KR",
     url: SITE_URL,
     siteName: "floor05",
-    title: "floor05 - 무료 이미지 도구",
+    title: "floor05 - 무료 온라인 도구 모음",
     description:
-      "서버 전송 없이 브라우저에서 바로 이미지 압축, 리사이즈, 포맷 변환, 크롭. 회원가입 없이 무제한 무료.",
+      "서버 전송 없이 브라우저에서 바로. 이미지 압축·변환·크롭, PDF 합치기, 글자수 세기, 연봉·퇴직금 계산까지 회원가입 없이 무제한 무료.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "floor05 - 무료 이미지 도구",
+        alt: "floor05 - 무료 온라인 도구 모음",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "floor05 - 무료 이미지 도구",
+    title: "floor05 - 무료 온라인 도구 모음",
     description:
-      "서버 전송 없이 브라우저에서 바로 이미지 압축, 리사이즈, 포맷 변환, 크롭.",
+      "서버 전송 없이 브라우저에서 바로. 이미지·PDF·계산기 도구를 회원가입 없이 무제한 무료로.",
     images: ["/og-image.png"],
   },
   verification: {
     google: "YmJ_D1dCRNV5n1DXivuYlBZt-TQuW-XPmwWXeSgKJnU",
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
+  // canonical은 여기(루트)에 두지 않는다. Next.js 메타데이터는 하위 페이지로
+  // 상속되므로, 루트에 canonical을 설정하면 자체 canonical이 없는 모든 페이지가
+  // "정식 URL = 홈"으로 선언되어 구글 색인에서 통째로 제외된다.
+  // canonical은 각 페이지에서 개별 설정한다.
 };
 
 export default function RootLayout({

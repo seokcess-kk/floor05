@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/image/merge`;
 export const metadata: Metadata = {
   title: "사진 합치기 - 여러 장을 한 장으로, 브라우저에서 바로",
   description:
-    "여러 사진을 세로·가로로 한 장에 이어붙입니다. 파일이 서버로 전송되지 않습니다. 카카오톡 캡처 합치기, 크기 다른 사진 정렬까지 무료로.",
+    "여러 사진을 세로·가로로 한 장에 이어붙입니다. 카카오톡 캡처 합치기, 크기 다른 사진 정렬까지 무료로. 대화 캡처처럼 사적인 이미지도 기기 밖으로 나가지 않습니다.",
   keywords: [
     "사진 합치기",
     "이미지 합치기",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "사진 합치기 - 여러 장을 한 장으로, 브라우저에서 바로",
-    description: "여러 사진을 세로·가로로 한 장에. 파일이 서버로 전송되지 않습니다.",
+    description: "여러 사진을 세로·가로로 한 장에. 캡처 이어붙이기도 기기 안에서 끝납니다.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "사진 합치기 - 여러 장을 한 장으로, 브라우저에서 바로",
-    description: "여러 사진을 세로·가로로 한 장에. 파일이 서버로 전송되지 않습니다.",
+    description: "카톡 캡처를 길게 이어붙여도 대화 내용은 기기 안에만 있습니다.",
   },
   alternates: {
     canonical: PAGE_URL,
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: "파일이 서버로 전송되나요?",
+    question: "합치는 사진이 서버에 올라가지 않나요?",
     answer:
-      "아니요, 모든 처리는 100% 브라우저에서 이루어집니다. 합치는 사진이 서버로 전송되지 않아 개인정보가 안전합니다.",
+      "아니요. 이어붙이기는 브라우저의 캔버스 위에서 이루어집니다. 카카오톡 대화 캡처처럼 사적인 내용이 담긴 이미지도 기기 밖으로 나가지 않습니다.",
   },
   {
     question: "한 번에 몇 장까지 합칠 수 있나요?",
@@ -69,7 +69,7 @@ const faqs = [
 
 const guide = {
   intro:
-    "여러 장의 사진을 한 장으로 이어붙이는 도구입니다. 위아래로 길게 잇거나 좌우로 나란히 붙일 수 있고, 모든 처리는 브라우저 안에서 끝나 파일이 서버로 전송되지 않습니다. 캡처를 길게 잇는 일부터 비교샷 콜라주까지 한 자리에서 해결됩니다.",
+    "여러 장의 사진을 한 장으로 이어붙이는 도구입니다. 위아래로 길게 잇거나 좌우로 나란히 붙일 수 있습니다. 이어붙이는 작업은 브라우저가 자기 캔버스 위에서 직접 하기 때문에, 대화 캡처 속 내용이 밖으로 새어 나갈 통로 자체가 없습니다. 캡처를 길게 잇는 일부터 비교샷 콜라주까지 한 자리에서 해결됩니다.",
   sections: [
     {
       heading: "세로와 가로, 언제 무엇을 쓰나",
@@ -134,7 +134,7 @@ const schemas = [
       priceCurrency: "KRW",
     },
     description:
-      "서버 전송 없이 브라우저에서 여러 사진을 세로·가로로 한 장으로 합치기. 무제한 무료.",
+      "여러 사진을 세로·가로로 한 장에 이어붙이는 무료 도구. 캡처 합치기도 기기 안에서 끝납니다.",
   },
   {
     "@context": "https://schema.org",

@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/image/mosaic`;
 export const metadata: Metadata = {
   title: "사진 모자이크 - 얼굴·개인정보 가리기",
   description:
-    "사진에서 얼굴, 차량 번호판, 주소 같은 개인정보를 드래그로 가립니다. 모자이크·블러 선택, 강도 조절. 서버 전송 없이 브라우저에서 바로, 회원가입 없이 무료입니다.",
+    "사진에서 얼굴, 차량 번호판, 주소 같은 개인정보를 드래그로 가립니다. 모자이크·블러 선택, 강도 조절. 가려야 할 만큼 민감한 사진이니, 원본은 브라우저 밖으로 내보내지 않습니다. 무료로 쓰세요.",
   keywords: [
     "사진 모자이크",
     "얼굴 모자이크",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "사진 모자이크 - 얼굴·개인정보 가리기",
-    description: "드래그로 얼굴·번호판·주소를 모자이크·블러 처리. 서버 전송 없음.",
+    description: "드래그로 얼굴·번호판·주소를 모자이크·블러 처리. 원본은 기기 밖으로 나가지 않습니다.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "사진 모자이크 - 얼굴·개인정보 가리기",
-    description: "드래그로 개인정보를 모자이크·블러 처리. 서버 전송 없음.",
+    description: "가리기 전 원본이 기기 밖으로 나가지 않는 모자이크 도구.",
   },
   alternates: { canonical: PAGE_URL },
 };
@@ -47,7 +47,7 @@ const guide = {
     {
       heading: "서버에 올리지 않아 안전하다",
       paragraphs: [
-        "가리려는 정보가 민감할수록, 그 사진을 외부 서버에 올리는 건 위험합니다. 이 도구는 처리를 전부 브라우저 안에서 끝내므로 사진이 서버로 전송되지 않습니다. 가린 사진만 기기에 저장됩니다.",
+        "모자이크를 하러 왔다는 건, 그 사진에 남에게 보이면 안 되는 부분이 있다는 뜻입니다. 가리기 전의 원본을 외부 서버에 올려 처리한다면 앞뒤가 맞지 않겠죠. 이 도구는 픽셀을 뭉개는 계산까지 전부 기기 안의 브라우저가 직접 하고, 남는 건 이미 가려진 결과물뿐입니다.",
       ],
     },
   ],
@@ -70,9 +70,9 @@ const faqs = [
       "둘 다 강도를 충분히 높이면 알아보기 어렵습니다. 확실히 가리려면 강도를 높게 설정하세요. 너무 약하면 형태가 비칠 수 있습니다.",
   },
   {
-    question: "사진이 서버에 올라가나요?",
+    question: "가리기 전 원본이 서버에 올라가나요?",
     answer:
-      "아니요. 모든 처리는 브라우저 안에서 이루어지며 사진이 서버로 전송되거나 저장되지 않습니다.",
+      "아니요. 가장 민감한 건 가리기 전의 원본인데, 그 원본은 브라우저 밖으로 한 발짝도 나가지 않습니다. 모자이크 계산도 저장도 전부 이 기기 안에서 끝납니다.",
   },
 ];
 
@@ -84,7 +84,7 @@ const schemas = [
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "사진에서 얼굴·개인정보를 드래그로 모자이크·블러 처리하는 무료 도구. 서버 전송 없이 브라우저에서 처리.",
+    description: "사진에서 얼굴·개인정보를 드래그로 모자이크·블러 처리하는 무료 도구. 원본은 기기 밖으로 나가지 않습니다.",
   },
   {
     "@context": "https://schema.org",

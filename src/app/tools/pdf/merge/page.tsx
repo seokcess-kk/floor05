@@ -8,7 +8,7 @@ const PAGE_URL = `${SITE_URL}/tools/pdf/merge`;
 export const metadata: Metadata = {
   title: "PDF 합치기 - 여러 PDF를 하나로 병합",
   description:
-    "여러 개의 PDF 파일을 하나로 합칩니다. 순서를 바꿔가며 병합하고, 파일은 서버에 올리지 않고 브라우저에서 바로. 회원가입 없이 무료입니다.",
+    "여러 개의 PDF 파일을 하나로 합칩니다. 순서를 바꿔가며 병합. 견적서·증빙처럼 밖에 내놓기 어려운 문서도 기기 안에서만 이어집니다. 가입 없이 무료.",
   keywords: [
     "pdf 합치기",
     "pdf 병합",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "PDF 합치기 - 여러 PDF를 하나로 병합",
-    description: "여러 PDF를 순서대로 하나로. 서버 전송 없이 브라우저에서.",
+    description: "여러 PDF를 순서대로 하나로. 병합은 기기 안에서 끝납니다.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -28,14 +28,14 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "PDF 합치기 - 여러 PDF를 하나로 병합",
-    description: "여러 PDF를 순서대로 하나로 합치기. 서버 전송 없음.",
+    description: "흩어진 PDF 최대 20개, 브라우저에서 한 파일로.",
   },
   alternates: { canonical: PAGE_URL },
 };
 
 const guide = {
   intro:
-    "흩어진 PDF를 하나로 모아야 할 때가 있습니다. 견적서와 계약서, 여러 장으로 스캔된 서류, 각각 받은 증빙 자료를 한 파일로 제출할 때죠. 이 도구는 여러 PDF를 올려 순서를 정하고 한 파일로 병합합니다. 파일은 서버로 전송되지 않습니다.",
+    "흩어진 PDF를 하나로 모아야 할 때가 있습니다. 견적서와 계약서, 여러 장으로 스캔된 서류, 각각 받은 증빙 자료를 한 파일로 제출할 때죠. 이 도구는 여러 PDF를 올려 순서를 정하고 한 파일로 병합합니다. 문서를 어디에 올리는 대신, 이 페이지가 기기 안에서 페이지들을 이어 붙입니다.",
   sections: [
     {
       heading: "PDF를 순서대로 합치기",
@@ -64,9 +64,9 @@ const faqs = [
     answer: "네. 목록의 위·아래 화살표로 순서를 조정한 뒤 합치면 그 순서대로 페이지가 이어집니다.",
   },
   {
-    question: "파일이 서버에 올라가나요?",
+    question: "합치는 PDF가 서버에 올라가나요?",
     answer:
-      "아니요. 병합은 100% 브라우저 안에서 이루어지며 파일이 서버로 전송되거나 저장되지 않습니다.",
+      "아니요. 계약서와 증빙을 한 파일로 묶는 일은 남의 서버가 아니라 이 브라우저가 합니다. 병합 중에도, 끝난 뒤에도 문서는 기기 안에만 있습니다.",
   },
   {
     question: "암호가 걸린 PDF도 합칠 수 있나요?",
@@ -83,7 +83,7 @@ const schemas = [
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "여러 PDF를 순서대로 하나로 병합하는 무료 도구. 서버 전송 없이 브라우저에서 처리.",
+    description: "여러 PDF를 순서대로 하나로 병합하는 무료 도구. 병합은 기기 안에서 이루어집니다.",
   },
   {
     "@context": "https://schema.org",
