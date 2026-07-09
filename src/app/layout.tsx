@@ -82,6 +82,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "YmJ_D1dCRNV5n1DXivuYlBZt-TQuW-XPmwWXeSgKJnU",
+    other: {
+      "naver-site-verification": "b0f2a1ff16235b099f211fb89126d1b52aff29f0",
+    },
   },
   // canonical은 여기(루트)에 두지 않는다. Next.js 메타데이터는 하위 페이지로
   // 상속되므로, 루트에 canonical을 설정하면 자체 canonical이 없는 모든 페이지가
