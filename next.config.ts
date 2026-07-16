@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
         destination: "https://www.floor05.com/:path*",
         permanent: true,
       },
+      // 존재한 적 없는 축약 URL로 외부 유입이 발생해 404가 나는 케이스.
+      // 실제 라우트인 heic-to-jpg로 301 통일해 색인 신호를 모은다.
+      {
+        source: "/tools/image/heic",
+        destination: "/tools/image/heic-to-jpg",
+        permanent: true,
+      },
     ];
   },
 };
