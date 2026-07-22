@@ -205,6 +205,63 @@ export default function PhotoEditingWithoutPhotoshopPage() {
               </Link>
             </p>
 
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">하려는 작업별로 어떤 도구를 쓰면 되나요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">작업 이름을 먼저 정하면 필요한 도구도 자연스럽게 좁혀집니다. 사진을 예쁘게 보정하는 일과 제출 규격에 맞추는 일은 목적이 다르므로, 한 화면에서 모든 기능을 찾기보다 필요한 조작만 골라 쓰는 편이 실수가 적습니다.</p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">작업</th>
+                    <th className="py-2 pr-4 text-brand-black">도구</th>
+                    <th className="py-2 pr-4 text-brand-black">언제 쓰는지</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">자르기</td>
+                    <td className="py-2 pr-4"><Link href="/tools/image/crop" className="text-brand-accent hover:underline">이미지 자르기</Link></td>
+                    <td className="py-2 pr-4">불필요한 여백을 빼거나 정해진 비율로 맞출 때 씁니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">크기 조절</td>
+                    <td className="py-2 pr-4"><Link href="/tools/image/resize" className="text-brand-accent hover:underline">이미지 크기 조절</Link></td>
+                    <td className="py-2 pr-4">가로세로 픽셀 조건이나 표시 크기를 맞출 때 유용합니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">용량 압축</td>
+                    <td className="py-2 pr-4"><Link href="/tools/image/compress" className="text-brand-accent hover:underline">이미지 압축</Link></td>
+                    <td className="py-2 pr-4">업로드 제한에 걸리거나 전송 용량을 줄이고 싶을 때 씁니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">포맷 변환</td>
+                    <td className="py-2 pr-4"><Link href="/tools/image/convert" className="text-brand-accent hover:underline">이미지 포맷 변환</Link></td>
+                    <td className="py-2 pr-4">HEIC, PNG, WebP 등을 JPG처럼 필요한 형식으로 바꿀 때 씁니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">여러 장 합치기</td>
+                    <td className="py-2 pr-4"><Link href="/tools/image/merge" className="text-brand-accent hover:underline">이미지 합치기</Link></td>
+                    <td className="py-2 pr-4">비교 이미지, 전후 사진, 안내용 한 장 이미지를 만들 때 편합니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">워터마크</td>
+                    <td className="py-2 pr-4"><Link href="/tools/image/watermark" className="text-brand-accent hover:underline">워터마크 넣기</Link></td>
+                    <td className="py-2 pr-4">사진 출처를 표시하거나 무단 사용을 줄이고 싶을 때 씁니다</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">모자이크</td>
+                    <td className="py-2 pr-4"><Link href="/tools/image/mosaic" className="text-brand-accent hover:underline">이미지 모자이크</Link></td>
+                    <td className="py-2 pr-4">얼굴, 차량 번호, 주소처럼 공개하면 곤란한 부분을 가릴 때 필요합니다</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">그래도 포토샵이 필요한 경우는 언제인가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">전문 편집의 중심은 여전히 전용 도구가 맡는 편이 좋습니다. 여러 레이어를 겹쳐 합성하고 마스크를 세밀하게 다루는 작업, 피부나 제품 사진을 자연스럽게 리터칭하는 작업, 색을 기준값에 맞춰 보정하는 작업은 브라우저 유틸리티보다 전문 프로그램이 안정적입니다. 인쇄소에 넘길 CMYK 작업이나 색상 프로파일 관리가 중요한 제작물도 마찬가지입니다.</p>
+            <p className="text-brand-mid leading-relaxed mb-4">반대로 제출 파일 만들기, 블로그용 이미지 정리, 메신저로 보낼 사진 가볍게 줄이기처럼 결과 기준이 명확한 일은 간단한 도구만으로 충분한 경우가 많습니다. 중요한 것은 도구의 이름보다 작업의 난이도와 결과물의 쓰임을 먼저 보는 것입니다.</p>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">워터마크와 모자이크까지 필요한 이유는 무엇인가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">사진을 공개하거나 공유할 때는 보기 좋게 만드는 것만큼 노출 범위를 정리하는 일도 중요합니다. 워터마크는 직접 촬영한 상품 사진, 포트폴리오 이미지, 중고 거래 사진에 출처 표시를 남길 때 도움이 됩니다. 완전한 도용 방지를 보장하지는 않지만, 출처를 지우고 다시 쓰는 행동을 줄이는 장치로 활용할 수 있습니다.</p>
+            <p className="text-brand-mid leading-relaxed mb-4">모자이크는 개인정보 보호 쪽에 더 가깝습니다. 택배 송장, 신분증 일부, 차량 번호, 아이 얼굴, 회사 내부 화면처럼 공개 범위를 제한해야 하는 요소가 있으면 업로드 전에 가리는 습관이 좋습니다. 한 번 게시된 이미지는 복사되어 남을 수 있으므로, 공개 후 삭제보다 공개 전 정리가 더 현실적인 대응입니다.</p>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-6">
               자주 묻는 질문
             </h2>

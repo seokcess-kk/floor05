@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import ToolCard from "@/components/common/ToolCard";
-import { TOOL_CATEGORIES, getToolsByCategory } from "@/lib/common/tools";
+import { TOOL_CATEGORIES, getToolsByCategory, type ToolCategory } from "@/lib/common/tools";
 import { SITE_URL } from "@/lib/common/constants";
+
+// 카테고리 허브 페이지 링크 (허브가 있는 카테고리만 "전체 보기" 노출)
+const CATEGORY_HUBS: Partial<Record<ToolCategory, { href: string; label: string }>> = {
+  image: { href: "/tools/image", label: "이미지 도구 전체 보기" },
+  calc: { href: "/tools/calc", label: "금융 계산기 전체 보기" },
+};
 
 export const metadata: Metadata = {
   alternates: {
@@ -43,14 +50,6 @@ const homeSchemas = [
     url: SITE_URL,
     description:
       "파일을 서버로 보내지 않고 브라우저에서 바로 처리하는 무료 온라인 도구 모음. 이미지 압축·변환·크롭부터 글자수 세기, 연봉·퇴직금 계산까지.",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "floor05",
-    url: SITE_URL,
-    description:
-      "존재하지 않는 0.5층 컨셉의 니치 유틸리티 도구 플랫폼. 모든 처리는 브라우저에서 이루어지며 파일이 서버로 전송되지 않습니다.",
   },
   {
     "@context": "https://schema.org",
@@ -141,6 +140,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             {TOOL_CATEGORIES.map((cat) => {
               const tools = getToolsByCategory(cat.id);
+              const hub = CATEGORY_HUBS[cat.id];
               if (tools.length === 0) return null;
               return (
                 <div key={cat.id}>
@@ -161,6 +161,16 @@ export default function Home() {
                       />
                     ))}
                   </div>
+                  {hub ? (
+                    <div className="mt-8 text-center">
+                      <Link
+                        href={hub.href}
+                        className="inline-flex items-center gap-1 font-mono text-sm text-brand-accent transition-colors hover:text-brand-accent-light"
+                      >
+                        {hub.label} →
+                      </Link>
+                    </div>
+                  ) : null}
                 </div>
               );
             })}

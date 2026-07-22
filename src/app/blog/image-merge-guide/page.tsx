@@ -42,44 +42,12 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "여러 사진을 한 장으로 합치는 방법",
-  step: [
-    {
-      "@type": "HowToStep",
-      name: "이미지 추가",
-      text: "합칠 이미지 2장 이상을 선택하거나 드래그 앤 드롭합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "순서·방향 설정",
-      text: "목록에서 순서를 정하고 세로/가로 방향과 크기 맞춤 방식을 선택합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "합치기",
-      text: "합치기 버튼을 누르면 한 장으로 결합됩니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "다운로드",
-      text: "합쳐진 이미지를 다운로드합니다.",
-    },
-  ],
-};
-
 export default function ImageMergeGuidePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -196,7 +164,7 @@ export default function ImageMergeGuidePage() {
               </li>
             </ul>
 
-            {/* 섹션 4 - HowTo */}
+            {/* 섹션 4 - 사용 방법 */}
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               4. 브라우저에서 합치는 법 (4단계)
             </h2>
@@ -275,9 +243,9 @@ export default function ImageMergeGuidePage() {
                 지금 바로 사진 합치기
               </h3>
               <p className="text-brand-light mb-6">
-                회원가입 없이 무료로 사용할 수 있습니다.
+                이어붙이기는 가입 없이 무료예요.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                합칠 사진과 캡처는 내 브라우저에서만 이어집니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

@@ -56,35 +56,6 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "증명사진 용량 줄이기",
-  description: "증명사진 파일 용량을 원하는 크기로 줄이는 방법",
-  step: [
-    {
-      "@type": "HowToStep",
-      name: "이미지 압축 도구 열기",
-      text: "floor05 이미지 압축 도구 페이지에 접속합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "증명사진 업로드",
-      text: "증명사진 파일을 드래그하거나 클릭해서 업로드합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "목표 용량 설정",
-      text: "목표 용량(예: 200KB, 500KB)을 입력합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "압축 및 다운로드",
-      text: "압축 버튼을 클릭하고 완료되면 다운로드합니다.",
-    },
-  ],
-};
-
 export default function PassportPhotoSizePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
@@ -92,10 +63,6 @@ export default function PassportPhotoSizePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -335,7 +302,7 @@ export default function PassportPhotoSizePage() {
               <p className="text-brand-light mb-6">
                 목표 용량만 입력하면 자동으로 맞춰드립니다.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                여권 사진 용량 조정은 지금 브라우저 안에서 끝나요.
               </p>
               <Link
                 href="/tools/image/compress"

@@ -148,33 +148,6 @@ const schemas = [
       },
     })),
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "여러 사진을 한 장으로 합치는 방법",
-    step: [
-      {
-        "@type": "HowToStep",
-        name: "이미지 추가",
-        text: "합칠 이미지 2장 이상을 드래그앤드롭하거나 클릭해서 선택합니다.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "순서와 방향 설정",
-        text: "목록에서 합칠 순서를 정하고, 세로/가로 방향과 크기 맞춤 방식을 선택합니다.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "합치기 실행",
-        text: "합치기 버튼을 클릭하면 브라우저에서 바로 한 장으로 결합됩니다.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "다운로드",
-        text: "합쳐진 이미지를 다운로드합니다.",
-      },
-    ],
-  },
 ];
 
 export default function MergePage() {

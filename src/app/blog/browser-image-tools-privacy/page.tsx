@@ -187,6 +187,59 @@ export default function BrowserImageToolsPrivacyPage() {
               </li>
             </ul>
 
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">서버 업로드 방식과 브라우저 처리 방식은 어디가 다를까요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">차이는 사진 파일이 내 기기를 벗어나는지에 있습니다. 같은 이미지 변환처럼 보여도 서버형 도구는 파일을 전송한 뒤 결과를 다시 받는 구조이고, 브라우저형 도구는 화면을 띄운 뒤 사용자의 기기 자원으로 처리를 끝내는 구조에 가깝습니다. 그래서 개인정보가 담긴 신분증 사진, 가족 사진, 업무 캡처처럼 외부 전송 자체가 부담스러운 파일은 처리 방식부터 확인하는 편이 좋습니다.</p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">항목</th>
+                    <th className="py-2 pr-4 text-brand-black">서버 업로드 방식</th>
+                    <th className="py-2 pr-4 text-brand-black">브라우저 처리 방식</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">파일 이동 경로</td>
+                    <td className="py-2 pr-4">내 기기에서 서비스 서버로 전송된 뒤 결과를 내려받습니다</td>
+                    <td className="py-2 pr-4">선택한 파일을 현재 브라우저 화면에서 읽고 결과를 만듭니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">인터넷 연결</td>
+                    <td className="py-2 pr-4">업로드와 다운로드 과정에 연결이 계속 필요합니다</td>
+                    <td className="py-2 pr-4">도구 화면을 연 뒤에는 작업 종류에 따라 연결 의존도가 낮습니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">대기 시간</td>
+                    <td className="py-2 pr-4">파일 크기와 회선 상태, 서버 대기열의 영향을 받습니다</td>
+                    <td className="py-2 pr-4">대체로 기기 성능과 이미지 크기에 좌우됩니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">유출 가능 지점</td>
+                    <td className="py-2 pr-4">전송 구간, 저장 공간, 처리 서버, 운영 로그가 확인 대상입니다</td>
+                    <td className="py-2 pr-4">기기와 브라우저 권한, 내려받은 결과 파일 관리가 핵심입니다</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">삭제 보장 확인 방법</td>
+                    <td className="py-2 pr-4">보관 기간, 자동 삭제 시점, 수동 삭제 기능을 약관에서 봐야 합니다</td>
+                    <td className="py-2 pr-4">업로드 요청이 없는지 확인하고 작업 뒤 탭과 파일을 정리합니다</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">정말 안 올라가는지 직접 확인할 수 있을까요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">확인은 가능하며 가장 단순한 방법은 브라우저 개발자 도구의 네트워크 기록을 보는 것입니다. 전문 지식이 없어도 파일을 고른 순간 큰 전송 요청이 생기는지 살펴보면 동작 방식을 어느 정도 구분할 수 있습니다.</p>
+            <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
+              <li>도구 페이지를 열기 전에 F12를 누르고 Network 또는 네트워크 탭을 선택합니다.</li>
+              <li>기록을 비우는 버튼을 누른 뒤 Preserve log 옵션은 필요에 따라 켜 둡니다.</li>
+              <li>이미지를 선택하고 압축, 변환, 크롭 같은 작업을 실제로 실행합니다.</li>
+              <li>목록에서 POST, PUT처럼 파일을 보내는 요청이 새로 생겼는지 확인합니다.</li>
+              <li>요청 크기가 사진 용량과 비슷하게 크거나 form data, blob 같은 전송 흔적이 있으면 서버 처리 가능성을 의심합니다.</li>
+              <li>폰트, 스크립트, 통계처럼 작은 요청은 페이지 표시용일 수 있으므로 파일 업로드 요청과 구분해서 봅니다.</li>
+            </ul>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">서버 방식이 오히려 맞는 경우도 있을까요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">있습니다. 수백 장을 한 번에 처리하거나, 고해상도 원본을 오래 걸리지 않게 변환하거나, AI 보정과 배경 제거처럼 무거운 연산이 필요한 기능은 서버형 도구가 더 자연스러울 수 있습니다. 이때는 서버 사용 자체를 문제로 보기보다 어떤 파일을 맡길지, 보관 기간과 삭제 정책이 명확한지, 처리 뒤 원본을 지울 수 있는지 확인하는 접근이 현실적입니다.</p>
+
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-6">
               자주 묻는 질문
             </h2>

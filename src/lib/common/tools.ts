@@ -10,6 +10,8 @@ export interface Tool {
   name: string;
   href: string;
   description: string;
+  /** 도구 콘텐츠 최종 수정일 YYYY-MM-DD — sitemap lastmod에 사용, 없으면 sitemap에서 생략 */
+  lastModified?: string;
   shortDescription?: string; // Header 드롭다운용 짧은 설명
   category: ToolCategory;
 }

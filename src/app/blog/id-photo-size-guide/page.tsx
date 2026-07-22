@@ -41,44 +41,12 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "증명사진 규격으로 만드는 방법",
-  step: [
-    {
-      "@type": "HowToStep",
-      name: "사진 업로드",
-      text: "얼굴이 정면으로 나온 사진을 크롭 도구에 올립니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "증명사진 프리셋 선택",
-      text: "증명사진(3×4), 여권(3.5×4.5), 미국 비자(2×2) 중 규격을 선택합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "영역 맞추기",
-      text: "얼굴이 규격 안에 들어오도록 크롭 영역을 조정합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "다운로드",
-      text: "권장 크기로 저장하고, 용량 제한이 있으면 압축으로 맞춥니다.",
-    },
-  ],
-};
-
 export default function IdPhotoSizeGuidePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -190,6 +158,47 @@ export default function IdPhotoSizeGuidePage() {
               켜세요. 선택 영역을 원형으로 잘라 투명 배경 PNG로 저장합니다. 1:1 비율과 함께 쓰면
               완전한 원이 됩니다.
             </p>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">cm 규격을 픽셀로 바꾸면 얼마인가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">300dpi로 맞춘다면 대표 규격은 아래처럼 계산할 수 있습니다. 다만 실제 접수에서는 얼굴 위치, 배경색, 머리 길이, 파일 용량 같은 세부 조건이 함께 붙는 경우가 많으므로 최종 제출 전에는 접수처 안내를 기준으로 확인해야 합니다.</p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">용도</th>
+                    <th className="py-2 pr-4 text-brand-black">cm 규격</th>
+                    <th className="py-2 pr-4 text-brand-black">300dpi 기준 픽셀</th>
+                    <th className="py-2 pr-4 text-brand-black">확인할 점</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">일반 증명사진</td>
+                    <td className="py-2 pr-4">3×4cm</td>
+                    <td className="py-2 pr-4">354×472px</td>
+                    <td className="py-2 pr-4">이력서나 제출처별 안내가 다를 수 있습니다</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">여권·비자용</td>
+                    <td className="py-2 pr-4">3.5×4.5cm</td>
+                    <td className="py-2 pr-4">413×531px</td>
+                    <td className="py-2 pr-4">국가와 기관별 얼굴 크기 조건을 따로 확인합니다</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">cm를 픽셀로 바꾸는 계산법은 무엇인가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">공식은 픽셀 = cm × 300 ÷ 2.54입니다. 여기서 2.54는 1인치가 2.54cm라는 뜻이고, 300은 인화용 사진에서 자주 쓰는 해상도 기준입니다. 예를 들어 3cm 너비는 3 × 300 ÷ 2.54 = 약 354px이고, 4cm 높이는 4 × 300 ÷ 2.54 = 약 472px입니다. 그래서 3×4cm 증명사진은 300dpi 기준으로 354×472px에 가깝습니다.</p>
+            <p className="text-brand-mid leading-relaxed mb-4">온라인 접수 화면에서 픽셀만 요구한다면 cm보다 해당 픽셀 조건을 우선으로 보면 됩니다. 반대로 인화소에 맡기거나 사진관 출력용 파일을 만들 때는 cm 규격과 해상도를 함께 맞추는 편이 결과를 예측하기 쉽습니다.</p>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">온라인 접수용과 인화용은 무엇이 다른가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">온라인 접수용은 화면에서 검증되는 조건이 중심이고, 인화용은 종이에 출력했을 때의 실제 크기가 중심입니다. 온라인에서는 가로세로 픽셀, 파일 용량, JPG 같은 형식 제한이 먼저 걸리는 경우가 많습니다. 인화에서는 3×4cm 또는 3.5×4.5cm처럼 물리적인 크기와 300dpi 같은 해상도 기준이 더 중요합니다.</p>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">접수가 반려되는 흔한 실수는 무엇인가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">가장 흔한 문제는 규격을 숫자로만 맞추다가 얼굴 비율이나 화질을 망치는 것입니다. 비율이 다른 사진을 억지로 늘리면 얼굴이 길어지거나 넓어져 부자연스럽고, 작은 사진을 크게 키우면 윤곽이 흐려질 수 있습니다. 또한 용량 제한을 넘겨 업로드가 막히거나, 배경과 얼굴 위치 조건을 놓쳐 반려되는 경우도 있습니다.</p>
+            <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
+              <li>비율이 맞지 않으면 늘리기보다 크롭으로 맞춥니다.</li>
+              <li>원본이 너무 작다면 무리하게 확대하지 말고 다시 촬영하는 편이 낫습니다.</li>
+              <li>접수 사이트의 용량 제한이 있으면 제출 전 <Link href="/tools/image/compress" className="text-brand-accent hover:underline">이미지 압축</Link>으로 확인합니다.</li>
+            </ul>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-6">
               자주 묻는 질문

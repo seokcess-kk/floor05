@@ -77,9 +77,9 @@ const faqs = [
       "마지막 생리일 기준 추정치라, 주기가 불규칙하거나 배란이 늦으면 실제 주수와 차이 날 수 있습니다. 정확한 주수와 예정일은 초음파 검사로 확인해야 합니다.",
   },
   {
-    question: "입력한 날짜가 저장되나요?",
+    question: "마지막 생리일을 입력하면 어딘가에 남나요?",
     answer:
-      "아니요. 모든 계산은 브라우저 안에서 이루어지며 입력값이 서버로 전송되거나 저장되지 않습니다.",
+      "어디에도 남기지 않습니다. 마지막 생리 시작일(LMP)은 현재 기기에서 예정일을 계산하는 순간에만 쓰이고 서버로 보내지지 않습니다.",
   },
 ];
 
@@ -113,7 +113,7 @@ export default function PregnancyPage() {
       guide={guide}
       faqs={faqs}
       currentToolHref="/tools/health/pregnancy"
-      relatedPostSlugs={["bmi-obesity-guide"]}
+      relatedPostSlugs={["ovulation-calculation-guide"]}
       schemas={schemas}
     >
       <PregnancyTool />

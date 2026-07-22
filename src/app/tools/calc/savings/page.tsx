@@ -111,6 +111,7 @@ export default function SavingsPage() {
       guide={guide}
       faqs={faqs}
       currentToolHref="/tools/calc/savings"
+      relatedPostSlugs={["savings-interest-guide"]}
       schemas={schemas}
     >
       <SavingsTool />

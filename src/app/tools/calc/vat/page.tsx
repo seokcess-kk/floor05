@@ -77,7 +77,7 @@ const faqs = [
   {
     question: "입력한 금액이 저장되나요?",
     answer:
-      "아니요. 모든 계산은 브라우저 안에서 이루어지며 입력값이 서버로 전송되거나 저장되지 않습니다.",
+      "저장되지 않습니다. 공급가액과 합계금액 같은 거래 금액은 세금계산서·견적서 계산에만 쓰이고 서버로 전송되지 않습니다.",
   },
 ];
 
@@ -110,6 +110,7 @@ export default function VatPage() {
       guide={guide}
       faqs={faqs}
       currentToolHref="/tools/calc/vat"
+      relatedPostSlugs={["vat-calculation-guide"]}
       schemas={schemas}
     >
       <VatTool />

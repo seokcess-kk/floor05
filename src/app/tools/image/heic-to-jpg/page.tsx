@@ -133,17 +133,6 @@ const schemas = [
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
     })),
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "아이폰 HEIC 사진을 JPG로 변환하는 방법",
-    step: [
-      { "@type": "HowToStep", name: "HEIC 파일 업로드", text: "아이폰에서 가져온 HEIC 파일을 드래그앤드롭합니다." },
-      { "@type": "HowToStep", name: "출력 포맷 확인", text: "JPG가 기본 선택되어 있습니다. 필요시 품질을 조절합니다." },
-      { "@type": "HowToStep", name: "변환", text: "변환 버튼을 클릭하면 브라우저에서 바로 변환됩니다." },
-      { "@type": "HowToStep", name: "다운로드", text: "변환된 JPG 파일을 다운로드합니다." },
-    ],
-  },
 ];
 
 export default function HeicToJpgPage() {

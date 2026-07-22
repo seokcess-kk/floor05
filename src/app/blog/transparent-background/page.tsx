@@ -331,7 +331,7 @@ export default function TransparentBackgroundPage() {
               <p className="text-brand-light mb-6">
                 투명도 유지하면서 용량 절감.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                투명 PNG와 로고 이미지는 기기 안에서 WebP로 바뀝니다.
               </p>
               <Link
                 href="/tools/image/convert"

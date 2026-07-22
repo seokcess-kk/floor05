@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "next-sitemap",
+    "indexnow": "node scripts/submit-indexnow.mjs",
     "start": "next start",
     "lint": "eslint \"./src/**/*.{ts,tsx}\""
   },

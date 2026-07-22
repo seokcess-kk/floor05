@@ -27,6 +27,84 @@ export interface BlogPost {
  * datePublished/dateModified는 검색엔진 신선도 신호(BlogPosting)로 사용된다.
  */
 export const POSTS: BlogPost[] = [
+  // ── 신규 (2026-07-22) ───────────────────────────────────────────
+  {
+    slug: "loan-interest-guide",
+    title: "대출 이자 계산법: 상환방식 3가지 비교",
+    description:
+      "원리금균등, 원금균등, 만기일시 상환의 월 납입액과 총이자 차이를 실제 숫자로 비교해 대출 이자 구조를 정리합니다.",
+    datePublished: "2026-07-22",
+    dateModified: "2026-07-22",
+    readTime: "7분",
+    keywords: [
+      "대출 이자 계산법",
+      "원리금균등 상환",
+      "원금균등 상환",
+      "만기일시 상환",
+      "주택담보대출 이자",
+      "신용대출 이자 계산",
+      "대출 상환 방식 비교",
+    ],
+    related: ["savings-interest-guide", "vat-calculation-guide", "salary-net-pay-guide"],
+  },
+  {
+    slug: "ovulation-calculation-guide",
+    title: "배란일 계산하는 법과 가임기",
+    description:
+      "마지막 생리 시작일과 생리 주기로 배란 예정일과 가임기를 추정하는 방법, 오차가 커지는 경우와 참고 한계를 함께 설명합니다.",
+    datePublished: "2026-07-22",
+    dateModified: "2026-07-22",
+    readTime: "6분",
+    keywords: [
+      "배란일 계산법",
+      "가임기 계산",
+      "생리주기 계산",
+      "임신 가능 기간",
+      "배란 예정일",
+      "불규칙 생리 배란일",
+      "임신 준비 계산기",
+    ],
+    related: ["bmi-obesity-guide", "mannai-age-guide"],
+  },
+  {
+    slug: "vat-calculation-guide",
+    title: "부가세 계산법: 공급가액·합계금액 관계",
+    description:
+      "부가세 별도와 포함 금액을 구분해 공급가액, 부가세, 합계금액을 계산하고 역산하는 방법을 정리합니다.",
+    datePublished: "2026-07-22",
+    dateModified: "2026-07-22",
+    readTime: "6분",
+    keywords: [
+      "부가세 계산법",
+      "공급가액 계산",
+      "부가세 포함 계산",
+      "합계금액 역산",
+      "부가가치세 10%",
+      "세금계산서 공급가액",
+      "부가세 별도 포함",
+    ],
+    related: ["savings-interest-guide", "loan-interest-guide", "salary-net-pay-guide"],
+  },
+  {
+    slug: "savings-interest-guide",
+    title: "예금·적금 이자 계산법: 단리와 복리 차이",
+    description:
+      "예금과 적금의 납입 방식 차이, 단리와 월복리 계산식, 이자소득세를 반영한 세후이자 흐름을 설명합니다.",
+    datePublished: "2026-07-22",
+    dateModified: "2026-07-22",
+    readTime: "6분",
+    keywords: [
+      "예금 이자 계산법",
+      "적금 이자 계산법",
+      "단리 복리 차이",
+      "월복리 계산",
+      "세후이자 계산",
+      "이자소득세 15.4%",
+      "적금 만기 이자",
+    ],
+    related: ["vat-calculation-guide", "loan-interest-guide", "salary-net-pay-guide"],
+  },
+
   // ── 신규 (2026-06-29) ───────────────────────────────────────────
   {
     slug: "exif-removal-guide",
@@ -334,7 +412,7 @@ export const POSTS: BlogPost[] = [
       "증명사진 300dpi",
     ],
     datePublished: "2026-06-12",
-    dateModified: "2026-06-12",
+    dateModified: "2026-07-22",
     readTime: "6분",
     related: ["passport-photo-size", "image-crop-guide", "character-count-guide"],
   },
@@ -391,7 +469,7 @@ export const POSTS: BlogPost[] = [
       "브라우저 사진 편집",
     ],
     datePublished: "2026-06-11",
-    dateModified: "2026-06-20",
+    dateModified: "2026-07-22",
     readTime: "7분",
     related: [
       "image-compression-guide",
@@ -414,7 +492,7 @@ export const POSTS: BlogPost[] = [
       "서버 전송 없는 이미지 변환",
     ],
     datePublished: "2026-06-11",
-    dateModified: "2026-06-11",
+    dateModified: "2026-07-22",
     readTime: "5분",
     related: [
       "image-compression-guide",
@@ -593,7 +671,7 @@ export const POSTS: BlogPost[] = [
       "PNG 압축",
     ],
     datePublished: "2026-03-07",
-    dateModified: "2026-06-11",
+    dateModified: "2026-07-22",
     readTime: "5분",
     related: ["image-quality-vs-size", "passport-photo-size", "png-vs-jpg"],
   },
@@ -612,7 +690,7 @@ export const POSTS: BlogPost[] = [
       "아이폰 사진 JPG",
     ],
     datePublished: "2026-03-07",
-    dateModified: "2026-06-11",
+    dateModified: "2026-07-22",
     readTime: "3분",
     related: ["png-vs-jpg", "image-compression-guide", "browser-image-tools-privacy"],
   },
@@ -688,6 +766,7 @@ export function buildBlogPostingSchema(slug: string): Record<string, unknown> | 
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
+    image: [`${SITE_URL}/og-image.png`],
     description: post.description,
     datePublished: post.datePublished,
     dateModified: post.dateModified,

@@ -359,7 +359,7 @@ export default function SNSImageSizePage() {
               <p className="text-brand-light mb-6">
                 인스타, 유튜브, 페이스북 등 SNS 프리셋 내장.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                SNS 업로드 전 브라우저에서 프리셋에 맞춰 둡니다.
               </p>
               <Link
                 href="/tools/image/resize"

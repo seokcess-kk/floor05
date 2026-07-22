@@ -57,30 +57,6 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "인스타그램 사진 크기 맞추는 방법",
-  description: "인스타그램에 올릴 사진을 최적 크기로 조정하는 방법",
-  step: [
-    {
-      "@type": "HowToStep",
-      name: "사진 업로드",
-      text: "리사이즈 도구에서 사진을 업로드합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "인스타그램 프리셋 선택",
-      text: "SNS 프리셋에서 Instagram 정사각형, 세로, 또는 가로를 선택합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "리사이즈 및 다운로드",
-      text: "변환 버튼을 클릭하고 최적화된 이미지를 다운로드합니다.",
-    },
-  ],
-};
-
 export default function InstagramImageSizePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
@@ -88,10 +64,6 @@ export default function InstagramImageSizePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -283,7 +255,7 @@ export default function InstagramImageSizePage() {
               <p className="text-brand-light mb-6">
                 인스타그램 프리셋으로 클릭 한 번에 완성.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                올리기 전 피드 비율에 맞게 브라우저에서 정리합니다.
               </p>
               <Link
                 href="/tools/image/resize"

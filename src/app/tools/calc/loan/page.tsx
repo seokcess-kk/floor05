@@ -111,6 +111,7 @@ export default function LoanPage() {
       guide={guide}
       faqs={faqs}
       currentToolHref="/tools/calc/loan"
+      relatedPostSlugs={["loan-interest-guide"]}
       schemas={schemas}
     >
       <LoanTool />

@@ -25,6 +25,7 @@ const config: Config = {
       fontFamily: {
         // Primary: 모노스페이스
         mono: [
+          "var(--font-mono)",
           "IBM Plex Mono",
           "SF Mono",
           "Fira Code",
@@ -34,6 +35,7 @@ const config: Config = {
         ],
         // Secondary: 한글
         sans: [
+          "var(--font-sans)",
           "Pretendard",
           "Apple SD Gothic Neo",
           "-apple-system",

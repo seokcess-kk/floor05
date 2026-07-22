@@ -57,35 +57,6 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "온라인에서 사진 자르기",
-  description: "브라우저에서 무료로 사진을 자르는 방법",
-  step: [
-    {
-      "@type": "HowToStep",
-      name: "이미지 업로드",
-      text: "크롭 도구에서 자르고 싶은 이미지를 업로드합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "비율 선택",
-      text: "원하는 비율 프리셋(1:1, 4:3, 16:9 등)을 선택합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "영역 조절",
-      text: "자를 영역을 드래그해서 조절합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "자르기 및 다운로드",
-      text: "자르기 버튼을 클릭하고 결과물을 다운로드합니다.",
-    },
-  ],
-};
-
 export default function ImageCropGuidePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
@@ -93,10 +64,6 @@ export default function ImageCropGuidePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -334,7 +301,7 @@ export default function ImageCropGuidePage() {
               <p className="text-brand-light mb-6">
                 비율 프리셋으로 원클릭 크롭. 회전과 반전도 지원.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                자르는 동안에도 사진은 서버로 가지 않습니다.
               </p>
               <Link
                 href="/tools/image/crop"

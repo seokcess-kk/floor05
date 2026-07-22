@@ -1,49 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Pretendard 폰트 (사용 weight만 로드: 300, 400, 500, 600, 700) */
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 300;
-  font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Light.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 400;
-  font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Regular.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 500;
-  font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Medium.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 600;
-  font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-SemiBold.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 700;
-  font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Bold.woff2') format('woff2');
-  font-display: swap;
-}
+/* 폰트는 next/font로 로드한다 (src/app/layout.tsx).
+   --font-sans: Pretendard(로컬 variable), --font-mono: IBM Plex Mono */
 
 /* 기본 스타일 */
 body {

@@ -121,17 +121,6 @@ const schemas = [
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
     })),
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "WebP를 JPG로 변환하는 방법",
-    step: [
-      { "@type": "HowToStep", name: "WebP 업로드", text: "변환할 WebP 파일을 드래그앤드롭합니다." },
-      { "@type": "HowToStep", name: "출력 포맷 확인", text: "JPG가 기본 선택되어 있습니다. 투명도가 필요하면 PNG를 고릅니다." },
-      { "@type": "HowToStep", name: "변환", text: "변환 버튼을 누르면 브라우저에서 바로 변환됩니다." },
-      { "@type": "HowToStep", name: "다운로드", text: "변환된 JPG 파일을 내려받습니다." },
-    ],
-  },
 ];
 
 export default function WebpToJpgPage() {

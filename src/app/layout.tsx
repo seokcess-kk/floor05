@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import CookieConsent from "@/components/common/CookieConsent";
 import { ADSENSE_ID, SITE_URL } from "@/lib/common/constants";
@@ -16,12 +18,23 @@ const organizationSchema = {
     "서버 전송 없이 브라우저에서 처리하는 무료 온라인 도구 모음. 이미지·PDF·계산기·변환 도구를 회원가입 없이 무제한 무료로.",
 };
 
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-mono",
+});
+
+const pretendard = localFont({
+  src: "../fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-sans",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: "floor05 - 무료 온라인 도구 모음",
-    template: "%s | floor05",
-  },
+  title: "floor05 - 무료 온라인 도구 모음",
   description:
     "서버 전송 없이 브라우저에서 바로. 이미지 압축·변환·크롭, PDF 합치기, 글자수 세기, 연봉·퇴직금 계산까지 회원가입 없이 무제한 무료.",
   keywords: [
@@ -98,16 +111,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={`${pretendard.variable} ${ibmPlexMono.variable}`}>
       <head>
         <meta name="google-adsense-account" content={ADSENSE_ID} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
       </head>
       <body className="font-sans antialiased">
         {children}

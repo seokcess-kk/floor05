@@ -57,35 +57,6 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "PNG를 JPG로 변환하는 방법",
-  description: "PNG 이미지를 JPG 포맷으로 변환하는 방법",
-  step: [
-    {
-      "@type": "HowToStep",
-      name: "이미지 업로드",
-      text: "변환할 PNG 파일을 선택하거나 드래그합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "출력 포맷 선택",
-      text: "출력 포맷으로 JPG를 선택합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "배경색 선택",
-      text: "투명 배경이 있으면 대체할 배경색(흰색/검정)을 선택합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "변환 및 다운로드",
-      text: "변환 버튼을 클릭하고 JPG 파일을 다운로드합니다.",
-    },
-  ],
-};
-
 export default function PngVsJpgPage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
@@ -93,10 +64,6 @@ export default function PngVsJpgPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -329,7 +296,7 @@ export default function PngVsJpgPage() {
               <p className="text-brand-light mb-6">
                 회원가입 없이 바로 변환할 수 있습니다.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                파일을 밖으로 보내지 않고 PNG와 JPG를 변환합니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

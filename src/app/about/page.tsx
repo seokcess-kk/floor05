@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import { TOOLS, TOOL_CATEGORIES, getToolsByCategory } from "@/lib/common/tools";
 
 export const metadata: Metadata = {
-  title: "소개 - floor05",
+  title: "소개",
   description:
-    "floor05는 브라우저에서 바로 동작하는 무료 온라인 도구를 제공합니다. 파일이 서버로 전송되지 않아 안전합니다.",
+    "floor05는 브라우저에서 바로 동작하는 무료 온라인 도구를 제공합니다. 이 사이트는 파일과 입력값을 서버로 보내지 않고 브라우저에서 처리합니다.",
   openGraph: {
-    title: "소개 - floor05",
+    title: "소개",
     description:
       "floor05는 브라우저에서 바로 동작하는 무료 온라인 도구를 제공합니다.",
   },
@@ -17,173 +18,223 @@ export const metadata: Metadata = {
   },
 };
 
+const trustItems = [
+  {
+    title: "생활 계산기 기준",
+    description:
+      "연봉 실수령액, 퇴직금, 주휴수당, 부가세, 예적금 같은 계산기는 국세청 세율, 고용노동부 최저임금과 근로기준, 국민연금·건강보험 등 4대보험 공식 요율처럼 공개된 기준을 바탕으로 만듭니다. 요율이 바뀌는 항목은 매년 기준 연도를 함께 갱신합니다.",
+  },
+  {
+    title: "건강 계산기 안내",
+    description:
+      "BMI 등 건강 관련 계산기는 대한비만학회처럼 공신력 있는 기준을 참고합니다. 다만 개인의 건강 상태를 단정하는 진단이 아니라 현재 값을 이해하기 위한 참고용 추정치입니다.",
+  },
+  {
+    title: "참고용 결과",
+    description:
+      "floor05의 계산 결과는 법적 효력이 있는 산정서나 전문 상담을 대체하지 않습니다. 제출, 신고, 계약처럼 중요한 결정에는 해당 기관의 최신 기준을 다시 확인해주세요.",
+  },
+];
+
+const operationItems = [
+  "메인 페이지에는 광고를 두지 않고, 개별 페이지도 최대 3개까지만 배치합니다.",
+  "파일과 입력값은 수집 대상이 아닙니다. 도구가 일할 공간은 사용자의 브라우저입니다.",
+  "아직 준비 중인 도구를 먼저 걸어두지 않습니다. 열면 쓸 수 있는 것만 노출합니다.",
+];
+
 export default function AboutPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-brand-white">
+    <div className="min-h-screen bg-brand-white text-brand-black">
       <Header />
-
-      <main className="flex-1">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          {/* 페이지 타이틀 */}
-          <header className="mb-12">
-            <h1 className="text-3xl sm:text-4xl font-bold text-brand-black mb-4">
+      <main>
+        <section className="border-b border-brand-black/10 bg-brand-paper">
+          <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
+            <p className="text-sm font-medium text-brand-accent">THE FLOOR THAT DOESN&apos;T EXIST</p>
+            <h1 className="mt-4 text-4xl font-semibold tracking-normal text-brand-black sm:text-5xl">
               소개
             </h1>
-            <p className="text-lg text-brand-mid">
-              존재하지 않는 0.5층에서 만듭니다.
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-brand-mid">
+              존재하지 않는 0.5층에서 만듭니다. 애매하게 필요하지만 막상 찾으면 번거로운 도구들을
+              한곳에 모아두는 작은 플랫폼입니다.
             </p>
-          </header>
+            <div className="mt-8 flex flex-wrap gap-3 text-sm text-brand-mid">
+              <span className="rounded-full border border-brand-black/10 bg-brand-white px-4 py-2">
+                {TOOL_CATEGORIES.length}개 카테고리
+              </span>
+              <span className="rounded-full border border-brand-black/10 bg-brand-white px-4 py-2">
+                {TOOLS.length}개 도구
+              </span>
+              <span className="rounded-full border border-brand-black/10 bg-brand-white px-4 py-2">
+                브라우저 안에서 처리
+              </span>
+            </div>
+          </div>
+        </section>
 
-          {/* 본문 */}
-          <div className="prose prose-lg max-w-none space-y-12">
-            {/* floor05란 */}
-            <section>
-              <h2 className="text-2xl font-bold text-brand-black mb-4">
-                floor05란?
-              </h2>
-              <p className="text-brand-mid leading-relaxed mb-4">
-                floor05(플로어공오)는 &quot;존재하지 않는 0.5층&quot;이라는 컨셉의
-                유틸리티 도구 플랫폼입니다. 이미지 압축, 리사이즈, 포맷 변환, 크롭 등
-                일상에서 필요한 이미지 편집 도구를 무료로 제공합니다.
+        <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <h2 className="text-2xl font-semibold text-brand-black">floor05란?</h2>
+            </div>
+            <div className="space-y-5 text-base leading-8 text-brand-mid">
+              <p>
+                floor05(플로어공오)는 1층과 2층 사이, 있는 듯 없는 0.5층이라는 컨셉에서
+                출발했습니다. 대단한 층은 아니지만, 잠깐 들러 필요한 일을 끝내기에는 꽤 괜찮은
+                층입니다.
               </p>
-              <p className="text-brand-mid leading-relaxed">
-                복잡한 프로그램 설치 없이, 웹 브라우저만 있으면 누구나
-                바로 사용할 수 있습니다.
+              <p>
+                이미지, 문서, 계산, 변환, 색상, 추첨처럼 일상에서 자주 마주치는 작은 문제를 다룹니다.
+                설치할 프로그램을 찾거나 계정을 만들기 전에, 브라우저에서 바로 끝낼 수 있는 도구를
+                만드는 것이 목표입니다.
               </p>
-            </section>
+              <p>
+                간단한 도구입니다. 잘 됩니다. 필요할 때 조용히 열어 쓰면 됩니다.
+              </p>
+            </div>
+          </div>
+        </section>
 
-            {/* 핵심 가치 */}
-            <section>
-              <h2 className="text-2xl font-bold text-brand-black mb-4">
-                핵심 가치
-              </h2>
-
-              <div className="space-y-6">
-                <div className="bg-brand-paper rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-brand-black mb-2">
-                    100% 브라우저 처리
-                  </h3>
-                  <p className="text-brand-mid">
-                    모든 이미지 처리가 사용자의 브라우저에서 직접 이루어집니다.
-                    <strong className="text-brand-black"> 파일이 서버로 전송되지 않습니다.</strong>{" "}
-                    개인 사진, 민감한 문서 이미지도 안심하고 처리할 수 있습니다.
-                  </p>
-                </div>
-
-                <div className="bg-brand-paper rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-brand-black mb-2">
-                    완전 무료
-                  </h3>
-                  <p className="text-brand-mid">
-                    회원가입, 로그인, 결제 없이 모든 기능을 무료로 사용할 수 있습니다.
-                    일일 사용량 제한도 없습니다.
-                  </p>
-                </div>
-
-                <div className="bg-brand-paper rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-brand-black mb-2">
-                    단순함
-                  </h3>
-                  <p className="text-brand-mid">
-                    복잡한 옵션 대신 실제로 필요한 기능만 제공합니다.
-                    파일을 드래그하고, 설정하고, 다운로드. 그게 전부입니다.
-                  </p>
-                </div>
+        <section className="bg-brand-paper">
+          <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+              <div>
+                <h2 className="text-2xl font-semibold text-brand-black">브라우저 처리 원칙</h2>
               </div>
-            </section>
+              <div className="space-y-5 text-base leading-8 text-brand-mid">
+                <p>
+                  도구 페이지를 여는 순간 필요한 처리 코드가 함께 내려갑니다. 이후 압축, 변환, 계산,
+                  추첨 같은 작업은 사용자의 기기 안에서 실행되며, 결과도 그 자리에서 만들어집니다.
+                </p>
+                <p>
+                  floor05 서버는 페이지를 보여주는 일을 맡고, 사용자가 고른 파일이나 입력한 값을 받아
+                  보관하는 흐름은 만들지 않습니다. 민감한 자료일수록 밖으로 덜 나가는 편이 낫습니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-            {/* 제공 도구 */}
-            <section>
-              <h2 className="text-2xl font-bold text-brand-black mb-4">
-                제공 도구
-              </h2>
-              <ul className="space-y-3 text-brand-mid">
-                <li className="flex items-start gap-3">
-                  <span className="text-brand-accent font-bold">•</span>
-                  <div>
-                    <Link href="/tools/image/compress" className="font-medium text-brand-black hover:text-brand-accent transition-colors">
-                      이미지 압축
-                    </Link>
-                    <span className="ml-2">— 화질 손실 최소화하며 용량 줄이기</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-brand-accent font-bold">•</span>
-                  <div>
-                    <Link href="/tools/image/resize" className="font-medium text-brand-black hover:text-brand-accent transition-colors">
-                      이미지 리사이즈
-                    </Link>
-                    <span className="ml-2">— SNS별 프리셋으로 쉽게 크기 조절</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-brand-accent font-bold">•</span>
-                  <div>
-                    <Link href="/tools/image/convert" className="font-medium text-brand-black hover:text-brand-accent transition-colors">
-                      포맷 변환
-                    </Link>
-                    <span className="ml-2">— JPG, PNG, WebP 간 자유롭게 변환</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-brand-accent font-bold">•</span>
-                  <div>
-                    <Link href="/tools/image/crop" className="font-medium text-brand-black hover:text-brand-accent transition-colors">
-                      이미지 크롭
-                    </Link>
-                    <span className="ml-2">— 원하는 영역만 잘라내기, 비율 프리셋 제공</span>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-brand-accent font-bold">•</span>
-                  <div>
-                    <Link href="/tools/image/heic-to-jpg" className="font-medium text-brand-black hover:text-brand-accent transition-colors">
-                      HEIC → JPG 변환
-                    </Link>
-                    <span className="ml-2">— 아이폰 사진을 어디서든 열 수 있게</span>
-                  </div>
-                </li>
-              </ul>
-            </section>
+        <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="text-2xl font-semibold text-brand-black">제공 도구</h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-brand-mid">
+                현재 {TOOL_CATEGORIES.length}개 카테고리에서 {TOOLS.length}개 도구를 제공합니다.
+                새 도구가 출시되면 이 목록도 함께 바뀝니다.
+              </p>
+            </div>
+            <Link
+              href="/"
+              className="inline-flex w-fit items-center rounded-md bg-brand-black px-4 py-2 text-sm font-medium text-brand-white transition-colors hover:bg-brand-accent"
+            >
+              전체 도구 보기
+            </Link>
+          </div>
 
-            {/* 운영자 소개 */}
-            <section>
-              <h2 className="text-2xl font-bold text-brand-black mb-4">
-                운영
-              </h2>
-              <p className="text-brand-mid leading-relaxed mb-4">
-                floor05는 개인이 운영하는 서비스입니다.
-                &quot;누구나 쉽게 쓸 수 있는 도구&quot;를 목표로,
-                실제로 필요한 기능을 직접 만들어 공유하고 있습니다.
-              </p>
-              <p className="text-brand-mid leading-relaxed">
-                문의사항이나 건의사항이 있으시면{" "}
-                <Link href="/contact" className="text-brand-accent hover:underline">
-                  문의 페이지
-                </Link>
-                를 통해 연락해주세요.
-              </p>
-            </section>
+          <div className="space-y-8">
+            {TOOL_CATEGORIES.map((category) => {
+              const categoryTools = getToolsByCategory(category.id);
 
-            {/* CTA */}
-            <div className="bg-brand-black rounded-lg p-8 text-center mt-12">
-              <h3 className="text-xl font-bold text-brand-paper mb-3">
-                지금 바로 사용해보세요
-              </h3>
-              <p className="text-brand-light mb-6">
-                설치 없이, 회원가입 없이, 브라우저에서 바로.
-              </p>
+              return (
+                <section
+                  key={category.id}
+                  className="border-t border-brand-black/10 pt-6"
+                  aria-labelledby={`category-${category.id}`}
+                >
+                  <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <h3 id={`category-${category.id}`} className="text-lg font-semibold text-brand-black">
+                      {category.label}
+                    </h3>
+                    <span className="text-sm text-brand-light">{categoryTools.length}개 도구</span>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {categoryTools.map((tool) => (
+                      <Link
+                        key={tool.href}
+                        href={tool.href}
+                        className="group rounded-md border border-brand-black/10 bg-brand-white p-4 transition-colors hover:border-brand-accent"
+                      >
+                        <span className="block text-sm font-semibold text-brand-black group-hover:text-brand-accent">
+                          {tool.name}
+                        </span>
+                        <span className="mt-1 block text-sm leading-6 text-brand-mid">
+                          {tool.shortDescription}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="bg-brand-paper">
+          <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+              <div>
+                <h2 className="text-2xl font-semibold text-brand-black">신뢰 기준</h2>
+              </div>
+              <div className="grid gap-4">
+                {trustItems.map((item) => (
+                  <article key={item.title} className="rounded-md border border-brand-black/10 bg-brand-white p-5">
+                    <h3 className="text-base font-semibold text-brand-black">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-brand-mid">{item.description}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <h2 className="text-2xl font-semibold text-brand-black">운영 원칙</h2>
+            </div>
+            <ul className="space-y-3 text-base leading-8 text-brand-mid">
+              {operationItems.map((item) => (
+                <li key={item} className="border-l-2 border-brand-accent pl-4">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="border-y border-brand-black/10 bg-brand-black text-brand-white">
+          <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+            <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <h2 className="text-2xl font-semibold">운영·문의</h2>
+                <p className="mt-3 max-w-2xl text-base leading-8 text-brand-light">
+                  floor05는 개인이 운영하는 서비스입니다. 쓰다가 어색한 부분, 틀린 기준, 있으면 좋을
+                  도구가 보이면 알려주세요. 0.5층은 엘리베이터가 없어서, 문의가 계단입니다.
+                </p>
+              </div>
               <Link
-                href="/"
-                className="inline-block bg-brand-accent text-brand-white px-6 py-3 rounded-md font-medium hover:bg-brand-accent-light transition-colors"
+                href="/contact"
+                className="inline-flex w-fit items-center rounded-md bg-brand-white px-5 py-3 text-sm font-medium text-brand-black transition-colors hover:bg-brand-accent-light"
               >
-                도구 둘러보기
+                문의 페이지
               </Link>
             </div>
           </div>
-        </div>
-      </main>
+        </section>
 
+        <section className="mx-auto max-w-5xl px-4 py-14 text-center sm:px-6">
+          <h2 className="text-2xl font-semibold text-brand-black">지금 필요한 도구부터 열어보세요</h2>
+          <p className="mt-3 text-base leading-7 text-brand-mid">
+            설치 없이 가볍게. 결과가 나오면 닫아도 됩니다.
+          </p>
+          <Link
+            href="/"
+            className="mt-6 inline-flex items-center rounded-md bg-brand-black px-5 py-3 text-sm font-medium text-brand-white transition-colors hover:bg-brand-accent"
+          >
+            도구 둘러보기
+          </Link>
+        </section>
+      </main>
       <Footer />
     </div>
   );

@@ -42,28 +42,12 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "사진에 워터마크 넣는 방법",
-  step: [
-    { "@type": "HowToStep", name: "이미지 업로드", text: "워터마크를 넣을 사진을 올립니다. 여러 장도 가능합니다." },
-    { "@type": "HowToStep", name: "텍스트·로고 선택", text: "텍스트를 입력하거나 로고 이미지를 추가합니다." },
-    { "@type": "HowToStep", name: "위치·투명도 조절", text: "미리보기를 보며 위치, 투명도, 회전, 전체 반복을 조절합니다." },
-    { "@type": "HowToStep", name: "적용·다운로드", text: "적용을 누르면 바로 합성되고 결과를 다운로드합니다." },
-  ],
-};
-
 export default function ImageWatermarkGuidePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -192,7 +176,7 @@ export default function ImageWatermarkGuidePage() {
               <li>완료되면 ZIP으로 한 번에 내려받습니다.</li>
             </ul>
 
-            {/* 섹션 5 - HowTo */}
+            {/* 섹션 5 - 사용 방법 */}
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               5. 브라우저에서 넣는 법 (4단계)
             </h2>
@@ -272,9 +256,9 @@ export default function ImageWatermarkGuidePage() {
                 지금 바로 워터마크 넣기
               </h3>
               <p className="text-brand-light mb-6">
-                회원가입 없이 무료로 사용할 수 있습니다.
+                워터마크 넣기도 무료, 가입은 빼고요.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                로고를 올려도 원본은 브라우저 안에서만 합성됩니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

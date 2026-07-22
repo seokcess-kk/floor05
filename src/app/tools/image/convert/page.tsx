@@ -172,17 +172,6 @@ const schemas = [
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
     })),
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "이미지 포맷을 변환하는 방법",
-    step: [
-      { "@type": "HowToStep", name: "파일 업로드", text: "변환할 이미지를 드래그앤드롭하거나 클릭해서 올립니다. JPG·PNG·WebP·AVIF·BMP·GIF·SVG·HEIC를 받습니다." },
-      { "@type": "HowToStep", name: "출력 포맷 선택", text: "JPG, PNG, WebP, AVIF 중 변환할 포맷을 고르고 필요하면 품질을 조절합니다." },
-      { "@type": "HowToStep", name: "변환", text: "변환 버튼을 누르면 브라우저에서 바로 변환됩니다. 여러 장도 한 번에 처리됩니다." },
-      { "@type": "HowToStep", name: "다운로드", text: "변환된 파일을 내려받습니다. 여러 장이면 ZIP으로 한 번에 받을 수 있습니다." },
-    ],
-  },
 ];
 
 export default function ConvertPage() {

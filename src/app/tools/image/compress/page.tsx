@@ -140,33 +140,6 @@ const schemas = [
       },
     })),
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "이미지 압축하는 방법",
-    step: [
-      {
-        "@type": "HowToStep",
-        name: "이미지 업로드",
-        text: "압축할 이미지를 드래그앤드롭하거나 클릭해서 선택합니다.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "압축 옵션 설정",
-        text: "품질 슬라이더로 압축률을 조절하거나 목표 용량을 설정합니다.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "압축 실행",
-        text: "압축 버튼을 클릭하면 브라우저에서 바로 압축됩니다.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "다운로드",
-        text: "압축된 이미지를 다운로드합니다. 여러 장일 경우 ZIP으로 받을 수 있습니다.",
-      },
-    ],
-  },
 ];
 
 export default function CompressPage() {

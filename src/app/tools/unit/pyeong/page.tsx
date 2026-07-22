@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import ToolLayout from "@/components/common/ToolLayout";
 import UnitConverter from "@/components/unit/UnitConverter";
 import { SITE_URL } from "@/lib/common/constants";
@@ -36,25 +37,30 @@ export const metadata: Metadata = {
 
 const guide = {
   intro:
-    "부동산에서 면적은 ㎡(제곱미터)로 표기하지만, 우리는 여전히 '몇 평'으로 가늠합니다. 1평은 약 3.3058㎡, 1㎡는 약 0.3025평입니다. 이 도구는 평과 ㎡를 양방향으로 즉시 변환해, '84㎡가 몇 평인지' 같은 질문에 바로 답합니다.",
+    "부동산에서 면적은 ㎡(제곱미터)로 표기하지만, 우리는 여전히 '몇 평'으로 가늠합니다. 기준값은 1평 = 3.305785㎡(정확히 400/121), 1㎡ = 0.3025평입니다. 이 도구는 평과 ㎡를 양방향으로 즉시 변환해, '84㎡가 몇 평인지' 같은 질문에 바로 답합니다.",
   sections: [
     {
       heading: "평 ↔ ㎡ 변환과 자주 쓰는 값",
       paragraphs: [
-        "1평은 사방 6자(약 1.818m)인 정사각형 넓이로, 정확히는 400/121 ≈ 3.3058㎡입니다. 반대로 1㎡는 약 0.3025평입니다. 평에서 ㎡로 바꾸려면 3.3058을 곱하고, ㎡에서 평으로 바꾸려면 3.3058로 나누면 됩니다.",
+        "평과 제곱미터는 1평 = 400/121㎡ = 3.305785㎡를 기준으로 서로 바꿔 계산합니다. 평에서 ㎡로 바꿀 때는 3.305785를 곱하고, ㎡에서 평으로 바꿀 때는 3.305785로 나누면 됩니다.",
       ],
       bullets: [
-        "59㎡ ≈ 17.8평 (소형 아파트, '59타입')",
-        "84㎡ ≈ 25.4평 (국민 평형, '84타입')",
+        "59㎡ ≈ 17.8평",
+        "84㎡ ≈ 25.4평",
         "32평 ≈ 105.8㎡",
-        "1평 = 3.3058㎡ / 1㎡ = 0.3025평",
+        "1평 = 3.305785㎡ / 1㎡ = 0.3025평",
       ],
     },
     {
-      heading: "분양면적·전용면적·공급면적은 다르다",
+      heading: "전용·공급·계약면적은 재는 범위가 다르다",
       paragraphs: [
-        "같은 집인데 '25평'과 '34평'이 같이 쓰이는 이유는 면적 기준이 여러 개라서입니다. 전용면적은 현관문 안쪽, 실제 우리 가족만 쓰는 공간입니다. 공급(분양)면적은 전용면적에 계단·복도·엘리베이터 같은 주거 공용면적을 더한 것입니다.",
-        "아파트 청약·분양에서 말하는 '84㎡'는 보통 전용면적입니다. 전용 84㎡는 분양면적으로는 약 33~34평이 되는데, 광고에 '34평형'이라 적히는 게 이 때문입니다. 면적을 비교할 때는 항상 '전용'인지 '공급'인지 먼저 확인하세요.",
+        "같은 집을 두고도 숫자가 달라지는 건 전용·공급·계약처럼 재는 범위가 서로 다르기 때문입니다. 아파트는 공급면적을 평형처럼 부르는 일이 많고, 오피스텔 광고에서는 계약면적이 앞에 나오는 경우가 있습니다.",
+        "숫자가 커 보이면 일단 기준 면적부터 확인하는 편이 좋습니다. 평수 계산은 산수지만, 면적 이름 확인은 거의 독해 문제에 가깝습니다.",
+      ],
+      bullets: [
+        "전용면적: 현관 안쪽에서 실제 생활에 쓰는 면적",
+        "공급(분양)면적: 전용면적에 계단·복도·엘리베이터 같은 주거 공용면적을 더한 면적",
+        "계약면적: 공급면적에 주차장·기계실 등 기타 공용면적까지 더한 면적",
       ],
     },
     {
@@ -70,22 +76,32 @@ const faqs = [
   {
     question: "84㎡는 몇 평인가요?",
     answer:
-      "약 25.4평입니다. ㎡를 3.3058로 나누면 평이 됩니다. 다만 이는 전용면적 기준이고, 분양(공급)면적으로는 보통 33~34평형으로 광고됩니다.",
+      "약 25.4평입니다. ㎡를 3.305785로 나누면 평이 됩니다. 다만 이는 전용면적 기준이고, 분양(공급)면적으로는 보통 33~34평형으로 광고됩니다.",
   },
   {
     question: "1평은 몇 ㎡인가요?",
     answer:
-      "약 3.3058㎡입니다(정확히는 400/121). 반대로 1㎡는 약 0.3025평입니다.",
+      "3.305785㎡입니다(정확히는 400/121). 반대로 1㎡는 약 0.3025평입니다.",
   },
   {
     question: "전용면적과 분양면적은 뭐가 다른가요?",
     answer:
-      "전용면적은 현관 안쪽 실제 사용 공간이고, 분양(공급)면적은 여기에 계단·복도 같은 주거 공용면적을 더한 것입니다. 그래서 같은 집도 전용 84㎡가 분양 34평형으로 표기됩니다.",
+      "전용면적은 세대가 단독으로 쓰는 내부 면적이고, 분양면적은 보통 그 면적에 복도·계단 등 주거 공용 부분을 포함한 공급면적을 뜻합니다. 그래서 전용 84㎡ 집도 광고에서는 34평형처럼 더 큰 숫자로 보일 수 있습니다.",
   },
   {
     question: "32평은 몇 ㎡인가요?",
     answer:
-      "약 105.8㎡입니다. 평에 3.3058을 곱하면 ㎡가 됩니다.",
+      "약 105.8㎡입니다. 평에 3.305785를 곱하면 ㎡가 됩니다.",
+  },
+  {
+    question: "계약면적은 무엇인가요?",
+    answer:
+      "공급면적 바깥에 있는 주차장·기계실 같은 건물 공용 공간까지 넓게 잡은 면적입니다. 오피스텔 광고 평형이 아파트보다 커 보일 때는 이 기준이 쓰였는지 확인해 보세요.",
+  },
+  {
+    question: "34평형 아파트의 전용면적은 얼마나 되나요?",
+    answer:
+      "흔히 말하는 34평형 아파트는 전용 84㎡인 경우가 많습니다. 전용 84㎡를 평으로 바꾸면 약 25.4평이고, 공급면적 기준으로 33~34평형처럼 불립니다.",
   },
   {
     question: "입력한 값이 저장되나요?",
@@ -126,7 +142,69 @@ export default function PyeongPage() {
       relatedPostSlugs={["pyeong-conversion-guide"]}
       schemas={schemas}
     >
-      <UnitConverter set="area" toolName="pyeong" />
+      <>
+        <UnitConverter set="area" toolName="pyeong" />
+
+        <section className="mt-6 rounded-lg border border-brand-light/50 bg-brand-paper p-4 shadow-sm">
+          <div className="mb-3">
+            <h2 className="text-lg font-semibold text-brand-dark">빠른 평수 환산표</h2>
+            <p className="mt-1 text-sm text-brand-mid">
+              1평 = 3.305785㎡(정확히 400/121), 1㎡ = 0.3025평 기준입니다.
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[520px] border-collapse text-sm">
+              <caption className="sr-only">제곱미터와 평을 양방향으로 빠르게 환산한 표</caption>
+              <thead>
+                <tr className="border-y border-brand-light/50 bg-brand-light/10 text-left text-brand-dark">
+                  <th scope="col" className="px-3 py-2 font-semibold">입력</th>
+                  <th scope="col" className="px-3 py-2 font-semibold">환산</th>
+                  <th scope="col" className="px-3 py-2 font-semibold">메모</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-brand-light/30">
+                <tr>
+                  <td className="px-3 py-2">59㎡</td>
+                  <td className="px-3 py-2">약 17.8평</td>
+                  <td className="px-3 py-2 text-brand-mid">㎡에서 평으로</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">84㎡</td>
+                  <td className="px-3 py-2">약 25.4평</td>
+                  <td className="px-3 py-2 text-brand-mid">㎡에서 평으로</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">114㎡</td>
+                  <td className="px-3 py-2">약 34.5평</td>
+                  <td className="px-3 py-2 text-brand-mid">㎡에서 평으로</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">20평</td>
+                  <td className="px-3 py-2">약 66.1㎡</td>
+                  <td className="px-3 py-2 text-brand-mid">평에서 ㎡로</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">25평</td>
+                  <td className="px-3 py-2">약 82.6㎡</td>
+                  <td className="px-3 py-2 text-brand-mid">평에서 ㎡로</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">32평</td>
+                  <td className="px-3 py-2">약 105.8㎡</td>
+                  <td className="px-3 py-2 text-brand-mid">평에서 ㎡로</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-sm text-brand-mid">
+            전용률, 서비스면적, 오피스텔 계약면적까지 이어서 보려면{" "}
+            <Link href="/blog/pyeong-conversion-guide" className="font-medium text-brand-dark hover:underline">
+              면적 용어를 깊게 정리한 가이드
+            </Link>
+            를 참고하세요.
+          </p>
+        </section>
+      </>
     </ToolLayout>
   );
 }

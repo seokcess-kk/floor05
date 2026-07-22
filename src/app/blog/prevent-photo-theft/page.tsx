@@ -262,9 +262,9 @@ export default function PreventPhotoTheftPage() {
                 사진에 표시부터 남기기
               </h3>
               <p className="text-brand-light mb-6">
-                회원가입 없이 무료로 사용할 수 있습니다.
+                회원가입 없이 무료로 표시를 남기세요.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                지키려는 사진을 남의 서버에 맡기지 않아도 됩니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

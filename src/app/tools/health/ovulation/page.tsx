@@ -77,9 +77,9 @@ const faqs = [
       "권장하지 않습니다. 예측 배란일은 변동이 크기 때문에 피임 수단으로는 신뢰도가 낮습니다. 피임·임신 계획은 산부인과 전문의와 상담하세요.",
   },
   {
-    question: "입력한 날짜가 저장되나요?",
+    question: "입력한 생리 주기 정보가 저장되나요?",
     answer:
-      "아니요. 모든 계산은 브라우저 안에서 이루어지며 입력값이 서버로 전송되거나 저장되지 않습니다.",
+      "남지 않습니다. 마지막 생리 시작일과 평균 주기는 내 기기 안에서 배란일을 추정할 때만 사용되고, 서버로 전송되지도 저장되지도 않습니다.",
   },
 ];
 
@@ -113,7 +113,7 @@ export default function OvulationPage() {
       guide={guide}
       faqs={faqs}
       currentToolHref="/tools/health/ovulation"
-      relatedPostSlugs={["bmi-obesity-guide"]}
+      relatedPostSlugs={["ovulation-calculation-guide"]}
       schemas={schemas}
     >
       <OvulationTool />

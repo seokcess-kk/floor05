@@ -57,39 +57,12 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "유튜브 썸네일 크기 맞추는 방법",
-  step: [
-    {
-      "@type": "HowToStep",
-      name: "16:9로 자르기",
-      text: "이미지를 16:9 비율로 크롭해 썸네일 영역을 잡습니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "1280×720으로 리사이즈",
-      text: "유튜브 썸네일 권장 크기인 1280×720으로 크기를 맞춥니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "2MB 이하로 압축",
-      text: "용량이 2MB를 넘으면 압축해 제한 안으로 맞춥니다.",
-    },
-  ],
-};
-
 export default function YoutubeThumbnailSizePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -368,9 +341,9 @@ export default function YoutubeThumbnailSizePage() {
                 지금 바로 썸네일 크기 맞추기
               </h3>
               <p className="text-brand-light mb-6">
-                회원가입 없이 무료로 사용할 수 있습니다.
+                썸네일 크기 맞춤은 가입 없이 무료입니다.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                썸네일은 서버를 거치지 않고 권장 규격으로 다듬습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

@@ -149,33 +149,6 @@ const schemas = [
       },
     })),
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "사진에 워터마크 넣는 방법",
-    step: [
-      {
-        "@type": "HowToStep",
-        name: "이미지 업로드",
-        text: "워터마크를 넣을 사진을 드래그앤드롭하거나 선택합니다. 여러 장도 가능합니다.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "텍스트 또는 로고 선택",
-        text: "텍스트를 입력하거나 로고 이미지를 올립니다.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "위치·투명도 조절",
-        text: "위치, 투명도, 회전, 전체 반복 여부를 미리보기를 보며 조절합니다.",
-      },
-      {
-        "@type": "HowToStep",
-        name: "적용·다운로드",
-        text: "적용 버튼을 누르면 브라우저에서 바로 합성되고, 결과를 다운로드합니다.",
-      },
-    ],
-  },
 ];
 
 export default function WatermarkPage() {

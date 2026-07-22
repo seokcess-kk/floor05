@@ -57,30 +57,6 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "HEIC 파일을 JPG로 변환하는 방법",
-  description: "아이폰 HEIC 사진을 JPG 포맷으로 변환하는 방법",
-  step: [
-    {
-      "@type": "HowToStep",
-      name: "HEIC 파일 선택",
-      text: "변환할 HEIC 파일을 선택하거나 드래그 앤 드롭합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "출력 포맷 선택",
-      text: "출력 포맷으로 JPG를 선택합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "변환 및 다운로드",
-      text: "변환 버튼을 클릭하고 JPG 파일을 다운로드합니다.",
-    },
-  ],
-};
-
 export default function HeicToJpgGuidePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
@@ -88,10 +64,6 @@ export default function HeicToJpgGuidePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -212,6 +184,57 @@ export default function HeicToJpgGuidePage() {
               <li>저장</li>
             </ol>
 
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">HEIC와 JPG는 실제로 무엇이 다른가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">핵심은 저장 효율과 호환성의 균형입니다. HEIC는 같은 장면을 비교적 작은 용량으로 저장하는 데 유리하지만, JPG는 오래된 프로그램과 웹 서비스까지 폭넓게 열리는 장점이 있습니다. 아이폰 안에서만 관리할 사진이라면 HEIC가 편할 수 있고, 누군가에게 제출하거나 여러 기기에서 열어야 한다면 JPG가 덜 번거로운 선택이 됩니다.</p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">항목</th>
+                    <th className="py-2 pr-4 text-brand-black">HEIC</th>
+                    <th className="py-2 pr-4 text-brand-black">JPG</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">같은 사진 기준 용량</td>
+                    <td className="py-2 pr-4">대체로 더 작게 저장되는 편입니다</td>
+                    <td className="py-2 pr-4">비슷한 품질에서는 더 커질 수 있습니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">화질 효율</td>
+                    <td className="py-2 pr-4">새 압축 방식이라 효율이 좋은 편입니다</td>
+                    <td className="py-2 pr-4">널리 쓰이지만 오래된 압축 방식입니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">호환성</td>
+                    <td className="py-2 pr-4">환경에 따라 열리지 않을 수 있습니다</td>
+                    <td className="py-2 pr-4">대부분의 웹사이트와 앱에서 바로 받습니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">지원 환경</td>
+                    <td className="py-2 pr-4">최신 iOS, macOS, 일부 Windows 환경에서 편합니다</td>
+                    <td className="py-2 pr-4">PC, 모바일, 프린터, 게시판 전반에서 안정적입니다</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">편집 프로그램 지원</td>
+                    <td className="py-2 pr-4">프로그램 버전에 따라 플러그인이나 확장 기능이 필요할 수 있습니다</td>
+                    <td className="py-2 pr-4">기본 사진 편집기부터 전문 편집기까지 폭넓게 지원합니다</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">윈도우 PC에서 HEIC가 안 열리는 이유는 무엇인가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">대부분은 확장 기능 지원 여부 때문입니다. Windows 기본 사진 앱은 버전과 설정에 따라 HEIC를 바로 보여 주기도 하지만, 어떤 환경에서는 별도 이미지 확장 기능 설치가 필요할 수 있습니다. 개인 PC라면 필요한 구성 요소를 설치해 해결할 수 있지만, 회사 PC나 학교 공용 PC처럼 설치 권한이 제한된 곳에서는 변환이 더 빠른 해법이 됩니다.</p>
+            <p className="text-brand-mid leading-relaxed mb-4">특히 보안 정책이 강한 PC에서는 스토어 접근이 막혀 있거나 확장 기능 설치가 승인 절차를 거쳐야 할 수 있습니다. 이럴 때는 원본 HEIC를 보관해 두고 제출용 사본만 <Link href="/tools/image/convert" className="text-brand-accent hover:underline">이미지 포맷 변환</Link>으로 JPG로 바꾸면 상대방 환경에 덜 의존하게 됩니다.</p>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">어디에 낼 때 JPG로 바꾸는 게 안전한가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">제출처가 파일 형식을 엄격히 안내하지 않았더라도 JPG가 무난한 경우가 많습니다. 관공서 민원 서류, 학교 과제나 증빙 자료, 채용 지원서, 자격시험 접수, 오래된 게시판 업로드처럼 시스템이 다양한 사용자 파일을 받아야 하는 곳에서는 호환성이 우선입니다. 인쇄소에 사진을 보낼 때도 JPG는 확인과 출력 과정에서 예측하기 쉽습니다.</p>
+            <ul className="list-disc list-inside text-brand-mid space-y-2 mb-6">
+              <li>업로드 버튼 옆에 JPG, JPEG, PNG만 표시되어 있으면 HEIC는 피합니다.</li>
+              <li>담당자가 파일을 열어 확인해야 하는 서류라면 범용 형식이 전달 사고를 줄입니다.</li>
+              <li>오래 보관할 증빙 자료는 원본 HEIC와 제출용 JPG를 따로 두면 다시 변환할 때 편합니다.</li>
+            </ul>
+
             {/* FAQ 섹션 */}
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-6">
               자주 묻는 질문
@@ -257,9 +280,9 @@ export default function HeicToJpgGuidePage() {
                 지금 바로 HEIC 변환하기
               </h3>
               <p className="text-brand-light mb-6">
-                회원가입 없이 무료로 사용할 수 있습니다.
+                HEIC를 골라 놓기만 하면 JPG로 바로 바뀝니다.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                원본 사진은 기기 밖으로 나가지 않습니다.
               </p>
               <Link
                 href="/tools/image/heic-to-jpg"

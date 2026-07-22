@@ -58,35 +58,6 @@ const faqSchema = {
   ],
 };
 
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "이미지 용량 줄이는 방법",
-  description: "화질 손실을 최소화하면서 이미지 파일 크기를 줄이는 방법",
-  step: [
-    {
-      "@type": "HowToStep",
-      name: "이미지 업로드",
-      text: "압축할 이미지 파일을 선택하거나 드래그 앤 드롭합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "품질 설정",
-      text: "슬라이더로 압축 품질을 조절합니다. 80% 정도가 화질과 용량의 균형점입니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "압축 결과 확인",
-      text: "Before/After 비교로 화질 차이를 확인합니다.",
-    },
-    {
-      "@type": "HowToStep",
-      name: "다운로드",
-      text: "압축된 이미지를 다운로드합니다.",
-    },
-  ],
-};
-
 export default function ImageCompressionGuidePage() {
   return (
     <div className="min-h-screen flex flex-col bg-brand-white">
@@ -94,10 +65,6 @@ export default function ImageCompressionGuidePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <Header />
@@ -211,6 +178,80 @@ export default function ImageCompressionGuidePage() {
               JPG를 사용하세요. 웹용이라면 WebP가 가장 효율적입니다.
             </p>
 
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">손실 압축과 무손실 압축은 어떻게 다른가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">두 방식의 차이는 줄이는 정보가 되돌릴 수 있는지에 있습니다. 손실 압축은 사람이 덜 민감하게 느끼는 정보를 일부 줄여 용량을 크게 낮추고, 무손실 압축은 원본 데이터를 유지한 채 저장 구조를 더 효율적으로 만듭니다. 사진을 웹에 올릴 때는 손실 압축이 흔하고, 로고나 캡처처럼 선명한 선이 중요한 이미지는 무손실 방식이 어울릴 때가 있습니다.</p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">항목</th>
+                    <th className="py-2 pr-4 text-brand-black">손실 압축</th>
+                    <th className="py-2 pr-4 text-brand-black">무손실 압축</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">원리</td>
+                    <td className="py-2 pr-4">눈에 덜 띄는 세부 정보를 줄여 저장합니다</td>
+                    <td className="py-2 pr-4">정보를 버리지 않고 더 효율적인 구조로 저장합니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">용량 감소 폭</td>
+                    <td className="py-2 pr-4">대체로 크게 줄어듭니다</td>
+                    <td className="py-2 pr-4">원본 상태에 따라 줄어드는 폭이 작을 수 있습니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">화질 변화</td>
+                    <td className="py-2 pr-4">강하게 적용하면 뭉개짐이나 얼룩이 보일 수 있습니다</td>
+                    <td className="py-2 pr-4">눈에 보이는 화질 변화가 거의 없습니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">원본 복원</td>
+                    <td className="py-2 pr-4">한번 줄인 세부 정보는 완전히 되돌리기 어렵습니다</td>
+                    <td className="py-2 pr-4">압축 방식에 따라 원본과 같은 데이터를 유지할 수 있습니다</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">어울리는 상황</td>
+                    <td className="py-2 pr-4">사진 첨부, 블로그 이미지, 웹 게시용 파일</td>
+                    <td className="py-2 pr-4">캡처, 아이콘, 투명 배경 이미지, 문서 보관용 파일</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">용도별 목표 용량은 어느 정도가 적당한가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">정확한 제한은 서비스마다 다르지만, 처음 압축할 때 참고할 만한 범위는 있습니다. 이메일은 받는 사람의 환경을 고려해 너무 큰 원본 여러 장을 그대로 보내지 않는 편이 좋고, 게시판이나 블로그는 로딩 속도를 위해 화면 크기에 맞춘 용량이 유리합니다. 원서나 지원서 접수는 사이트에서 제시하는 상한이 최우선입니다.</p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">용도</th>
+                    <th className="py-2 pr-4 text-brand-black">일반적인 목표</th>
+                    <th className="py-2 pr-4 text-brand-black">확인할 점</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">이메일 첨부</td>
+                    <td className="py-2 pr-4">한 장당 수백 KB에서 1MB 안팎이면 전달이 편합니다</td>
+                    <td className="py-2 pr-4">여러 장이면 전체 첨부 용량 제한을 봅니다</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">게시판·블로그 업로드</td>
+                    <td className="py-2 pr-4">화면 표시용은 1MB 이하를 먼저 목표로 잡을 수 있습니다</td>
+                    <td className="py-2 pr-4">서비스별 자동 리사이즈 여부가 다릅니다</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">원서·지원서 접수</td>
+                    <td className="py-2 pr-4">공고의 파일 상한 아래로 맞춥니다</td>
+                    <td className="py-2 pr-4">사진 규격과 파일 형식 조건을 함께 확인합니다</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">압축해도 용량이 안 줄어드는 이유는 무엇인가요?</h2>
+            <p className="text-brand-mid leading-relaxed mb-4">이미 충분히 압축된 JPG는 다시 눌러도 줄어드는 폭이 작을 수 있습니다. 특히 메신저나 SNS에서 받은 사진은 업로드 과정에서 한 번 최적화된 파일일 가능성이 높습니다. 이 경우 품질 값을 더 낮추면 숫자는 줄어도 얼굴과 글자가 눈에 띄게 무너질 수 있으므로 <Link href="/tools/image/resize" className="text-brand-accent hover:underline">이미지 크기 조절</Link>로 실제 가로세로를 줄이는 편이 더 효과적일 때가 많습니다.</p>
+            <p className="text-brand-mid leading-relaxed mb-4">사진을 PNG로 저장했을 때 용량이 커지는 일도 흔합니다. PNG는 선명한 그래픽과 투명 배경에는 강하지만, 색 변화가 많은 사진에는 비효율적일 수 있습니다. 사진 파일은 JPG나 WebP 계열이 대체로 작고, 캡처나 로고는 PNG가 더 나은 경우가 있어 이미지 성격에 맞춰 고르는 것이 중요합니다.</p>
+
             {/* FAQ 섹션 */}
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-6">
               자주 묻는 질문
@@ -257,9 +298,9 @@ export default function ImageCompressionGuidePage() {
                 지금 바로 이미지 용량 줄이기
               </h3>
               <p className="text-brand-light mb-6">
-                회원가입 없이 무료로 사용할 수 있습니다.
+                품질을 조절하면서 용량과 화질을 눈으로 비교해 보세요.
                 <br />
-                파일이 서버로 전송되지 않아 안전합니다.
+                압축은 지금 쓰는 브라우저 안에서 끝납니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
