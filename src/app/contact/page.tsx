@@ -6,11 +6,11 @@ import Footer from "@/components/common/Footer";
 import ContactForm from "@/components/common/ContactForm";
 
 export const metadata: Metadata = {
-  title: "문의",
+  title: "문의 - 도구 오류 신고와 기능 제안",
   description:
     "floor05 도구에 대한 불편·오류 신고, 기능 건의, 일반 문의를 폼으로 바로 남겨주세요. 영업일 기준 1~3일 내에 확인합니다.",
   openGraph: {
-    title: "문의",
+    title: "문의 - 도구 오류 신고와 기능 제안",
     description:
       "floor05 도구에 대한 불편·오류 신고, 기능 건의, 일반 문의를 폼으로 바로 남겨주세요.",
   },

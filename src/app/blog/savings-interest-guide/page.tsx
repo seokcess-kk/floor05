@@ -58,6 +58,23 @@ export default function SavingsInterestGuidePage() {
           <p>월복리는 매월 생긴 이자가 다음 달 계산에 다시 들어가므로 단리보다 세전이자가 조금 커질 수 있습니다. 예금 월복리 이자는 원금 × ((1+월이율)^개월 − 1)로 계산합니다. 1,200만원을 12개월 동안 연 4% 월복리로 맡기면 세전이자는 488,899원입니다.</p>
           <p>적금도 월복리 구조에서는 납입 회차별로 남은 기간 동안 복리 효과가 반영됩니다. 월 50만원씩 12개월, 연 4% 조건에서는 세전이자 131,602원, 세후이자 111,335원입니다. 같은 조건의 단리 세후이자 109,980원보다 많지만, 1년·4% 조건에서는 차이가 크지는 않습니다.</p>
           <div className="overflow-x-auto"><table><thead><tr><th>조건</th><th>계산 방식</th><th>세전이자</th><th>세후이자</th></tr></thead><tbody><tr><td>월 50만원 × 12개월 연 4% 적금</td><td>단리</td><td>130,000원</td><td>109,980원</td></tr><tr><td>월 50만원 × 12개월 연 4% 적금</td><td>월복리</td><td>131,602원</td><td>111,335원</td></tr><tr><td>1,200만원 12개월 연 4% 예금</td><td>단리</td><td>480,000원</td><td>406,080원</td></tr><tr><td>1,200만원 12개월 연 4% 예금</td><td>월복리</td><td>488,899원</td><td>조건별 세금 적용</td></tr></tbody></table></div>
+          <figure className="not-prose my-8">
+            <svg viewBox="0 0 420 280" role="img" width="100%" className="block max-w-xl mx-auto" style={{ height: "auto" }}>
+              <title>단리와 복리의 원리금 성장 비교</title>
+              <desc>같은 원금에서 시작해도 기간이 길어질수록 복리 곡선이 단리 직선보다 위로 더 크게 벌어지는 모습을 보여주는 그래프.</desc>
+              <line x1="50" y1="30" x2="50" y2="230" stroke="#0A0A0A" strokeWidth="1.5" />
+              <line x1="50" y1="230" x2="400" y2="230" stroke="#0A0A0A" strokeWidth="1.5" />
+              <text x="50" y="22" textAnchor="middle" fontSize="12" fill="#4A4A4A">원리금</text>
+              <text x="400" y="250" textAnchor="end" fontSize="12" fill="#4A4A4A">기간</text>
+              <circle cx="50" cy="200" r="3" fill="#0A0A0A" />
+              <text x="44" y="204" textAnchor="end" fontSize="12" fill="#4A4A4A">원금</text>
+              <line x1="50" y1="200" x2="400" y2="110" stroke="#0A0A0A" strokeWidth="2" />
+              <path d="M50 200 C 180 185 300 150 400 55" fill="none" stroke="#C45C2C" strokeWidth="2" />
+              <text x="395" y="48" textAnchor="end" fontSize="14" fill="#C45C2C">복리</text>
+              <text x="395" y="103" textAnchor="end" fontSize="14" fill="#0A0A0A">단리</text>
+            </svg>
+            <figcaption className="mt-3 text-sm text-brand-mid text-center">같은 원금이라도 기간이 길어질수록 복리는 단리보다 원리금이 더 가파르게 늘어난다.</figcaption>
+          </figure>
           <h2>세후이자는 어디에서 줄어드나요?</h2>
           <p>일반적인 과세 상품에서는 이자 지급 시 이자소득세 15.4%가 원천징수됩니다. 이 비율은 소득세 14%와 지방소득세 1.4%를 더한 값입니다. 따라서 비교할 때는 세전이자가 아니라 실제로 받는 세후이자를 함께 보는 편이 좋습니다.</p>
           <p>비과세나 세금우대 상품은 조건에 따라 적용 방식이 달라질 수 있습니다. 가입 대상, 한도, 상품 유형에 따라 세금이 줄어들거나 다르게 계산될 수 있으므로, 같은 금리 상품이라도 최종 수령액 비교에서는 과세 조건을 따로 확인해야 합니다.</p>

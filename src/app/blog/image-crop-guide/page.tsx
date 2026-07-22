@@ -206,6 +206,24 @@ export default function ImageCropGuidePage() {
               </table>
             </div>
 
+            <p className="text-brand-mid leading-relaxed mb-4">
+              아래 그림에서 세 비율의 실제 가로세로 모양을 눈으로 확인할 수 있습니다.
+            </p>
+
+            <figure className="my-8">
+              <svg viewBox="0 0 420 145" role="img" width="100%" className="block max-w-xl mx-auto" style={{ height: "auto" }}>
+                <title>1:1, 4:3, 16:9 비율 비교</title>
+                <desc>같은 높이를 기준으로 1:1 정사각형, 4:3, 16:9 직사각형의 가로 폭을 실제 비율대로 그려 비교한 그림입니다.</desc>
+                <rect x="10" y="25" width="90" height="90" rx="4" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+                <text x="55" y="75" textAnchor="middle" fontSize="15" fill="#0A0A0A">1:1</text>
+                <rect x="115" y="25" width="120" height="90" rx="4" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+                <text x="175" y="75" textAnchor="middle" fontSize="15" fill="#0A0A0A">4:3</text>
+                <rect x="250" y="25" width="160" height="90" rx="4" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+                <text x="330" y="75" textAnchor="middle" fontSize="15" fill="#0A0A0A">16:9</text>
+              </svg>
+              <figcaption className="mt-3 text-sm text-brand-mid text-center">같은 높이 기준으로 1:1은 정사각형, 16:9로 갈수록 가로가 길어집니다.</figcaption>
+            </figure>
+
             {/* 사용 방법 */}
             <BlogInlineCTA href="/tools/image/crop" label="사진 자르기 →">
               비율 감 잡으셨나요? 바로 잘라봐도 됩니다.

@@ -182,6 +182,32 @@ export default function LoanInterestGuidePage() {
             </table>
           </div>
 
+          <figure className="not-prose my-8">
+            <svg viewBox="0 0 460 300" role="img" width="100%" className="block max-w-xl mx-auto" style={{ height: "auto" }}>
+              <title>원리금균등과 원금균등의 월 상환액 흐름 비교</title>
+              <desc>주택담보 1억원 연 4% 30년 예시에서 원리금균등은 매달 약 47만원으로 일정하고, 원금균등은 첫 달 약 61만원에서 마지막 약 28만원으로 줄어드는 막대 그래프.</desc>
+              <rect x="90" y="14" width="14" height="14" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+              <text x="110" y="25" fontSize="12" fill="#0A0A0A">원리금균등</text>
+              <rect x="250" y="14" width="14" height="14" fill="#C45C2C" />
+              <text x="270" y="25" fontSize="12" fill="#0A0A0A">원금균등</text>
+              <line x1="55" y1="240" x2="430" y2="240" stroke="#0A0A0A" strokeWidth="1.5" />
+              <rect x="68" y="115" width="20" height="125" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+              <rect x="138" y="115" width="20" height="125" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+              <rect x="208" y="115" width="20" height="125" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+              <rect x="278" y="115" width="20" height="125" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+              <rect x="348" y="115" width="20" height="125" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+              <rect x="92" y="80" width="20" height="160" fill="#C45C2C" />
+              <rect x="162" y="102" width="20" height="138" fill="#C45C2C" />
+              <rect x="232" y="124" width="20" height="116" fill="#C45C2C" />
+              <rect x="302" y="145" width="20" height="95" fill="#C45C2C" />
+              <rect x="372" y="167" width="20" height="73" fill="#C45C2C" />
+              <text x="78" y="108" textAnchor="middle" fontSize="11" fill="#0A0A0A">477,415원</text>
+              <text x="102" y="72" textAnchor="middle" fontSize="11" fill="#C45C2C">611,111원</text>
+              <text x="382" y="160" textAnchor="middle" fontSize="11" fill="#C45C2C">278,704원</text>
+              <text x="240" y="262" textAnchor="middle" fontSize="12" fill="#4A4A4A">상환 회차(시간)</text>
+            </svg>
+            <figcaption className="mt-3 text-sm text-brand-mid text-center">원리금균등은 매달 상환액이 같지만, 원금균등은 첫 달이 가장 크고 회차가 지날수록 줄어든다.</figcaption>
+          </figure>
           <h2>신용대출 3천만 원은 어떤 차이가 날까요?</h2>
           <p>
             신용대출 3,000만 원, 연 5퍼센트, 3년 조건에서는 기간이 짧아 차이가 작아 보이지만

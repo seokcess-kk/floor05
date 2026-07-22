@@ -154,8 +154,23 @@ export default function ImageCompressionGuidePage() {
             <p className="text-brand-mid leading-relaxed mb-4">
               이미지 압축은 가장 간단한 방법입니다. 품질을 70-85%로 설정하면
               육안으로 구분하기 어려운 수준의 화질 저하만 발생하면서 용량은
-              절반 이하로 줄어듭니다.
+              절반 이하로 줄어듭니다. 아래 그림처럼 원본과 압축 후 용량을 나란히
+              두면 차이가 한눈에 들어옵니다.
             </p>
+
+            <figure className="my-8">
+              <svg viewBox="0 0 400 200" role="img" width="100%" className="block max-w-xl mx-auto" style={{ height: "auto" }}>
+                <title>이미지 압축 전후 용량 비교</title>
+                <desc>원본 4.2MB 이미지를 압축하면 약 1.4MB로 줄어드는 것을 가로 막대로 비교한 그림입니다.</desc>
+                <rect x="92" y="44" width="228" height="34" rx="4" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+                <text x="16" y="66" fontSize="14" fill="#0A0A0A">원본</text>
+                <text x="326" y="66" fontSize="14" fill="#0A0A0A">4.2MB</text>
+                <rect x="92" y="112" width="76" height="34" rx="4" fill="#C45C2C" />
+                <text x="16" y="134" fontSize="14" fill="#0A0A0A">압축 후</text>
+                <text x="176" y="134" fontSize="14" fill="#0A0A0A">1.4MB</text>
+              </svg>
+              <figcaption className="mt-3 text-sm text-brand-mid text-center">품질을 조절하면 원본 4.2MB 사진이 1.4MB 안팎까지, 절반 이하로 줄어듭니다.</figcaption>
+            </figure>
 
             <h3 className="text-xl font-semibold text-brand-black mt-8 mb-3">
               방법 2: 리사이즈하기

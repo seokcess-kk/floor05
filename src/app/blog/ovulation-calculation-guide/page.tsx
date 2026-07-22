@@ -17,7 +17,7 @@ const faqJsonLd = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "배란일은 어떻게 계산하나요?",
+      name: "배란 예정일은 어떤 공식으로 구하나요?",
       acceptedAnswer: {
         "@type": "Answer",
         text: "일반적인 계산 모델은 다음 생리 예정일에서 14일을 빼 배란 예정일을 추정합니다. 황체기가 약 14일이라는 평균 가정을 쓰는 방식입니다.",
@@ -162,6 +162,23 @@ export default function OvulationCalculationGuidePage() {
             </table>
           </div>
 
+          <figure className="not-prose my-8">
+            <svg viewBox="0 0 480 200" role="img" width="100%" className="block max-w-xl mx-auto" style={{ height: "auto" }}>
+              <title>28일 주기를 기준으로 한 배란 예정일과 가임기 추정 타임라인</title>
+              <desc>생리 시작일 D부터 다음 생리 예정일 D+28까지의 가로 타임라인에서 D+14를 배란 예정일로, D+9부터 D+15까지를 가임기로 추정해 표시한 그림. 평균 모델에 따른 참고용 추정이다.</desc>
+              <rect x="168.6" y="98" width="85.7" height="24" rx="3" fill="#E8734A" />
+              <line x1="40" y1="110" x2="440" y2="110" stroke="#0A0A0A" strokeWidth="2" />
+              <line x1="240" y1="110" x2="240" y2="82" stroke="#C45C2C" strokeWidth="1.5" />
+              <text x="240" y="74" textAnchor="middle" fontSize="12" fill="#0A0A0A">배란 예정 D+14</text>
+              <circle cx="40" cy="110" r="4" fill="#C45C2C" stroke="#FFFFFF" strokeWidth="1.5" />
+              <circle cx="240" cy="110" r="4" fill="#C45C2C" stroke="#FFFFFF" strokeWidth="1.5" />
+              <circle cx="440" cy="110" r="4" fill="#C45C2C" stroke="#FFFFFF" strokeWidth="1.5" />
+              <text x="211" y="146" textAnchor="middle" fontSize="12" fill="#C45C2C">가임기 D+9~D+15</text>
+              <text x="40" y="150" textAnchor="start" fontSize="12" fill="#0A0A0A">생리 시작 D일</text>
+              <text x="440" y="150" textAnchor="end" fontSize="12" fill="#0A0A0A">다음 생리 예정 D+28</text>
+            </svg>
+            <figcaption className="mt-3 text-sm text-brand-mid text-center">28일 주기를 예로 들면 생리 시작일(D)로부터 약 14일 뒤를 배란 예정일로 보고 그 앞뒤 며칠을 가임기로 추정한다.</figcaption>
+          </figure>
           <h2>계산값의 한계는 무엇일까요?</h2>
           <p>
             이 계산은 평균 모델 기반의 추정치라 실제 배란일과 다를 수 있습니다. 특히 생리 주기가
@@ -232,7 +249,7 @@ export default function OvulationCalculationGuidePage() {
           </p>
 
           <h2>자주 묻는 질문</h2>
-          <h3>배란일은 어떻게 계산하나요?</h3>
+          <h3>배란 예정일은 어떤 공식으로 구하나요?</h3>
           <p>
             다음 생리 예정일에서 14일을 빼 배란 예정일을 추정합니다. 황체기가 약 14일이라는
             평균 가정을 쓰는 방법입니다.

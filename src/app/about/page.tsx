@@ -5,11 +5,11 @@ import Footer from "@/components/common/Footer";
 import { TOOLS, TOOL_CATEGORIES, getToolsByCategory } from "@/lib/common/tools";
 
 export const metadata: Metadata = {
-  title: "소개",
+  title: "소개 - 존재하지 않는 0.5층, 브라우저에서 끝나는 도구들",
   description:
     "floor05는 브라우저에서 바로 동작하는 무료 온라인 도구를 제공합니다. 이 사이트는 파일과 입력값을 서버로 보내지 않고 브라우저에서 처리합니다.",
   openGraph: {
-    title: "소개",
+    title: "소개 - 존재하지 않는 0.5층, 브라우저에서 끝나는 도구들",
     description:
       "floor05는 브라우저에서 바로 동작하는 무료 온라인 도구를 제공합니다.",
   },

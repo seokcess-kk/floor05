@@ -177,7 +177,31 @@ export default function PngVsJpgPage() {
             </ul>
             <p className="text-brand-mid leading-relaxed mb-6">
               JPG는 투명을 지원하지 않아서, 투명한 영역이 흰색이나 검정색으로 채워집니다.
+              아래 그림에서 두 포맷의 배경 처리 방식을 비교해 보세요.
             </p>
+
+            <figure className="my-8">
+              <svg viewBox="0 0 400 210" role="img" width="100%" className="block max-w-xl mx-auto" style={{ height: "auto" }}>
+                <title>PNG와 JPG의 투명 배경 차이</title>
+                <desc>PNG는 체커보드로 표현한 투명 배경 위에 도형을 유지하고, JPG는 같은 도형을 흰 배경으로 채우는 것을 나란히 보여 줍니다.</desc>
+                <defs>
+                  <pattern id="checker" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <rect width="20" height="20" fill="#FFFFFF" />
+                    <rect width="10" height="10" fill="#B0B0B0" />
+                    <rect x="10" y="10" width="10" height="10" fill="#B0B0B0" />
+                  </pattern>
+                </defs>
+                <text x="105" y="22" textAnchor="middle" fontSize="15" fill="#0A0A0A">PNG</text>
+                <text x="295" y="22" textAnchor="middle" fontSize="15" fill="#0A0A0A">JPG</text>
+                <rect x="20" y="30" width="170" height="140" rx="6" fill="url(#checker)" stroke="#0A0A0A" strokeWidth="1.5" />
+                <circle cx="105" cy="100" r="42" fill="#C45C2C" />
+                <rect x="210" y="30" width="170" height="140" rx="6" fill="#FFFFFF" stroke="#0A0A0A" strokeWidth="1.5" />
+                <circle cx="295" cy="100" r="42" fill="#C45C2C" />
+                <text x="105" y="192" textAnchor="middle" fontSize="13" fill="#4A4A4A">투명 배경 유지</text>
+                <text x="295" y="192" textAnchor="middle" fontSize="13" fill="#4A4A4A">흰 배경으로 채움</text>
+              </svg>
+              <figcaption className="mt-3 text-sm text-brand-mid text-center">같은 도형이라도 PNG는 배경을 투명하게 두고, JPG는 흰색으로 메웁니다.</figcaption>
+            </figure>
 
             {/* 용량 */}
             <BlogInlineCTA href="/tools/image/convert" label="포맷 변환 →">

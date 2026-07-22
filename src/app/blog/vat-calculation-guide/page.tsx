@@ -81,6 +81,25 @@ export default function VatCalculationGuidePage() {
           <h2>공급가액에서 합계금액은 어떻게 계산하나요?</h2>
           <p>공급가액에서 출발할 때는 공급가액에 1.1을 곱하면 합계금액입니다. 부가세는 공급가액의 10%이므로 공급가액 1,000,000원에는 부가세 100,000원이 붙고, 최종 합계는 1,100,000원이 됩니다.</p>
           <div className="overflow-x-auto"><table><thead><tr><th>공급가액</th><th>부가세</th><th>합계금액</th><th>계산식</th></tr></thead><tbody><tr><td>100,000원</td><td>10,000원</td><td>110,000원</td><td>100,000원 × 1.1</td></tr><tr><td>500,000원</td><td>50,000원</td><td>550,000원</td><td>500,000원 × 1.1</td></tr><tr><td>1,000,000원</td><td>100,000원</td><td>1,100,000원</td><td>1,000,000원 × 1.1</td></tr></tbody></table></div>
+          <figure className="not-prose my-8">
+            <svg viewBox="0 0 480 190" role="img" width="100%" className="block max-w-xl mx-auto" style={{ height: "auto" }}>
+              <title>합계금액을 공급가액과 부가세로 나눈 구성</title>
+              <desc>합계금액 110,000원이 공급가액 100,000원과 부가세 10,000원(10퍼센트)으로 이루어져 있음을 한 막대의 두 구간으로 보여주는 그림.</desc>
+              <line x1="40" y1="58" x2="440" y2="58" stroke="#0A0A0A" strokeWidth="1" />
+              <line x1="40" y1="58" x2="40" y2="66" stroke="#0A0A0A" strokeWidth="1" />
+              <line x1="440" y1="58" x2="440" y2="66" stroke="#0A0A0A" strokeWidth="1" />
+              <text x="240" y="48" textAnchor="middle" fontSize="13" fill="#0A0A0A">합계금액 110,000원</text>
+              <rect x="40" y="70" width="364" height="50" fill="#F2F0ED" />
+              <rect x="404" y="70" width="36" height="50" fill="#C45C2C" />
+              <rect x="40" y="70" width="400" height="50" rx="4" fill="none" stroke="#0A0A0A" strokeWidth="1.5" />
+              <line x1="404" y1="70" x2="404" y2="120" stroke="#0A0A0A" strokeWidth="1.5" />
+              <text x="222" y="92" textAnchor="middle" fontSize="13" fill="#0A0A0A">공급가액</text>
+              <text x="222" y="108" textAnchor="middle" fontSize="12" fill="#4A4A4A">100,000원</text>
+              <line x1="422" y1="120" x2="422" y2="140" stroke="#C45C2C" strokeWidth="1" />
+              <text x="422" y="156" textAnchor="middle" fontSize="12" fill="#C45C2C">부가세 10,000원 (10%)</text>
+            </svg>
+            <figcaption className="mt-3 text-sm text-brand-mid text-center">합계금액 110,000원은 공급가액 100,000원과 부가세 10,000원(10%)이 합쳐진 금액이다.</figcaption>
+          </figure>
           <h2>합계금액에서 공급가액을 역산하려면 어떻게 하나요?</h2>
           <p>합계금액에서 역산할 때는 합계를 1.1로 나누면 공급가액입니다. 포함된 부가세만 바로 보고 싶다면 합계금액에 10/110을 곱하면 됩니다. 합계 550,000원은 공급가액 500,000원과 부가세 50,000원으로 나뉩니다.</p>
           <div className="overflow-x-auto"><table><thead><tr><th>합계금액</th><th>공급가액</th><th>부가세</th><th>역산식</th></tr></thead><tbody><tr><td>110,000원</td><td>100,000원</td><td>10,000원</td><td>110,000원 ÷ 1.1</td></tr><tr><td>550,000원</td><td>500,000원</td><td>50,000원</td><td>550,000원 × 10/110</td></tr><tr><td>1,100,000원</td><td>1,000,000원</td><td>100,000원</td><td>1,100,000원 ÷ 1.1</td></tr></tbody></table></div>

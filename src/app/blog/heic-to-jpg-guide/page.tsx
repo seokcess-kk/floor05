@@ -131,7 +131,30 @@ export default function HeicToJpgGuidePage() {
             <p className="text-brand-mid leading-relaxed mb-6">
               문제는 윈도우, 안드로이드, 일부 웹사이트에서 HEIC를 지원하지 않는다는
               것입니다. 그래서 다른 기기나 서비스에서 사용하려면 JPG로 변환해야 합니다.
+              아래 그림처럼 변환 한 번이면 대부분의 호환성 문제가 풀립니다.
             </p>
+
+            <figure className="my-8">
+              <svg viewBox="0 0 410 170" role="img" width="100%" className="block max-w-xl mx-auto" style={{ height: "auto" }}>
+                <title>HEIC에서 JPG로 변환하는 흐름</title>
+                <desc>아이폰 HEIC를 변환하면 JPG가 되며, HEIC는 아이폰에서만 잘 열리고 JPG는 어디서나 열리는 호환성 차이를 함께 표시합니다.</desc>
+                <rect x="16" y="44" width="110" height="54" rx="6" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+                <text x="71" y="66" textAnchor="middle" fontSize="13" fill="#0A0A0A">아이폰</text>
+                <text x="71" y="84" textAnchor="middle" fontSize="13" fill="#0A0A0A">HEIC</text>
+                <line x1="128" y1="71" x2="154" y2="71" stroke="#0A0A0A" strokeWidth="1.5" />
+                <polygon points="154,66.5 160,71 154,75.5" fill="#0A0A0A" />
+                <rect x="160" y="44" width="90" height="54" rx="6" fill="#C45C2C" />
+                <text x="205" y="76" textAnchor="middle" fontSize="14" fill="#FFFFFF">변환</text>
+                <line x1="252" y1="71" x2="278" y2="71" stroke="#0A0A0A" strokeWidth="1.5" />
+                <polygon points="278,66.5 284,71 278,75.5" fill="#0A0A0A" />
+                <rect x="284" y="44" width="110" height="54" rx="6" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+                <text x="339" y="76" textAnchor="middle" fontSize="15" fill="#0A0A0A">JPG</text>
+                <text x="71" y="124" textAnchor="middle" fontSize="12" fill="#4A4A4A">아이폰 <tspan fill="#C45C2C">✓</tspan></text>
+                <text x="71" y="142" textAnchor="middle" fontSize="12" fill="#4A4A4A">윈도우·구형 <tspan fill="#B0B0B0">✗</tspan></text>
+                <text x="339" y="124" textAnchor="middle" fontSize="12" fill="#4A4A4A">어디서나 <tspan fill="#C45C2C">✓</tspan></text>
+              </svg>
+              <figcaption className="mt-3 text-sm text-brand-mid text-center">아이폰 HEIC를 변환하면, 윈도우와 구형 기기까지 어디서나 열리는 JPG가 됩니다.</figcaption>
+            </figure>
 
             {/* 섹션 2 */}
             <BlogInlineCTA href="/tools/image/heic-to-jpg" label="HEIC → JPG 변환 →">

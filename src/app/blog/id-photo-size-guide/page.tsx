@@ -110,8 +110,32 @@ export default function IdPhotoSizeGuidePage() {
             </ul>
             <p className="text-brand-mid leading-relaxed mb-4">
               화면·웹 제출용은 위 픽셀 크기면 충분합니다. 인화용은 300DPI 기준 픽셀로 맞추면
-              실측 크기로 출력됩니다.
+              실측 크기로 출력됩니다. 아래 그림은 여권 규격 3.5×4.5cm를 측정선으로 나타낸 것입니다.
             </p>
+
+            <figure className="my-8">
+              <svg viewBox="0 0 320 210" role="img" width="100%" className="block max-w-xl mx-auto" style={{ height: "auto" }}>
+                <title>여권사진 3.5×4.5cm 치수</title>
+                <desc>여권사진 규격 3.5cm 너비와 4.5cm 높이를 측정선으로 표시하고 300dpi 기준 413×531px 값을 함께 나타낸 치수 그림입니다.</desc>
+                <rect x="108" y="44" width="93" height="120" rx="4" fill="#F2F0ED" stroke="#0A0A0A" strokeWidth="1.5" />
+                <circle cx="154.5" cy="88" r="22" fill="#B0B0B0" />
+                <rect x="122" y="132" width="65" height="32" rx="16" fill="#B0B0B0" />
+                <line x1="108" y1="44" x2="108" y2="26" stroke="#0A0A0A" strokeWidth="1.5" />
+                <line x1="201" y1="44" x2="201" y2="26" stroke="#0A0A0A" strokeWidth="1.5" />
+                <line x1="108" y1="28" x2="201" y2="28" stroke="#0A0A0A" strokeWidth="1.5" />
+                <line x1="108" y1="24" x2="108" y2="32" stroke="#0A0A0A" strokeWidth="1.5" />
+                <line x1="201" y1="24" x2="201" y2="32" stroke="#0A0A0A" strokeWidth="1.5" />
+                <text x="154.5" y="20" textAnchor="middle" fontSize="13" fill="#0A0A0A">3.5cm</text>
+                <line x1="201" y1="44" x2="220" y2="44" stroke="#0A0A0A" strokeWidth="1.5" />
+                <line x1="201" y1="164" x2="220" y2="164" stroke="#0A0A0A" strokeWidth="1.5" />
+                <line x1="218" y1="44" x2="218" y2="164" stroke="#0A0A0A" strokeWidth="1.5" />
+                <line x1="214" y1="44" x2="222" y2="44" stroke="#0A0A0A" strokeWidth="1.5" />
+                <line x1="214" y1="164" x2="222" y2="164" stroke="#0A0A0A" strokeWidth="1.5" />
+                <text x="226" y="108" textAnchor="start" fontSize="13" fill="#0A0A0A">4.5cm</text>
+                <text x="154.5" y="186" textAnchor="middle" fontSize="12" fill="#4A4A4A">413 × 531px (300dpi)</text>
+              </svg>
+              <figcaption className="mt-3 text-sm text-brand-mid text-center">여권사진 3.5×4.5cm는 300dpi 기준 413×531px로, 세로가 조금 더 긴 비율입니다.</figcaption>
+            </figure>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               2. 비율이 안 맞으면 잘리거나 늘어납니다
