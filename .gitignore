@@ -45,3 +45,6 @@ next-env.d.ts
 .vscode/
 *.swp
 *.swo
+
+# SEO audit artifacts (local only)
+floor05.com-audit/
