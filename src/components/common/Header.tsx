@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
-import { TOOLS } from "@/lib/common/tools";
+import { TOOL_CATEGORIES, getToolsByCategory } from "@/lib/common/tools";
 
 function Logo() {
   return (
@@ -23,6 +23,7 @@ function Logo() {
 export default function Header() {
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const toolsButtonRef = useRef<HTMLButtonElement>(null);
 
   // 외부 클릭 감지로 드롭다운 닫기
   useEffect(() => {
@@ -46,6 +47,7 @@ export default function Header() {
     function handleEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setIsToolsOpen(false);
+        toolsButtonRef.current?.focus();
       }
     }
 
@@ -59,9 +61,9 @@ export default function Header() {
   }, [isToolsOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-white border-b border-brand-light/20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14">
+    <header className="sticky top-0 z-50 border-b border-brand-light/20 bg-brand-white">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-14 items-center justify-between">
           {/* 왼쪽: 로고 */}
           <Logo />
 
@@ -70,15 +72,17 @@ export default function Header() {
             {/* 도구 드롭다운 */}
             <div className="relative" ref={dropdownRef}>
               <button
+                ref={toolsButtonRef}
                 onClick={() => setIsToolsOpen(!isToolsOpen)}
-                className="flex items-center gap-1 font-mono text-xs text-brand-mid hover:text-brand-black transition-colors uppercase tracking-wider"
+                className="-mr-2 flex min-h-11 items-center gap-1 px-2 font-mono text-xs uppercase tracking-wider text-brand-mid transition-colors hover:text-brand-black focus-visible:text-brand-black"
                 aria-expanded={isToolsOpen}
                 aria-haspopup="true"
-                aria-label="도구 메뉴 열기"
+                aria-controls="tool-directory-menu"
+                aria-label={`도구 메뉴 ${isToolsOpen ? "닫기" : "열기"}`}
               >
                 도구
                 <svg
-                  className={`w-3 h-3 transition-transform ${isToolsOpen ? "rotate-180" : ""}`}
+                  className={`h-3 w-3 transition-transform ${isToolsOpen ? "rotate-180" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -89,22 +93,45 @@ export default function Header() {
 
               {/* 드롭다운 메뉴 */}
               {isToolsOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-brand-white rounded-lg shadow-lg border border-brand-light/20 py-2 z-50">
-                  {TOOLS.map((tool) => (
-                    <Link
-                      key={tool.href}
-                      href={tool.href}
-                      onClick={() => setIsToolsOpen(false)}
-                      className="flex items-center justify-between px-4 py-2.5 hover:bg-brand-paper transition-colors group"
-                    >
-                      <span className="text-sm text-brand-black group-hover:text-brand-accent transition-colors">
-                        {tool.name}
-                      </span>
-                      <span className="text-xs text-brand-light">
-                        {tool.shortDescription}
-                      </span>
-                    </Link>
-                  ))}
+                <div
+                  id="tool-directory-menu"
+                  className="tool-directory-scroll absolute right-0 z-50 mt-2 max-h-[min(70dvh,32rem)] w-[min(calc(100vw-2rem),44rem)] overflow-y-auto overscroll-contain rounded-lg border border-brand-light/20 bg-brand-white shadow-lg"
+                >
+                  <div className="sticky top-0 z-10 flex items-center justify-between border-b border-brand-light/20 bg-brand-white px-4 py-3 sm:px-5">
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-brand-mid">
+                      Tool directory
+                    </p>
+                    <p className="text-xs text-brand-light">
+                      {TOOL_CATEGORIES.length}개의 Room
+                    </p>
+                  </div>
+
+                  <div className="columns-2 gap-x-6 p-4 sm:columns-3 sm:p-5">
+                    {TOOL_CATEGORIES.map((category) => {
+                      const tools = getToolsByCategory(category.id);
+
+                      return (
+                        <section key={category.id} className="mb-6 break-inside-avoid">
+                          <h3 className="mb-2 font-mono text-[10px] font-medium uppercase tracking-wider text-brand-accent">
+                            {category.room} · {category.label}
+                          </h3>
+                          <ul className="space-y-1">
+                            {tools.map((tool) => (
+                              <li key={tool.href}>
+                                <Link
+                                  href={tool.href}
+                                  onClick={() => setIsToolsOpen(false)}
+                                  className="-mx-2 block rounded-sm px-2 py-1.5 text-xs leading-5 text-brand-mid transition-colors hover:bg-brand-paper hover:text-brand-black focus-visible:bg-brand-paper focus-visible:text-brand-black"
+                                >
+                                  {tool.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </section>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>

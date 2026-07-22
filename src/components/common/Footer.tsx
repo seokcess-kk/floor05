@@ -51,7 +51,7 @@ export default function Footer() {
               </span>
             </div>
 
-            <div className="footer-tool-scroll max-h-64 overflow-y-auto overscroll-contain pr-3">
+            <div className="tool-directory-scroll max-h-64 overflow-y-auto overscroll-contain pr-3">
               <div className="columns-2 gap-x-6 sm:columns-3">
                 {TOOL_CATEGORIES.map((category) => {
                   const tools = getToolsByCategory(category.id);
