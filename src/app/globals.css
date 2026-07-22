@@ -71,6 +71,29 @@ body {
   background: #4A4A4A;
 }
 
+/* 푸터 도구 디렉터리: 항목 수와 무관하게 푸터 높이를 일정하게 유지 */
+.footer-tool-scroll {
+  scrollbar-color: #4A4A4A transparent;
+  scrollbar-width: thin;
+}
+
+.footer-tool-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.footer-tool-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.footer-tool-scroll::-webkit-scrollbar-thumb {
+  background: #4A4A4A;
+  border-radius: 999px;
+}
+
+.footer-tool-scroll::-webkit-scrollbar-thumb:hover {
+  background: #B0B0B0;
+}
+
 /* 모션 감소 선호 설정 */
 @media (prefers-reduced-motion: reduce) {
   *,
