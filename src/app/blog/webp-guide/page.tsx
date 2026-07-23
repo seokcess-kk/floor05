@@ -244,23 +244,23 @@ export default function WebPGuidePage() {
             <div className="space-y-4 text-brand-mid">
               <div className="flex items-start gap-3">
                 <span className="text-brand-accent font-bold shrink-0">✓</span>
-                <p><strong>웹사이트/블로그 이미지</strong> — 용량이 작아 로딩 속도 향상</p>
+                <p className="text-brand-mid leading-relaxed mb-4"><strong>웹사이트/블로그 이미지</strong> — 용량이 작아 로딩 속도 향상</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-brand-accent font-bold shrink-0">✓</span>
-                <p><strong>이메일 첨부 파일</strong> — 용량 제한에 여유가 생김</p>
+                <p className="text-brand-mid leading-relaxed mb-4"><strong>이메일 첨부 파일</strong> — 용량 제한에 여유가 생김</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-brand-accent font-bold shrink-0">✓</span>
-                <p><strong>투명 배경이 필요한 아이콘/로고</strong> — PNG보다 가벼움</p>
+                <p className="text-brand-mid leading-relaxed mb-4"><strong>투명 배경이 필요한 아이콘/로고</strong> — PNG보다 가벼움</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-red-500 font-bold shrink-0">✗</span>
-                <p><strong>인스타그램, 카카오톡 업로드</strong> — JPG/PNG로 변환 필요</p>
+                <p className="text-brand-mid leading-relaxed mb-4"><strong>인스타그램, 카카오톡 업로드</strong> — JPG/PNG로 변환 필요</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-red-500 font-bold shrink-0">✗</span>
-                <p><strong>인쇄물</strong> — 인쇄업체에서 지원하지 않을 수 있음</p>
+                <p className="text-brand-mid leading-relaxed mb-4"><strong>인쇄물</strong> — 인쇄업체에서 지원하지 않을 수 있음</p>
               </div>
             </div>
 

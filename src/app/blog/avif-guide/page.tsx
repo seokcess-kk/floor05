@@ -220,19 +220,19 @@ export default function AvifGuidePage() {
             <div className="space-y-4 text-brand-mid mb-6">
               <div className="flex items-start gap-3">
                 <span className="text-brand-accent font-bold shrink-0">✓</span>
-                <p><strong>웹사이트·블로그 이미지</strong> — 용량을 한 단계 더 줄여 로딩 속도 개선</p>
+                <p className="text-brand-mid leading-relaxed mb-4"><strong>웹사이트·블로그 이미지</strong> — 용량을 한 단계 더 줄여 로딩 속도 개선</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-brand-accent font-bold shrink-0">✓</span>
-                <p><strong>방문자가 최신 브라우저 위주</strong> — 호환성 부담이 적은 경우</p>
+                <p className="text-brand-mid leading-relaxed mb-4"><strong>방문자가 최신 브라우저 위주</strong> — 호환성 부담이 적은 경우</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-red-500 font-bold shrink-0">✗</span>
-                <p><strong>메일 첨부·문서·인쇄·업로드</strong> — 받는 쪽 환경을 모를 땐 JPG가 안전</p>
+                <p className="text-brand-mid leading-relaxed mb-4"><strong>메일 첨부·문서·인쇄·업로드</strong> — 받는 쪽 환경을 모를 땐 JPG가 안전</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-red-500 font-bold shrink-0">✗</span>
-                <p><strong>오래된 프로그램·기기에서 열어야 할 때</strong> — JPG·PNG로 변환</p>
+                <p className="text-brand-mid leading-relaxed mb-4"><strong>오래된 프로그램·기기에서 열어야 할 때</strong> — JPG·PNG로 변환</p>
               </div>
             </div>
 

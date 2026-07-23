@@ -233,21 +233,21 @@ export default function TransparentBackgroundPage() {
             <div className="space-y-4 text-brand-mid">
               <div className="flex items-start gap-3">
                 <span className="text-brand-accent font-bold shrink-0">1.</span>
-                <p>
+                <p className="text-brand-mid leading-relaxed mb-4">
                   <strong>JPG로 변환하면 투명 영역이 채워집니다</strong> —
                   floor05에서는 흰색으로 채워지며, 다른 도구에서는 검은색이 될 수도 있습니다.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-brand-accent font-bold shrink-0">2.</span>
-                <p>
+                <p className="text-brand-mid leading-relaxed mb-4">
                   <strong>투명 PNG는 용량이 큽니다</strong> —
                   웹에서 사용할 때는 WebP로 변환하면 투명도를 유지하면서 용량을 줄일 수 있습니다.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-brand-accent font-bold shrink-0">3.</span>
-                <p>
+                <p className="text-brand-mid leading-relaxed mb-4">
                   <strong>SNS 업로드 시 확인하세요</strong> —
                   일부 플랫폼은 투명 PNG를 업로드하면 배경을 자동으로 채웁니다.
                 </p>
