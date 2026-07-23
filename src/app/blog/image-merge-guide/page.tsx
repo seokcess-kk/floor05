@@ -20,7 +20,7 @@ const faqSchema = {
       name: "사진 여러 장을 한 장으로 어떻게 합치나요?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "합칠 사진을 모두 올린 뒤 세로 또는 가로 방향을 고르고 합치기를 누르면 한 장의 이미지로 이어붙습니다. 브라우저에서 바로 처리되며 파일이 서버로 전송되지 않습니다.",
+        text: "합칠 사진을 모두 올린 뒤 세로 또는 가로 방향을 고르고 합치기를 누르면 한 장으로 이어붙습니다. 이 과정은 브라우저가 직접 처리해, 사진을 서버로 올리지 않고 끝냅니다.",
       },
     },
     {
@@ -93,7 +93,7 @@ export default function ImageMergeGuidePage() {
                 💡 바로 합치고 싶다면?
               </p>
               <p className="text-brand-mid text-sm mb-4">
-                파일이 서버로 전송되지 않는 무료 이미지 합치기 도구를 사용해보세요.
+                여러 장을 세로·가로로 이어 붙이는 무료 도구, 사진은 브라우저 안에만 둡니다.
               </p>
               <Link
                 href="/tools/image/merge"
@@ -212,8 +212,8 @@ export default function ImageMergeGuidePage() {
                 </h3>
                 <p className="text-brand-mid">
                   합칠 사진을 모두 올린 뒤 세로 또는 가로 방향을 고르고 합치기를
-                  누르면 한 장으로 이어집니다. 브라우저에서 바로 처리되어 파일이
-                  서버로 전송되지 않습니다.
+                  누르면 한 장으로 이어붙습니다. 이 과정은 브라우저가 직접 처리해,
+                  사진을 서버로 올리지 않고 끝냅니다.
                 </p>
               </div>
               <div className="border-b border-brand-light/20 pb-6">

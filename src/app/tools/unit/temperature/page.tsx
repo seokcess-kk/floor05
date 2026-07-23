@@ -56,6 +56,19 @@ const guide = {
         "변환 공식은 전부 브라우저 안에서 돌아갑니다. 온도 하나 바꿔 보는 데 서버까지 다녀올 이유가 없으니까요.",
       ],
     },
+    {
+      heading: "화씨는 요리·날씨·체온에서 자주 만납니다",
+      paragraphs: [
+        "화씨를 실제로 마주치는 곳은 대개 셋입니다. 외국 레시피의 오븐 온도, 해외 날씨 앱, 그리고 미국식 체온 표기입니다. 오븐을 예로 들면 350°F는 약 177°C, 400°F는 약 204°C, 425°F는 약 218°C로, 베이킹 레시피의 온도는 이 언저리에 몰려 있습니다.",
+        "날씨는 정확한 숫자보다 어림 감각이 먼저입니다. 화씨에서 30을 뺀 뒤 2로 나누면 대략의 섭씨가 나옵니다. 70°F는 (70−30)÷2 ≈ 20°C(실제 21.1°C)로 쾌적하고, 90°F는 ≈ 30°C(실제 32.2°C)로 한여름 더위입니다. 정밀한 값은 위 변환기에 넣고, 걸어가며 하는 암산은 이 어림식으로 감만 잡으면 됩니다.",
+      ],
+      bullets: [
+        "오븐 350°F ≈ 177°C, 400°F ≈ 204°C, 425°F ≈ 218°C",
+        "쾌적한 실내 70°F ≈ 21°C",
+        "미열 기준 100.4°F = 38°C",
+        "어림 암산: (화씨 − 30) ÷ 2 ≈ 섭씨",
+      ],
+    },
   ],
 };
 
@@ -80,9 +93,19 @@ const faqs = [
       "섭씨에 273.15를 더하면 켈빈이 됩니다. 0K(절대영도)는 −273.15°C입니다.",
   },
   {
-    question: "입력한 값이 저장되나요?",
+    question: "외국 레시피의 오븐 350도는 섭씨 몇 도인가요?",
     answer:
-      "아니요. 곱하고 더하는 몇 번의 계산이라 서버로 보낼 것도 없습니다. 입력한 온도는 화면에서 쓰이고 그대로 사라집니다.",
+      "약 177°C입니다. (350 − 32) × 5/9로 계산합니다. 400°F는 약 204°C, 425°F는 약 218°C라, 베이킹 온도는 대부분 175~220°C 사이에 들어옵니다.",
+  },
+  {
+    question: "화씨를 섭씨로 암산하는 요령이 있나요?",
+    answer:
+      "화씨에서 30을 빼고 2로 나누면 대략의 섭씨가 나옵니다. 70°F는 약 20°C(실제 21.1°C) 정도라 날씨 감을 잡는 데는 충분합니다. 소수점까지 정확한 값은 위 변환기를 쓰세요.",
+  },
+  {
+    question: "넣은 온도가 저장되나요?",
+    answer:
+      "저장되지 않습니다. 온도 변환은 곱셈과 덧셈 몇 번이면 끝나 서버가 관여할 일이 없고, 넣은 값은 화면에서 쓰인 뒤 사라집니다.",
   },
 ];
 
@@ -117,7 +140,67 @@ export default function TemperaturePage() {
       currentToolHref="/tools/unit/temperature"
       schemas={schemas}
     >
-      <UnitConverter set="temperature" toolName="temperature" />
+      <>
+        <UnitConverter set="temperature" toolName="temperature" />
+
+        <section className="mt-6 rounded-lg border border-brand-light/50 bg-brand-paper p-4 shadow-sm">
+          <div className="mb-3">
+            <h2 className="text-lg font-semibold text-brand-dark">화씨 → 섭씨 기준점 표</h2>
+            <p className="mt-1 text-sm text-brand-mid">
+              °C = (°F − 32) × 5/9 로 계산합니다. 물은 32°F에서 얼고 212°F에서 끓습니다.
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[520px] border-collapse text-sm">
+              <caption className="sr-only">일상에서 자주 쓰는 화씨 온도를 섭씨로 환산한 표</caption>
+              <thead>
+                <tr className="border-y border-brand-light/50 bg-brand-light/10 text-left text-brand-dark">
+                  <th scope="col" className="px-3 py-2 font-semibold">화씨(°F)</th>
+                  <th scope="col" className="px-3 py-2 font-semibold">섭씨(°C)</th>
+                  <th scope="col" className="px-3 py-2 font-semibold">메모</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-brand-light/30">
+                <tr>
+                  <td className="px-3 py-2">0°F</td>
+                  <td className="px-3 py-2">약 −17.8°C</td>
+                  <td className="px-3 py-2 text-brand-mid">몹시 추운 날</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">32°F</td>
+                  <td className="px-3 py-2">0°C</td>
+                  <td className="px-3 py-2 text-brand-mid">물이 어는 점</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">70°F</td>
+                  <td className="px-3 py-2">약 21.1°C</td>
+                  <td className="px-3 py-2 text-brand-mid">쾌적한 실내</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">98.6°F</td>
+                  <td className="px-3 py-2">37°C</td>
+                  <td className="px-3 py-2 text-brand-mid">사람 평균 체온</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">100.4°F</td>
+                  <td className="px-3 py-2">38°C</td>
+                  <td className="px-3 py-2 text-brand-mid">미열 기준</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">212°F</td>
+                  <td className="px-3 py-2">100°C</td>
+                  <td className="px-3 py-2 text-brand-mid">물이 끓는 점</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">350°F</td>
+                  <td className="px-3 py-2">약 176.7°C</td>
+                  <td className="px-3 py-2 text-brand-mid">오븐 베이킹</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </>
     </ToolLayout>
   );
 }

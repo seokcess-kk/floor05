@@ -86,7 +86,7 @@ export default function SeverancePayGuidePage() {
               <p className="font-medium text-brand-black mb-3">💡 바로 계산하고 싶다면?</p>
               <p className="text-brand-mid text-sm mb-4">
                 입사일·퇴사일과 월급만 넣으면 평균임금 방식으로 퇴직금을 바로 보여줍니다.
-                상여금·연차수당까지 반영하고, 입력값은 서버로 전송되지 않습니다.
+                상여금·연차수당까지 반영하며, 넣은 월급과 날짜는 계산이 끝나면 브라우저에 남지 않습니다.
               </p>
               <Link
                 href="/tools/calc/severance"
@@ -212,7 +212,7 @@ export default function SeverancePayGuidePage() {
                 지금 바로 퇴직금 계산
               </h3>
               <p className="text-brand-light mb-6">
-                입사일·월급만 넣으면 평균임금 방식으로 바로. 회원가입 없이 무료입니다.
+                입사일·월급만 넣으면 평균임금 방식으로 바로. 로그인도 결제도 없습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

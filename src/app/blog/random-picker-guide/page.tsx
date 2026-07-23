@@ -262,7 +262,7 @@ export default function RandomPickerGuidePage() {
             <div className="bg-brand-black rounded-lg p-8 mt-12 text-center">
               <h3 className="text-xl font-bold text-brand-paper mb-3">지금 바로 공정하게</h3>
               <p className="text-brand-light mb-6">
-                사다리타기로, 룰렛으로. 회원가입 없이 무료입니다.
+                사다리타기로, 룰렛으로. 가입 절차 없이 바로 돌려 볼 수 있습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

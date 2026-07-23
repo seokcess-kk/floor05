@@ -98,9 +98,9 @@ export default function InstagramImageSizePage() {
           <div className="prose prose-lg max-w-none">
             {/* 도입 */}
             <p className="text-brand-mid text-lg leading-relaxed mb-8">
-              인스타그램에 사진을 올렸는데 잘리거나 흐릿해진 적 있으신가요?
-              인스타그램은 특정 크기와 비율만 지원하기 때문입니다.
-              이 글에서 모든 인스타그램 이미지 규격을 정리해드립니다.
+              공들여 찍은 사진이 인스타그램에서 위아래로 잘리거나 뿌옇게 올라간 적
+              있을 겁니다. 피드·스토리·릴스가 저마다 정해진 비율만 받기 때문입니다.
+              이 글은 인스타그램에서 쓰이는 이미지 규격을 용도별로 짚어 줍니다.
             </p>
 
             {/* CTA 박스 */}
@@ -109,7 +109,7 @@ export default function InstagramImageSizePage() {
                 💡 바로 크기 조절하고 싶다면?
               </p>
               <p className="text-brand-mid text-sm mb-4">
-                인스타그램 프리셋이 내장된 무료 리사이즈 도구를 사용해보세요.
+                피드·스토리 비율이 프리셋으로 들어 있는 무료 리사이즈 도구가 있습니다.
               </p>
               <Link
                 href="/tools/image/resize"
@@ -221,8 +221,8 @@ export default function InstagramImageSizePage() {
                 </h3>
                 <p className="text-brand-mid">
                   인스타그램이 지원하지 않는 비율이기 때문입니다.
-                  올리기 전에 1:1, 4:5, 또는 1.91:1 비율로 미리 조정하세요.
-                  floor05 리사이즈 도구에서 인스타그램 프리셋을 선택하면 됩니다.
+                  올리기 전에 1:1, 4:5, 또는 1.91:1 중 하나로 맞춰 두면 됩니다.
+                  리사이즈 도구의 인스타그램 프리셋을 고르면 한 번에 잡힙니다.
                 </p>
               </div>
 
@@ -241,8 +241,8 @@ export default function InstagramImageSizePage() {
                   Q. 여러 사진을 한꺼번에 크기 조절할 수 있나요?
                 </h3>
                 <p className="text-brand-mid">
-                  네, floor05 리사이즈 도구는 여러 장을 한꺼번에 처리할 수 있습니다.
-                  같은 프리셋으로 일괄 변환 후 ZIP으로 다운로드하세요.
+                  네, 리사이즈 도구는 여러 장을 한꺼번에 올려 처리할 수 있습니다.
+                  같은 프리셋을 적용해 변환하면 ZIP 하나로 내려받습니다.
                 </p>
               </div>
             </div>

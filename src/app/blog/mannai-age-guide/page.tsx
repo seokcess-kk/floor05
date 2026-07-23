@@ -87,7 +87,7 @@ export default function MannaiAgeGuidePage() {
               <p className="font-medium text-brand-black mb-3">💡 바로 계산하고 싶다면?</p>
               <p className="text-brand-mid text-sm mb-4">
                 생년월일만 넣으면 만 나이·연 나이·세는 나이·띠·다음 생일 D-Day를 한 번에
-                보여줍니다. 입력값은 서버로 전송되지 않습니다.
+                보여줍니다. 생년월일은 계산하는 동안에만 쓰이고 어디에도 기록되지 않습니다.
               </p>
               <Link
                 href="/tools/date/age"
@@ -228,7 +228,7 @@ export default function MannaiAgeGuidePage() {
                 생년월일로 바로 계산
               </h3>
               <p className="text-brand-light mb-6">
-                만 나이·연 나이·세는 나이·띠·다음 생일을 한 번에. 회원가입 없이 무료입니다.
+                만 나이·연 나이·세는 나이·띠·다음 생일을 한 번에. 회원가입 절차가 아예 없습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

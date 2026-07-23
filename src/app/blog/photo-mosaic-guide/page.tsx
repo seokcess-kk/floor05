@@ -83,7 +83,7 @@ export default function PhotoMosaicGuidePage() {
             <div className="bg-brand-paper rounded-lg p-6 mb-10 border border-brand-light/20">
               <p className="font-medium text-brand-black mb-3">💡 바로 가리고 싶다면?</p>
               <p className="text-brand-mid text-sm mb-4">
-                가릴 부분을 드래그하면 모자이크·블러로 덮어줍니다. 사진은 서버로 전송되지 않습니다.
+                가릴 부분을 드래그하면 모자이크나 블러로 덮어 줍니다. 원본은 이 브라우저 안에서만 열리고 처리됩니다.
               </p>
               <Link
                 href="/tools/image/mosaic"
@@ -183,7 +183,7 @@ export default function PhotoMosaicGuidePage() {
             <p className="text-brand-mid leading-relaxed mb-4">
               가리려는 정보가 민감할수록, 그 사진을 외부 서버에 업로드하는 것 자체가 위험합니다.
               이미 한 번 올라간 파일은 어디에 남는지 알기 어렵기 때문입니다. 이 도구는 처리를 전부
-              브라우저 안에서 끝내므로, 사진이 서버로 전송되지 않습니다. 가린 사진만 기기에 저장됩니다.
+              브라우저 안에서 끝내므로, 가리기 전 사진이 업로드되는 순간 자체가 없습니다. 저장되는 것은 이미 처리를 마친 결과 이미지뿐입니다.
             </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-6">자주 묻는 질문</h2>
@@ -235,7 +235,7 @@ export default function PhotoMosaicGuidePage() {
             <div className="bg-brand-black rounded-lg p-8 mt-12 text-center">
               <h3 className="text-xl font-bold text-brand-paper mb-3">올리기 전에 가리기</h3>
               <p className="text-brand-light mb-6">
-                얼굴·번호판·주소를 드래그로 가리기. 회원가입 없이 무료입니다.
+                얼굴·번호판·주소를 드래그로 가리기. 가입 절차 없이 그냥 씁니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

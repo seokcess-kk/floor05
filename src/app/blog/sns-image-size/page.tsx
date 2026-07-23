@@ -98,9 +98,9 @@ export default function SNSImageSizePage() {
           <div className="prose prose-lg max-w-none">
             {/* 도입 */}
             <p className="text-brand-mid text-lg leading-relaxed mb-8">
-              SNS에 사진을 올렸는데 잘리거나 흐릿하게 나온 적 있으신가요?
-              각 플랫폼마다 권장하는 이미지 크기가 다르기 때문입니다.
-              이 글에서 모든 주요 SNS의 최적 이미지 규격을 정리해드립니다.
+              같은 사진 한 장을 여러 SNS에 올리다 보면, 어떤 곳에서는 멀쩡하고
+              어떤 곳에서는 잘리곤 합니다. 플랫폼마다 권장 크기와 비율이 제각각이기
+              때문입니다. 인스타그램부터 카카오톡까지, 주요 서비스의 이미지 규격을 한자리에 모았습니다.
             </p>
 
             {/* CTA 박스 */}
@@ -109,7 +109,7 @@ export default function SNSImageSizePage() {
                 💡 지금 바로 크기 맞추고 싶다면?
               </p>
               <p className="text-brand-mid text-sm mb-4">
-                SNS별 프리셋이 내장된 리사이즈 도구로 원클릭 변환하세요.
+                플랫폼별 크기가 프리셋으로 정리된 리사이즈 도구로 바로 맞춰 보세요.
               </p>
               <Link
                 href="/tools/image/resize"
@@ -345,8 +345,8 @@ export default function SNSImageSizePage() {
                   Q. floor05에서 한 번에 여러 크기로 변환할 수 있나요?
                 </h3>
                 <p className="text-brand-mid">
-                  리사이즈 도구에서 SNS 프리셋을 선택하면 해당 크기로 변환됩니다.
-                  여러 플랫폼용이 필요하면 같은 원본으로 여러 번 변환하세요.
+                  리사이즈 도구에서 원하는 플랫폼 프리셋을 고르면 그 크기로 바꿔 줍니다.
+                  여러 곳에 쓸 거라면 같은 원본을 프리셋만 바꿔 가며 반복하면 됩니다.
                 </p>
               </div>
             </div>

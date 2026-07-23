@@ -109,7 +109,7 @@ export default function AvifGuidePage() {
                 💡 AVIF가 지금 안 열리나요?
               </p>
               <p className="text-brand-mid text-sm mb-4">
-                AVIF를 JPG·PNG로, 또는 이미지를 AVIF로 무료 변환하세요. 브라우저에서 바로 처리되고 파일이 서버로 전송되지 않습니다.
+                AVIF를 JPG·PNG로, 또는 이미지를 AVIF로 무료 변환하세요. 변환은 열어 둔 브라우저 안에서 끝나고, 원본 이미지는 기기를 떠나지 않습니다.
               </p>
               <Link
                 href="/tools/image/convert"

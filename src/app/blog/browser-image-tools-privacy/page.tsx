@@ -88,8 +88,8 @@ export default function BrowserImageToolsPrivacyPage() {
                 💡 민감한 사진일수록, 서버를 안 거치는 게 안전합니다
               </p>
               <p className="text-brand-mid text-sm mb-4">
-                floor05 이미지 도구는 전부 브라우저에서 처리됩니다. 파일이 서버로
-                전송되지 않고, 회원가입도 필요 없습니다.
+                floor05 이미지 도구는 전부 브라우저에서 처리됩니다. 고른 사진은
+                업로드되지 않고, 계정을 만들 필요도 없습니다.
               </p>
               <Link
                 href="/tools/image/compress"
@@ -121,11 +121,11 @@ export default function BrowserImageToolsPrivacyPage() {
             </p>
             <div className="bg-brand-paper rounded-lg p-6 my-8 border border-brand-light/20">
               <p className="text-brand-mid text-sm mb-0">
-                floor05의 모든 이미지 도구는 이 방식입니다.{" "}
+                floor05의 모든 이미지 도구가 이 방식입니다.{" "}
                 <strong className="text-brand-black">
-                  파일이 서버로 전송되지 않습니다.
+                  사진은 이 페이지를 벗어나지 않습니다.
                 </strong>{" "}
-                회원가입도 필요 없습니다.
+                가입 절차도 없습니다.
               </p>
             </div>
 
@@ -279,7 +279,7 @@ export default function BrowserImageToolsPrivacyPage() {
                 안전하게, 무료로 사진 다루기
               </h3>
               <p className="text-brand-light mb-6">
-                파일이 서버로 전송되지 않습니다. 회원가입 없이 무제한 무료.
+                고른 사진은 서버 대신 브라우저에서 처리됩니다. 가입도, 사용 제한도 없습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

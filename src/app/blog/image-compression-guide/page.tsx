@@ -52,7 +52,7 @@ const faqSchema = {
       name: "온라인에서 이미지 압축하면 개인정보가 유출되나요?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "대부분의 온라인 압축 도구는 서버에 파일을 업로드합니다. 개인정보가 걱정된다면 브라우저에서 직접 처리하는 도구(예: floor05)를 사용하세요. 파일이 서버로 전송되지 않습니다.",
+        text: "대부분의 온라인 압축 도구는 서버에 파일을 업로드합니다. 개인정보가 걱정된다면 기기에서 직접 처리하는 도구(예: floor05)를 고르세요. 사진이 네트워크로 오가지 않아 유출 위험이 줄어듭니다.",
       },
     },
   ],
@@ -110,7 +110,7 @@ export default function ImageCompressionGuidePage() {
                 💡 바로 압축하고 싶다면?
               </p>
               <p className="text-brand-mid text-sm mb-4">
-                파일이 서버로 전송되지 않는 무료 이미지 압축 도구를 사용해보세요.
+                사진을 서버에 올리지 않고 용량만 줄여 주는 무료 압축 도구를 써 보세요.
               </p>
               <Link
                 href="/tools/image/compress"
@@ -301,8 +301,8 @@ export default function ImageCompressionGuidePage() {
                 </h3>
                 <p className="text-brand-mid">
                   대부분의 온라인 압축 도구는 서버에 파일을 업로드합니다.
-                  개인정보가 걱정된다면 브라우저에서 직접 처리하는 도구를
-                  사용하세요. floor05는 파일이 서버로 전송되지 않습니다.
+                  개인정보가 걱정된다면 기기에서 직접 처리하는 도구를
+                  고르세요. floor05는 사진이 네트워크로 오가지 않습니다.
                 </p>
               </div>
             </div>

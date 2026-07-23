@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "사진 회전·반전 - 세로로 찍힌 사진 바로잡기",
-    description: "90도 회전·좌우/상하 반전. 서버 전송 없이 브라우저에서.",
+    description: "90도 회전·좌우/상하 반전. 사진을 올리지 않고 브라우저에서 바로.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -87,7 +87,7 @@ const faqs = [
       "사진 파일에 방향 태그(EXIF)만 기록돼 있고 픽셀은 돌아간 채 저장된 경우입니다. 태그를 무시하는 프로그램에서는 누워 보입니다. 이 도구로 회전해 저장하면 픽셀 자체가 바로 세워져 어디서 열어도 똑바로 보입니다.",
   },
   {
-    question: "사진이 서버에 올라가나요?",
+    question: "돌린 사진이 서버로 전송되나요?",
     answer:
       "아니요. 회전·반전은 픽셀 위치만 바꾸는 가벼운 연산이라 여러분의 브라우저 안에서 바로 끝납니다. 사진이 floor05 서버로 올라갈 일 자체가 없습니다.",
   },
@@ -101,7 +101,7 @@ const schemas = [
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "사진을 90도 회전하거나 좌우·상하로 반전하는 무료 도구. 서버 전송 없이 브라우저에서 처리.",
+    description: "사진을 90도 회전하거나 좌우·상하로 반전하는 무료 도구. 회전 연산은 이 브라우저가 맡습니다.",
   },
   {
     "@context": "https://schema.org",
@@ -139,7 +139,7 @@ export default function RotatePage() {
   return (
     <ToolLayout
       title="사진 회전·반전"
-      description="세로로 찍힌 사진을 바로. 90도 회전·좌우/상하 반전, 서버 전송 없이."
+      description="세로로 찍힌 사진을 바로. 90도 회전·좌우/상하 반전, 업로드 없이 기기에서."
       guide={guide}
       faqs={faqs}
       workflowCTA={workflowCTA}

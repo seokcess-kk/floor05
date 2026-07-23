@@ -92,7 +92,7 @@ export default function PyeongConversionGuidePage() {
               <p className="font-medium text-brand-black mb-3">💡 바로 변환하고 싶다면?</p>
               <p className="text-brand-mid text-sm mb-4">
                 평과 ㎡를 양방향으로 즉시 변환합니다. 어느 칸에 넣어도 나머지가 바로 바뀌고,
-                입력값은 서버로 전송되지 않습니다.
+                적어 넣은 면적 값은 이 화면을 벗어나지 않습니다.
               </p>
               <Link
                 href="/tools/unit/pyeong"
@@ -244,7 +244,7 @@ export default function PyeongConversionGuidePage() {
             <div className="bg-brand-black rounded-lg p-8 mt-12 text-center">
               <h3 className="text-xl font-bold text-brand-paper mb-3">평 ↔ ㎡ 바로 변환</h3>
               <p className="text-brand-light mb-6">
-                어느 칸에 넣어도 나머지가 바로. 회원가입 없이 무료입니다.
+                어느 칸에 넣어도 나머지가 바로. 계정 없이도 얼마든지 환산할 수 있습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

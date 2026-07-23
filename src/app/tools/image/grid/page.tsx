@@ -88,7 +88,7 @@ const faqs = [
       "원본에서 각 칸을 그대로 오려내는 방식이라 화질 손실이 없습니다. 다만 원본이 작으면 칸 하나가 인스타그램 권장 크기(1080px)보다 작아질 수 있으니, 3×3 분할에는 가로 3240px 이상의 사진을 권합니다.",
   },
   {
-    question: "사진이 서버에 올라가나요?",
+    question: "9분할한 사진이 서버에 올라가나요?",
     answer:
       "아니요. 자르기와 ZIP 묶기까지 전부 브라우저 안에서 끝납니다. 인스타그램에 올리기 전의 사진이 floor05 서버를 거치는 일은 없습니다.",
   },
@@ -102,7 +102,7 @@ const schemas = [
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "한 장의 사진을 3×3 등으로 나눠 ZIP으로 받는 무료 도구. 서버 전송 없이 브라우저에서 처리.",
+    description: "한 장의 사진을 3×3 등으로 나눠 ZIP으로 받는 무료 도구. 인스타 올리기 전 사진이 기기를 벗어나지 않습니다.",
   },
   {
     "@context": "https://schema.org",

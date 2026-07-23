@@ -297,7 +297,7 @@ export default function ColorCodeGuidePage() {
             <div className="bg-brand-black rounded-lg p-8 mt-12 text-center">
               <h3 className="text-xl font-bold text-brand-paper mb-3">색, 코드로 바로 다루기</h3>
               <p className="text-brand-light mb-6">
-                변환하고, 대비를 확인하고, 그라데이션까지. 회원가입 없이 무료입니다.
+                변환하고, 대비를 확인하고, 그라데이션까지. 가입 없이 팔레트를 바로 만져 볼 수 있습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

@@ -51,6 +51,19 @@ const guide = {
         "암호가 걸린 PDF는 암호를 먼저 풀어야 합칠 수 있습니다. 합쳐진 PDF는 기기에 바로 저장됩니다.",
       ],
     },
+    {
+      heading: "이럴 때 PDF를 합칩니다",
+      paragraphs: [
+        "합치기가 필요한 상황은 대체로 정해져 있습니다. 견적서·계약서·증빙을 한 파일로 묶어 제출할 때, 여러 번에 걸쳐 스캔한 서류를 이어 붙일 때, 앞뒤 표지를 본문에 씌울 때죠. 손에 사진밖에 없다면 먼저 이미지 PDF 변환으로 사진을 PDF로 만든 뒤 다른 PDF와 합치면 한 파일로 정리됩니다.",
+        "스캐너로 양면 문서를 뜰 때 앞면과 뒷면을 따로 스캔했다면, 두 묶음을 올려 순서만 번갈아 맞추면 원래 순서로 이어집니다. 다만 옆으로 눕거나 거꾸로 된 PDF는 합쳐도 그 방향 그대로 들어갑니다. 병합은 페이지 순서만 손대고 회전은 건드리지 않으니, 방향이 틀어진 문서는 합치기 전에 바로잡아 두는 게 좋습니다.",
+      ],
+      bullets: [
+        "견적서·계약서·증빙 → 제출용 한 파일로",
+        "여러 번 스캔한 서류 → 순서 맞춰 이어 붙이기",
+        "사진뿐이라면 → 이미지 PDF 변환 후 병합",
+        "누운·거꾸로 된 페이지는 방향 그대로 — 합치기 전에 정리",
+      ],
+    },
   ],
 };
 
@@ -62,6 +75,21 @@ const faqs = [
   {
     question: "합치는 순서를 바꿀 수 있나요?",
     answer: "네. 목록의 위·아래 화살표로 순서를 조정한 뒤 합치면 그 순서대로 페이지가 이어집니다.",
+  },
+  {
+    question: "양면을 앞·뒤 따로 스캔했는데 한 파일로 합칠 수 있나요?",
+    answer:
+      "네. 앞면 묶음과 뒷면 묶음을 모두 올린 뒤, 목록에서 순서를 번갈아 배열하면 1·2·3처럼 원래 차례로 이어집니다. 합치기 전에 미리보기로 순서만 한 번 확인하면 됩니다.",
+  },
+  {
+    question: "페이지가 옆으로 누워서 합쳐집니다.",
+    answer:
+      "병합은 페이지 순서만 정리하고 회전은 바꾸지 않아, 원본이 누워 있으면 결과도 그대로 눕습니다. 방향이 틀어진 PDF는 합치기 전에 바로 세워 두세요.",
+  },
+  {
+    question: "합친 PDF 용량이 큰데 줄일 수 있나요?",
+    answer:
+      "병합은 각 파일의 페이지를 그대로 이어 붙여서, 용량은 대략 원본들을 더한 크기가 됩니다. 사진이 많아 무겁다면 합칠 파일 수를 줄이거나, 사진 위주 문서는 이미지 단계에서 미리 용량을 줄여 PDF로 만드는 편이 낫습니다.",
   },
   {
     question: "합치는 PDF가 서버에 올라가나요?",
@@ -107,7 +135,52 @@ export default function PdfMergePage() {
       relatedPostSlugs={["image-to-pdf-guide"]}
       schemas={schemas}
     >
-      <PdfMergeTool />
+      <>
+        <PdfMergeTool />
+
+        <section className="mt-6 rounded-lg border border-brand-light/50 bg-brand-paper p-4 shadow-sm">
+          <div className="mb-3">
+            <h2 className="text-lg font-semibold text-brand-dark">병합 순서 예시</h2>
+            <p className="mt-1 text-sm text-brand-mid">
+              올린 파일은 위에서 아래로 이어집니다. 상황별로 이렇게 배열하면 헷갈리지 않습니다.
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[520px] border-collapse text-sm">
+              <caption className="sr-only">상황별로 어떤 파일을 어떤 순서로 합칠지 정리한 표</caption>
+              <thead>
+                <tr className="border-y border-brand-light/50 bg-brand-light/10 text-left text-brand-dark">
+                  <th scope="col" className="px-3 py-2 font-semibold">상황</th>
+                  <th scope="col" className="px-3 py-2 font-semibold">올리는 파일</th>
+                  <th scope="col" className="px-3 py-2 font-semibold">배열 순서</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-brand-light/30">
+                <tr>
+                  <td className="px-3 py-2">계약서 세트</td>
+                  <td className="px-3 py-2">본문 + 별첨</td>
+                  <td className="px-3 py-2 text-brand-mid">본문 → 별첨</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">앞뒤 표지 씌우기</td>
+                  <td className="px-3 py-2">표지 + 본문</td>
+                  <td className="px-3 py-2 text-brand-mid">표지 → 본문 → 뒤표지</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">양면 스캔</td>
+                  <td className="px-3 py-2">앞면 묶음 + 뒷면 묶음</td>
+                  <td className="px-3 py-2 text-brand-mid">번갈아 배열</td>
+                </tr>
+                <tr>
+                  <td className="px-3 py-2">사진과 문서 섞기</td>
+                  <td className="px-3 py-2">이미지 PDF + 기존 PDF</td>
+                  <td className="px-3 py-2 text-brand-mid">원하는 자리에 끼워 넣기</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </>
     </ToolLayout>
   );
 }

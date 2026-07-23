@@ -27,7 +27,7 @@ const faqSchema = {
       name: "증명사진을 원형(프로필)으로 만들 수 있나요?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "네. 크롭 도구의 '원형으로 자르기'를 켜면 선택 영역을 원형으로 잘라 투명 배경 PNG로 저장합니다. 1:1 비율과 함께 쓰면 완전한 원이 되어 프로필 사진에 적합합니다.",
+        text: "네. 크롭 도구의 '원형으로 자르기'를 켜면 선택 영역을 원형으로 잘라 투명 배경 PNG로 저장합니다. 사원증이나 동그란 프로필 자리에 넣을 때, 1:1로 맞춘 다음 원형 옵션을 켜면 테두리가 깔끔하게 떨어집니다.",
       },
     },
     {
@@ -84,7 +84,7 @@ export default function IdPhotoSizeGuidePage() {
             <div className="bg-brand-paper rounded-lg p-6 mb-10 border border-brand-light/20">
               <p className="font-medium text-brand-black mb-3">💡 바로 만들고 싶다면?</p>
               <p className="text-brand-mid text-sm mb-4">
-                크롭 도구의 증명사진 프리셋으로 규격 비율 + 권장 크기를 한 번에 맞출 수 있습니다. 파일이 서버로 전송되지 않습니다.
+                크롭 도구의 증명사진 프리셋으로 규격 비율과 권장 크기를 한 번에 맞출 수 있습니다. 얼굴 사진은 업로드 없이 브라우저에서 잘립니다.
               </p>
               <Link
                 href="/tools/image/crop"
@@ -262,7 +262,7 @@ export default function IdPhotoSizeGuidePage() {
                 지금 바로 증명사진 만들기
               </h3>
               <p className="text-brand-light mb-6">
-                규격 프리셋·원형 크롭까지. 회원가입 없이 무료, 파일은 서버로 전송되지 않습니다.
+                규격 프리셋과 원형 크롭까지. 가입 없이 무료로, 증명사진은 기기 안에서만 만들어집니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

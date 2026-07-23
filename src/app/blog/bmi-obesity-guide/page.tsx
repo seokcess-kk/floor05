@@ -94,7 +94,7 @@ export default function BmiObesityGuidePage() {
               <p className="font-medium text-brand-black mb-3">💡 바로 계산하고 싶다면?</p>
               <p className="text-brand-mid text-sm mb-4">
                 키와 몸무게만 넣으면 BMI와 비만도, 정상 체중 범위를 대한비만학회 기준으로 바로
-                보여줍니다. 입력값은 서버로 전송되지 않습니다.
+                보여줍니다. 넣은 키·몸무게는 화면 밖으로 나가지 않습니다.
               </p>
               <Link
                 href="/tools/health/bmi"
@@ -259,7 +259,7 @@ export default function BmiObesityGuidePage() {
             <div className="bg-brand-black rounded-lg p-8 mt-12 text-center">
               <h3 className="text-xl font-bold text-brand-paper mb-3">키·몸무게로 바로 확인</h3>
               <p className="text-brand-light mb-6">
-                BMI와 비만도, 정상 체중 범위를 한 번에. 회원가입 없이 무료입니다.
+                BMI와 비만도, 정상 체중 범위를 한 번에. 설치 없이 웹에서 바로 씁니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

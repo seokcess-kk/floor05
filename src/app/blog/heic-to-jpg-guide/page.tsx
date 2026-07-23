@@ -40,10 +40,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      name: "HEIC를 JPG로 변환하면 화질이 떨어지나요?",
+      name: "이미 압축된 HEIC를 다시 JPG로 바꾸면 화질이 많이 상하나요?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "고품질(90% 이상)로 변환하면 육안으로 구분할 수 없는 수준입니다. HEIC 자체가 압축 포맷이므로 JPG로 변환해도 화질 손실은 최소화됩니다.",
+        text: "HEIC와 JPG 모두 눈에 덜 띄는 정보를 덜어내는 손실 압축이라, 품질을 90%대로 두고 한 번 변환하는 정도로는 두 번째 압축의 흔적이 거의 드러나지 않습니다. 다만 같은 사진을 반복해 저장하면 손실이 조금씩 쌓이므로 원본 HEIC는 남겨 두는 편이 좋습니다.",
       },
     },
     {
@@ -266,22 +266,26 @@ export default function HeicToJpgGuidePage() {
             <div className="space-y-6">
               <div className="border-b border-brand-light/20 pb-6">
                 <h3 className="text-lg font-semibold text-brand-black mb-2">
-                  Q. HEIC를 JPG로 변환하면 화질이 떨어지나요?
+                  Q. 이미 압축된 HEIC를 또 JPG로 압축하면 화질이 많이 상하지 않나요?
                 </h3>
                 <p className="text-brand-mid">
-                  고품질(90% 이상)로 변환하면 육안으로 구분할 수 없는 수준입니다.
-                  HEIC 자체가 압축 포맷이므로 JPG로 변환해도 화질 손실은
-                  최소화됩니다.
+                  걱정만큼 상하지는 않습니다. HEIC와 JPG 모두 눈에 덜 띄는 정보를
+                  덜어내는 방식이라, 90%대 품질로 옮기면 두 번째 압축의 흔적은
+                  대개 알아보기 어렵습니다. 다만 같은 사진을 몇 번이고 다시
+                  저장하면 조금씩 뭉개지므로, 원본 HEIC는 지우지 말고 남겨 두는
+                  편이 안전합니다.
                 </p>
               </div>
 
               <div className="border-b border-brand-light/20 pb-6">
                 <h3 className="text-lg font-semibold text-brand-black mb-2">
-                  Q. 여러 장을 한꺼번에 변환할 수 있나요?
+                  Q. 안드로이드 폰이나 회사 PC에서도 이 방법이 통하나요?
                 </h3>
                 <p className="text-brand-mid">
-                  네, floor05 HEIC 변환 도구는 여러 장을 한꺼번에 변환할 수
-                  있습니다. 변환된 파일들은 ZIP으로 묶어서 다운로드할 수 있습니다.
+                  네. 변환은 브라우저가 맡는 일이라, 아이폰에서 받은 HEIC를
+                  안드로이드나 PC 브라우저에 올려도 똑같이 JPG로 나옵니다. 오히려
+                  HEIC가 안 열려 애먹는 쪽이 안드로이드·구형 PC인 만큼, 파일을 받는
+                  기기에서 곧바로 바꿔 쓰기 좋습니다.
                 </p>
               </div>
 
@@ -290,9 +294,9 @@ export default function HeicToJpgGuidePage() {
                   Q. 온라인 변환 시 개인정보가 유출되나요?
                 </h3>
                 <p className="text-brand-mid">
-                  대부분의 온라인 도구는 서버에 파일을 업로드합니다.
-                  floor05는 브라우저에서 직접 변환하므로 파일이 서버로
-                  전송되지 않습니다.
+                  많은 온라인 변환 사이트는 파일을 서버에 올려 처리합니다. 이
+                  도구는 변환을 브라우저 안에서 끝내기 때문에, 사진이 기기 밖으로
+                  나가는 단계 자체가 없습니다.
                 </p>
               </div>
             </div>

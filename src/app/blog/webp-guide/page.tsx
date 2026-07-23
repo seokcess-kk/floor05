@@ -110,7 +110,7 @@ export default function WebPGuidePage() {
                 💡 지금 바로 WebP로 변환하고 싶다면?
               </p>
               <p className="text-brand-mid text-sm mb-4">
-                JPG, PNG 이미지를 WebP로 무료 변환하세요. 브라우저에서 바로 처리됩니다.
+                가지고 있는 JPG·PNG를 WebP로 바꿔 페이지를 가볍게 만들어 보세요. 변환은 이 브라우저 안에서 끝나 원본이 밖으로 나가지 않습니다.
               </p>
               <Link
                 href="/tools/image/convert"
@@ -307,7 +307,7 @@ export default function WebPGuidePage() {
                 JPG/PNG → WebP 변환하기
               </h3>
               <p className="text-brand-light mb-6">
-                브라우저에서 바로 변환. 파일이 서버로 전송되지 않습니다.
+                이미지를 고르는 순간 브라우저가 WebP로 바꿔 냅니다. 원본은 이 페이지를 벗어나지 않으니 여러 장 돌려봐도 부담이 없습니다.
               </p>
               <Link
                 href="/tools/image/convert"

@@ -104,7 +104,7 @@ export default function YoutubeThumbnailSizePage() {
               </p>
               <p className="text-brand-mid text-sm mb-4">
                 리사이즈 도구에서 1280×720으로 한 번에 맞출 수 있습니다.
-                파일이 서버로 전송되지 않습니다.
+                썸네일 이미지는 업로드 없이 브라우저에서 처리됩니다.
               </p>
               <Link
                 href="/tools/image/resize"

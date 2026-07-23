@@ -86,7 +86,7 @@ export default function SalaryNetPayGuidePage() {
               <p className="font-medium text-brand-black mb-3">💡 바로 계산하고 싶다면?</p>
               <p className="text-brand-mid text-sm mb-4">
                 연봉만 넣으면 2026년 요율로 4대보험·소득세를 떼고 월 실수령액을 바로 보여줍니다.
-                부양가족·비과세까지 반영하고, 입력값은 서버로 전송되지 않습니다.
+                부양가족·비과세까지 반영하며, 넣은 연봉은 서버를 거치지 않고 화면 안에서 계산됩니다.
               </p>
               <Link
                 href="/tools/calc/salary"
@@ -268,7 +268,7 @@ export default function SalaryNetPayGuidePage() {
                 지금 바로 실수령액 계산
               </h3>
               <p className="text-brand-light mb-6">
-                연봉만 넣으면 월 실수령액과 공제 내역을 바로. 회원가입 없이 무료입니다.
+                연봉만 넣으면 월 실수령액과 공제 내역을 바로. 가입 없이 브라우저에서 끝납니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

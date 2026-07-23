@@ -199,7 +199,7 @@ export default function CharacterCountGuidePage() {
                 지금 바로 글자수 세기
               </h3>
               <p className="text-brand-light mb-6">
-                공백·바이트·원고지·목표 글자수까지 한 번에. 회원가입 없이 무료입니다.
+                공백·바이트·원고지·목표 글자수까지 한 번에. 로그인 절차 없이 바로 세어 볼 수 있습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

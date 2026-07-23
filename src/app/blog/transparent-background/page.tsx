@@ -96,9 +96,9 @@ export default function TransparentBackgroundPage() {
           <div className="prose prose-lg max-w-none">
             {/* 도입 */}
             <p className="text-brand-mid text-lg leading-relaxed mb-8">
-              로고나 제품 사진의 배경을 투명하게 만들고 싶으신가요?
-              투명 배경 이미지를 사용하면 어떤 배경 위에 올려도 자연스럽게 합성됩니다.
-              이 글에서 투명 배경의 원리와 포맷별 특성을 알려드립니다.
+              로고나 제품 컷을 어떤 배경에 올려도 겉돌지 않게 하려면 배경이 투명해야
+              합니다. 그 투명함이 파일 안에서 어떻게 저장되고, 포맷을 바꿀 때 왜
+              사라지기도 하는지 정리했습니다. 배경을 &lsquo;지우는&rsquo; 방법이 아니라 &lsquo;투명도를 다루는&rsquo; 관점의 글입니다.
             </p>
 
             {/* 안내 박스 */}

@@ -92,7 +92,7 @@ export default function WeeklyHolidayPayGuidePage() {
               <p className="font-medium text-brand-black mb-3">💡 바로 계산하고 싶다면?</p>
               <p className="text-brand-mid text-sm mb-4">
                 시급과 1주 근로시간만 넣으면 주휴수당과 월 환산 급여를 바로 보여줍니다. 2026년
-                최저시급 기준이며, 입력값은 서버로 전송되지 않습니다.
+                최저시급 기준이고, 넣은 시급·근로시간은 계산이 끝나면 그대로 사라집니다.
               </p>
               <Link
                 href="/tools/calc/wage"
@@ -254,7 +254,7 @@ export default function WeeklyHolidayPayGuidePage() {
             <div className="bg-brand-black rounded-lg p-8 mt-12 text-center">
               <h3 className="text-xl font-bold text-brand-paper mb-3">내 주휴수당 바로 계산</h3>
               <p className="text-brand-light mb-6">
-                시급과 근로시간만 넣으면 주휴수당과 월급을 바로. 회원가입 없이 무료입니다.
+                시급과 근로시간만 넣으면 주휴수당과 월급을 바로. 가입도, 앱 설치도 필요 없습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

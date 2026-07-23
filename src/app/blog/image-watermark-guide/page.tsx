@@ -20,7 +20,7 @@ const faqSchema = {
       name: "사진에 워터마크를 어떻게 넣나요?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "사진을 올리고 텍스트를 입력하거나 로고 이미지를 추가한 뒤, 위치와 투명도를 정하고 적용하면 됩니다. 브라우저에서 바로 합성되며 파일이 서버로 전송되지 않습니다.",
+        text: "사진을 올리고 텍스트를 입력하거나 로고 이미지를 추가한 뒤, 위치와 투명도를 정하고 적용하면 됩니다. 합성은 이 브라우저가 직접 처리하며, 원본과 로고는 기기 밖으로 나가지 않습니다.",
       },
     },
     {
@@ -33,10 +33,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      name: "여러 장에 같은 워터마크를 한 번에 넣을 수 있나요?",
+      name: "상품 사진 수십 장에 같은 워터마크를 붙이려면?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "네. 여러 장을 올리면 같은 설정으로 일괄 적용되고 ZIP으로 한 번에 내려받을 수 있습니다. 크기 옵션이 사진 크기에 비례한 %라 장마다 비율이 일정하게 유지됩니다.",
+        text: "여러 장을 한 번에 올리면 지정한 워터마크가 모든 사진에 똑같이 얹힙니다. 결과는 ZIP으로 묶여 내려오고, 크기 값이 % 기준이라 해상도가 제각각이어도 워터마크 비율은 그대로 유지됩니다.",
       },
     },
   ],
@@ -93,7 +93,7 @@ export default function ImageWatermarkGuidePage() {
                 💡 바로 넣고 싶다면?
               </p>
               <p className="text-brand-mid text-sm mb-4">
-                파일이 서버로 전송되지 않는 무료 워터마크 도구를 사용해보세요.
+                설치도 로그인도 없이, 브라우저에서 바로 워터마크를 얹는 무료 도구입니다.
               </p>
               <Link
                 href="/tools/image/watermark"
@@ -208,7 +208,7 @@ export default function ImageWatermarkGuidePage() {
                 로 맞추면 됩니다.
               </li>
               <li>
-                모든 처리는 브라우저 안에서 끝나, 사진과 로고가 서버로 전송되지
+                합성부터 저장까지 브라우저 안에서 끝나, 사진과 로고를 어디에도 올리지
                 않습니다.
               </li>
             </ul>
@@ -223,9 +223,9 @@ export default function ImageWatermarkGuidePage() {
                   Q. 사진에 워터마크를 어떻게 넣나요?
                 </h3>
                 <p className="text-brand-mid">
-                  사진을 올리고 텍스트를 입력하거나 로고를 추가한 뒤, 위치와
-                  투명도를 정하고 적용하면 됩니다. 브라우저에서 바로 합성되어 파일이
-                  서버로 전송되지 않습니다.
+                  사진을 올리고 텍스트를 입력하거나 로고 이미지를 추가한 뒤, 위치와
+                  투명도를 정하고 적용하면 됩니다. 합성은 이 브라우저가 직접 처리하며,
+                  원본과 로고는 기기 밖으로 나가지 않습니다.
                 </p>
               </div>
               <div className="border-b border-brand-light/20 pb-6">
@@ -240,12 +240,12 @@ export default function ImageWatermarkGuidePage() {
               </div>
               <div className="pb-6">
                 <h3 className="text-lg font-semibold text-brand-black mb-2">
-                  Q. 여러 장에 같은 워터마크를 한 번에 넣을 수 있나요?
+                  Q. 상품 사진 수십 장에 같은 워터마크를 붙이려면?
                 </h3>
                 <p className="text-brand-mid">
-                  네. 여러 장을 올리면 같은 설정으로 일괄 적용되고 ZIP으로 한 번에
-                  내려받을 수 있습니다. 크기 옵션이 % 기준이라 장마다 비율이 일정하게
-                  유지됩니다.
+                  여러 장을 한 번에 올리면 지정한 워터마크가 모든 사진에 똑같이
+                  얹힙니다. 결과는 ZIP으로 묶여 내려오고, 크기 값이 % 기준이라
+                  해상도가 제각각이어도 워터마크 비율은 그대로 유지됩니다.
                 </p>
               </div>
             </div>

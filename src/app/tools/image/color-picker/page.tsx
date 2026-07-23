@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "이미지 색상 추출 - 사진에서 HEX 코드 뽑기",
-    description: "클릭한 지점의 색과 대표 팔레트를 HEX로. 서버 전송 없음.",
+    description: "클릭한 지점의 색과 대표 팔레트를 HEX로. 사진은 올리지 않고 화면에서 바로 읽습니다.",
     url: PAGE_URL,
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -88,7 +88,7 @@ const faqs = [
       "사진은 압축 노이즈 때문에 바로 옆 픽셀끼리도 색값이 미세하게 다릅니다. 단색처럼 보이는 영역이라도 한가운데를 클릭하는 것이 의도한 색에 가장 가깝습니다.",
   },
   {
-    question: "사진이 서버에 올라가나요?",
+    question: "색을 뽑을 사진도 어딘가로 전송되나요?",
     answer:
       "아니요. 색 추출은 브라우저가 이미지의 픽셀 값을 읽는 것만으로 끝나는 작업이라, 사진을 어딘가로 보낼 이유가 없습니다. 유출이 걱정되는 시안·화보에서도 마음 놓고 색을 뽑으세요.",
   },
@@ -102,7 +102,7 @@ const schemas = [
     applicationCategory: "DesignApplication",
     operatingSystem: "Web Browser",
     offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
-    description: "사진을 클릭해 색을 추출하고 대표 색 팔레트와 HEX 코드를 뽑는 무료 도구. 서버 전송 없이 브라우저에서 처리.",
+    description: "사진을 클릭해 색을 추출하고 대표 색 팔레트와 HEX 코드를 뽑는 무료 도구. 픽셀 값은 브라우저 안에서만 읽습니다.",
   },
   {
     "@context": "https://schema.org",

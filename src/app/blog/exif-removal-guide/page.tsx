@@ -91,8 +91,8 @@ export default function ExifRemovalGuidePage() {
             <div className="bg-brand-paper rounded-lg p-6 mb-10 border border-brand-light/20">
               <p className="font-medium text-brand-black mb-3">💡 바로 지우고 싶다면?</p>
               <p className="text-brand-mid text-sm mb-4">
-                사진을 올리면 위치·기기·시각 정보를 제거해 돌려줍니다. 사진은 서버로 전송되지
-                않습니다.
+                사진을 넣으면 위치·기기·시각 정보를 떼어내 되돌려 줍니다. 지우는 과정은 이
+                브라우저 안에서만 돌아갑니다.
               </p>
               <Link
                 href="/tools/image/exif-remove"
@@ -183,7 +183,7 @@ export default function ExifRemovalGuidePage() {
               </Link>
               는 사진을 브라우저 안에서 다시 인코딩해 EXIF를 포함한 모든 메타데이터를 제거합니다.
               원본에 위치정보가 있었으면 &lsquo;위치정보(GPS) 포함&rsquo;으로 표시해 알려주고, 여러
-              장을 한 번에 처리해 ZIP으로 줍니다. 파일이 서버로 전송되지 않습니다.
+              장을 한 번에 처리해 ZIP으로 줍니다. 사진이 네트워크를 타는 구간은 어디에도 없습니다.
             </p>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-6">자주 묻는 질문</h2>
@@ -238,7 +238,7 @@ export default function ExifRemovalGuidePage() {
             <div className="bg-brand-black rounded-lg p-8 mt-12 text-center">
               <h3 className="text-xl font-bold text-brand-paper mb-3">올리기 전에 지우기</h3>
               <p className="text-brand-light mb-6">
-                위치·기기·시각 정보를 브라우저에서 바로 제거. 회원가입 없이 무료입니다.
+                위치·기기·시각 정보를 브라우저에서 바로 제거. 로그인도, 비용도 없습니다.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
