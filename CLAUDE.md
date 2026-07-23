@@ -83,13 +83,14 @@ src/
 11. **정보·정책 페이지(about/contact/privacy/terms)에 `robots: { index:false }`** — 심사자가 확인하는 페이지, 색인 허용 필수
 12. **"브라우저 처리/무료" 문구를 페이지 간 복붙** — 같은 문장 반복 = 저가치 중복 판정. 도구마다 새로 쓴다
 13. **새 도구 페이지를 tools.ts에 등록 안 함** — 링크 없는 고아/도어웨이 페이지가 됨
+14. **블로그/콘텐츠 본문을 `prose`(Tailwind Typography)에 의존** — 이 프로젝트엔 typography 플러그인이 없어 `prose`/`prose-*` 클래스가 무효(빌드 CSS에 `.prose` 규칙 0개). 맨 태그(`<h2>`·`<p>`·`<table>` 등)로 쓰면 무스타일로 깨진다. 요소마다 유틸리티 클래스 직접 지정(기준: `src/app/blog/image-compression-guide/page.tsx`). 빌드·tsc·lint는 무스타일도 통과하므로 반드시 렌더 화면으로 확인
 
 ## 반드시 지킬 것
 
 - **광고 최대 3개/페이지** (페이지 길이에 따라 2개로 축소 가능)
 - **SEO title 패턴**: `[핵심 키워드] - [차별화 한 마디]`
 - **가이드 섹션은 FAQ 형태** (GEO/AI 검색 최적화)
-- **Schema Markup 적용**: SoftwareApplication, HowTo, FAQPage
+- **Schema Markup 적용**: SoftwareApplication, FAQPage (HowTo는 2023.9 리치결과 폐지 — 신규 적용 금지)
 - **파일 제한**: 50MB/파일, 일괄 10장(데스크톱)/5장(모바일)
 - **common/ 수정 시 하위 호환 유지**
 
@@ -100,6 +101,7 @@ src/
 - **도구 페이지 최소 분량**: guide 섹션 2개↑(권장 3개), faqs 4개↑, workflowCTA로 내부 링크
 - **프라이버시/무료 문구는 도구별 고유 문장** — FAQ 답변·guide 꼬리말·description·og/twitter·schema 각각 다르게
 - **블로그 본문 1,400자↑**, 수정 시 `blog.ts`의 `dateModified` 갱신
+- **블로그 본문 스타일은 유틸리티 클래스 직접 지정** (`prose` 무효 — 위 절대금지 14번). 기준 파일 `image-compression-guide`의 클래스 패턴 복사: h2=`text-2xl font-bold text-brand-black mt-12 mb-4`, p=`text-brand-mid leading-relaxed mb-4`, 표 th=`py-2 pr-4 text-brand-black`
 - **도메인 통일**: SITE_URL = robots Host = sitemap = `https://www.floor05.com`(www). 완료 후 `npm run build`(sitemap 재생성) → `tsc` → `lint`
 
 ## 브랜드 보이스
