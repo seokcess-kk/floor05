@@ -592,7 +592,7 @@ export const POSTS: BlogPost[] = [
       "사진 용량 줄이기",
     ],
     datePublished: "2026-03-10",
-    dateModified: "2026-06-11",
+    dateModified: "2026-07-23",
     readTime: "4분",
     related: ["id-photo-size-guide", "image-compression-guide", "image-quality-vs-size"],
   },

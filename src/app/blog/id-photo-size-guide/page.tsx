@@ -138,6 +138,98 @@ export default function IdPhotoSizeGuidePage() {
             </figure>
 
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              관공서·시험·취업별 증명사진 규격 한눈에 보기
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              증명사진은 쓰이는 곳에 따라 요구 픽셀, 파일 용량 상한, 배경색이 다르게 정해져 있습니다.
+              관공서와 시험 접수는 흰 배경에 픽셀·용량이 모두 정해져 있고, 취업 사이트는 크기 규정 없이
+              파일 용량 상한만 두는 경우가 많습니다. 자주 찾는 용도를 한 표로 모았으니 준비하려는 서류의
+              행을 먼저 찾아보세요. 아래 값은 각 기관 공식 안내 기준이며 접수 시점에 따라 바뀔 수 있습니다.
+            </p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">용도</th>
+                    <th className="py-2 pr-4 text-brand-black">픽셀 규격</th>
+                    <th className="py-2 pr-4 text-brand-black">용량 상한</th>
+                    <th className="py-2 pr-4 text-brand-black">배경</th>
+                    <th className="py-2 pr-4 text-brand-black">형식</th>
+                    <th className="py-2 pr-4 text-brand-black">출처(기관)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">여권 신청</td>
+                    <td className="py-2 pr-4">413×531px</td>
+                    <td className="py-2 pr-4">500KB 이하</td>
+                    <td className="py-2 pr-4">흰색</td>
+                    <td className="py-2 pr-4">JPG</td>
+                    <td className="py-2 pr-4">외교부(passport.go.kr)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">공무원 원서접수</td>
+                    <td className="py-2 pr-4">137×177px</td>
+                    <td className="py-2 pr-4">100KB 미만</td>
+                    <td className="py-2 pr-4">흰색</td>
+                    <td className="py-2 pr-4">JPG</td>
+                    <td className="py-2 pr-4">사이버국가고시(gosi.kr)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">토익 응시원서</td>
+                    <td className="py-2 pr-4">115×150px</td>
+                    <td className="py-2 pr-4">500KB</td>
+                    <td className="py-2 pr-4">흰색</td>
+                    <td className="py-2 pr-4">JPG</td>
+                    <td className="py-2 pr-4">YBM(toeic.co.kr)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">운전면허 신청</td>
+                    <td className="py-2 pr-4">350×450px</td>
+                    <td className="py-2 pr-4">250KB</td>
+                    <td className="py-2 pr-4">흰색</td>
+                    <td className="py-2 pr-4">JPG</td>
+                    <td className="py-2 pr-4">도로교통공단(koroad)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">잡코리아 이력서</td>
+                    <td className="py-2 pr-4">자유</td>
+                    <td className="py-2 pr-4">1MB</td>
+                    <td className="py-2 pr-4">지정 없음</td>
+                    <td className="py-2 pr-4">JPG·PNG</td>
+                    <td className="py-2 pr-4">잡코리아(jobkorea)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">사람인 이력서</td>
+                    <td className="py-2 pr-4">자유</td>
+                    <td className="py-2 pr-4">10MB</td>
+                    <td className="py-2 pr-4">지정 없음</td>
+                    <td className="py-2 pr-4">JPG·PNG</td>
+                    <td className="py-2 pr-4">사람인(saramin)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-brand-light text-sm mb-6">
+              ※ 규격과 용량 상한은 기관 사정에 따라 갱신될 수 있으니 최종 제출 전 해당 기관 공지를 확인하세요.
+            </p>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              AI로 보정한 사진은 왜 반려되나요
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              여권·운전면허처럼 공식 제출용 증명사진은 편집 프로그램이나 필터, AI로 얼굴을 합성·창작한 결과물을
+              받지 않도록 안내하는 곳이 많습니다. 본인 확인이 목적이라 실제 얼굴과 달라지면 곤란하기 때문입니다.
+              그래서 피부를 매끈하게 펴거나 눈을 키우는 이른바 &lsquo;뽀샵&rsquo; 사진은 접수 단계에서 걸러질 수 있습니다.
+            </p>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              반면 여기서 소개한 방식은 정면으로 찍은 원본을 규격 비율로 자르고 크기·용량만 맞추는 것이라, 얼굴 자체를
+              바꾸는 가공과는 성격이 다릅니다. 카메라로 담은 모습을 그대로 두고 테두리와 파일 크기만 손보는 셈이지요.
+              다만 배경색이나 표정처럼 기관마다 다른 조건이 있으니, 보정 금지 규정을 포함한 최종 기준은 제출 전
+              접수처 안내에서 확인하시기 바랍니다.
+            </p>
+
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
               2. 비율이 안 맞으면 잘리거나 늘어납니다
             </h2>
             <p className="text-brand-mid leading-relaxed mb-4">

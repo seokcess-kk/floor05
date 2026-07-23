@@ -49,6 +49,22 @@ const guide = {
       ],
     },
     {
+      heading: "linear·radial·conic — 유형별 CSS 문법",
+      paragraphs: [
+        "그라데이션은 색이 번지는 방식에 따라 세 가지로 나뉩니다. 선형·원형은 익숙하지만, 원뿔형(conic)은 색이 중심을 축으로 빙 도는 형태라 진행률 링이나 색상환을 그릴 때 씁니다. 문법의 틀은 비슷해서, 아래 예시에서 색과 각도만 바꿔 끼우면 됩니다.",
+      ],
+      table: {
+        headers: ["유형", "색이 흐르는 방식", "CSS 문법 예"],
+        rows: [
+          ["linear", "직선 한 방향", "linear-gradient(135deg, #6EE7B7, #3B82F6)"],
+          ["radial", "중심에서 바깥으로", "radial-gradient(circle at center, #FDE68A, #F59E0B)"],
+          ["conic", "중심을 축으로 회전", "conic-gradient(from 90deg, #F472B6, #8B5CF6)"],
+        ],
+        caption:
+          "색 정지점을 세 개 이상 둘 때는 가운데 색의 명도를 양 끝값의 중간쯤에 맞추면 이음새가 매끄럽습니다. 각도(deg)와 위치(%)만 바꿔 그대로 재활용하세요.",
+      },
+    },
+    {
       heading: "복사해서 바로 쓰기",
       paragraphs: [
         "결과는 background: linear-gradient(...) 형태의 CSS로 출력됩니다. 복사 버튼을 눌러 그대로 스타일시트나 인라인 스타일에 붙여넣으면 됩니다. 버튼 배경, 카드 헤더, 히어로 영역 배경 등에 활용하기 좋습니다.",

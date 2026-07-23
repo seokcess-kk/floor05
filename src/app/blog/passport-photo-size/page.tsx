@@ -137,14 +137,14 @@ export default function PassportPhotoSizePage() {
                 </thead>
                 <tbody className="text-brand-mid">
                   <tr className="border-b border-brand-light/20">
-                    <td className="py-3 px-4">사람인/잡코리아</td>
-                    <td className="py-3 px-4 font-mono">500KB 이하</td>
-                    <td className="py-3 px-4">3×4cm</td>
+                    <td className="py-3 px-4">잡코리아·사람인</td>
+                    <td className="py-3 px-4 font-mono">잡코리아 1MB·사람인 10MB</td>
+                    <td className="py-3 px-4">크기 규정 없음</td>
                   </tr>
                   <tr className="border-b border-brand-light/20">
                     <td className="py-3 px-4">공무원 원서접수</td>
-                    <td className="py-3 px-4 font-mono">200KB 이하</td>
-                    <td className="py-3 px-4">3×4cm (100~200px)</td>
+                    <td className="py-3 px-4 font-mono">100KB 미만</td>
+                    <td className="py-3 px-4">3.5×4.5cm (137×177px)</td>
                   </tr>
                   <tr className="border-b border-brand-light/20">
                     <td className="py-3 px-4">대학 원서접수</td>
@@ -248,12 +248,94 @@ export default function PassportPhotoSizePage() {
                   </tr>
                   <tr>
                     <td className="py-3 px-4">운전면허</td>
-                    <td className="py-3 px-4">3 × 4 cm</td>
-                    <td className="py-3 px-4 font-mono">354 × 472 px</td>
+                    <td className="py-3 px-4">3.5 × 4.5 cm</td>
+                    <td className="py-3 px-4 font-mono">350 × 450 px (250KB 이하)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
+
+            {/* 여권 중심 규격 비교 */}
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              5. 여권사진과 관공서·시험 사진, 규격이 이렇게 다릅니다
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              여권사진은 다른 증명사진보다 규격이 까다로운 축에 듭니다. 외교부 기준으로 413×531px에
+              흰색 배경, JPG 형식을 요구하고, 얼굴 크기와 눈 위치 같은 세부 조건까지 붙습니다. 같은 흰색
+              배경이라도 공무원 원서접수나 토익 응시원서는 요구 픽셀이 여권보다 작아서, 여권용으로 만든
+              사진을 그대로 다른 접수처에 올리면 크기가 맞지 않을 수 있습니다. 아래 표에 여권과 대표
+              관공서·시험·취업 사진의 픽셀·배경·형식을 나란히 정리했습니다.
+            </p>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-light/40 text-left">
+                    <th className="py-2 pr-4 text-brand-black">용도</th>
+                    <th className="py-2 pr-4 text-brand-black">픽셀 규격</th>
+                    <th className="py-2 pr-4 text-brand-black">배경</th>
+                    <th className="py-2 pr-4 text-brand-black">형식</th>
+                    <th className="py-2 pr-4 text-brand-black">출처(기관)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-brand-mid">
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">여권 신청</td>
+                    <td className="py-2 pr-4">413×531px</td>
+                    <td className="py-2 pr-4">흰색</td>
+                    <td className="py-2 pr-4">JPG</td>
+                    <td className="py-2 pr-4">외교부(passport.go.kr)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">공무원 원서접수</td>
+                    <td className="py-2 pr-4">137×177px</td>
+                    <td className="py-2 pr-4">흰색</td>
+                    <td className="py-2 pr-4">JPG</td>
+                    <td className="py-2 pr-4">사이버국가고시(gosi.kr)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">토익 응시원서</td>
+                    <td className="py-2 pr-4">115×150px</td>
+                    <td className="py-2 pr-4">흰색</td>
+                    <td className="py-2 pr-4">JPG</td>
+                    <td className="py-2 pr-4">YBM(toeic.co.kr)</td>
+                  </tr>
+                  <tr className="border-b border-brand-light/20">
+                    <td className="py-2 pr-4">잡코리아 이력서</td>
+                    <td className="py-2 pr-4">자유</td>
+                    <td className="py-2 pr-4">지정 없음</td>
+                    <td className="py-2 pr-4">JPG·PNG</td>
+                    <td className="py-2 pr-4">잡코리아(jobkorea)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">사람인 이력서</td>
+                    <td className="py-2 pr-4">자유</td>
+                    <td className="py-2 pr-4">지정 없음</td>
+                    <td className="py-2 pr-4">JPG·PNG</td>
+                    <td className="py-2 pr-4">사람인(saramin)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-brand-light text-sm mb-6">
+              ※ 픽셀·배경 규정은 각 기관 안내 기준이며, 여권은 얼굴 크기 등 추가 조건이 있으니 외교부 여권안내를 확인하세요.
+            </p>
+
+            {/* 편집 금지 규정과 용량 조정 */}
+            <h2 className="text-2xl font-bold text-brand-black mt-12 mb-4">
+              6. 편집 금지 규정, 용량 조정은 괜찮을까요
+            </h2>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              온라인으로 여권이나 운전면허를 신청할 때는 사진을 필터·합성·AI 편집으로 손댄 경우 반려한다는 규정이
+              함께 붙습니다. 얼굴을 실제와 다르게 만들면 신원 확인이 어려워지기 때문입니다. 그렇다면 용량을 줄이는 일도
+              편집에 해당하지 않을까 걱정될 수 있는데, 압축은 파일 크기를 낮추는 작업일 뿐 이목구비나 피부, 배경을 바꾸는
+              가공이 아닙니다.
+            </p>
+            <p className="text-brand-mid leading-relaxed mb-4">
+              여기서 안내한 목표 용량 맞추기나 크롭으로 여백을 덜어내는 방법은 사진에 담긴 얼굴을 그대로 두고
+              크기·용량만 조정하는 것이라, 보정·합성을 금지하는 조항과 충돌하지 않는 편입니다. 다만 지나치게 압축해
+              화질이 상하면 규격 미달로 반려될 수 있고 세부 기준은 접수처마다 다르니, 제출 전에는 해당 기관 공고를 한 번
+              더 확인하세요.
+            </p>
 
             {/* FAQ 섹션 */}
             <h2 className="text-2xl font-bold text-brand-black mt-12 mb-6">

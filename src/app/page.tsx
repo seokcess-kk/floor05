@@ -10,6 +10,12 @@ import { SITE_URL } from "@/lib/common/constants";
 const CATEGORY_HUBS: Partial<Record<ToolCategory, { href: string; label: string }>> = {
   image: { href: "/tools/image", label: "이미지 도구 전체 보기" },
   calc: { href: "/tools/calc", label: "금융 계산기 전체 보기" },
+  date: { href: "/tools/date", label: "날짜 계산기 전체 보기" },
+  health: { href: "/tools/health", label: "건강 계산기 전체 보기" },
+  unit: { href: "/tools/unit", label: "단위 변환기 전체 보기" },
+  pdf: { href: "/tools/pdf", label: "PDF 도구 전체 보기" },
+  color: { href: "/tools/color", label: "색상 도구 전체 보기" },
+  random: { href: "/tools/random", label: "랜덤 뽑기 도구 전체 보기" },
 };
 
 export const metadata: Metadata = {

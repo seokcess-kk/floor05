@@ -13,10 +13,18 @@ interface FAQ {
 }
 
 // 도구 본문 해설(아티클) — 서버 렌더링되는 고유 콘텐츠
+// 조견표·출처표 등 구조화 데이터(선택). 있으면 실제 <table>로 렌더된다.
+export interface GuideTable {
+  headers: string[];
+  rows: string[][];
+  caption?: string;
+}
+
 export interface GuideSection {
   heading: string;
   paragraphs?: string[];
   bullets?: string[];
+  table?: GuideTable;
 }
 
 export interface ToolGuide {
@@ -157,6 +165,45 @@ export default function ToolLayout({
                         </li>
                       ))}
                     </ul>
+                  )}
+                  {section.table && (
+                    <figure className="my-6">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm border-collapse">
+                          <thead>
+                            <tr className="border-b border-brand-light/40 text-left">
+                              {section.table.headers.map((header, hIndex) => (
+                                <th
+                                  key={hIndex}
+                                  className="py-2 pr-4 text-brand-black font-semibold whitespace-nowrap"
+                                >
+                                  {header}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody className="text-brand-mid">
+                            {section.table.rows.map((row, rIndex) => (
+                              <tr
+                                key={rIndex}
+                                className="border-b border-brand-light/20"
+                              >
+                                {row.map((cell, cIndex) => (
+                                  <td key={cIndex} className="py-2 pr-4">
+                                    {cell}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      {section.table.caption && (
+                        <figcaption className="mt-2 text-xs text-brand-light">
+                          {section.table.caption}
+                        </figcaption>
+                      )}
+                    </figure>
                   )}
                 </div>
               ))}
