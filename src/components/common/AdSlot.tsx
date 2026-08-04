@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useCookieConsent } from "./CookieConsent";
 import KakaoAdfit from "./KakaoAdfit";
 import {
   ADSENSE_ID,
@@ -44,25 +43,26 @@ const SLOT_CONFIG: Record<
 export default function AdSlot({ slot, className = "" }: AdSlotProps) {
   const adRef = useRef<HTMLDivElement>(null);
   const [adPushed, setAdPushed] = useState(false);
-  const { scriptReady } = useCookieConsent();
   const isDev = process.env.NODE_ENV === "development";
 
   const config = SLOT_CONFIG[slot] || SLOT_CONFIG["tool-below"];
 
   useEffect(() => {
-    // AdSense 광고 로드 (스크립트 준비 + 슬롯 ID 설정 시).
+    // AdSense 광고 로드. 스크립트는 루트 layout <head>에서 로드되며,
+    // adsbygoogle 큐는 스크립트 로드 전 push도 버퍼링하므로(공식 스니펫과
+    // 동일 패턴) 준비 상태를 기다릴 필요가 없다.
     // 개인화 여부(NPA)는 CookieConsent가 전역 플래그로 제어하므로, 동의와 무관하게
     // 광고를 노출한다. 미동의 시에는 자동으로 비개인화 광고가 게재된다.
-    if (!isDev && scriptReady && ADSENSE_SLOT_ID && adRef.current && !adPushed) {
+    if (!isDev && ADSENSE_SLOT_ID && adRef.current && !adPushed) {
       try {
-        const adsbygoogle = window.adsbygoogle || [];
-        adsbygoogle.push({});
+        window.adsbygoogle = window.adsbygoogle || [];
+        window.adsbygoogle.push({});
         setAdPushed(true);
       } catch {
         // 광고 로드 실패 시 무시
       }
     }
-  }, [isDev, scriptReady, adPushed]);
+  }, [isDev, adPushed]);
 
   // 개발 환경: 플레이스홀더 표시
   if (isDev) {

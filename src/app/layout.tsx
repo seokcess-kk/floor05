@@ -114,6 +114,14 @@ export default function RootLayout({
     <html lang="ko" className={`${pretendard.variable} ${ibmPlexMono.variable}`}>
       <head>
         <meta name="google-adsense-account" content={ADSENSE_ID} />
+        {/* AdSense 공식 스니펫. 심사 시스템이 초기 HTML의 head에서 확인하므로
+            지연 로드 없이 여기서 서버 렌더링한다(async라 렌더 블로킹 없음).
+            개인화 여부는 CookieConsent의 NPA 플래그가 제어한다. */}
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`}
+          crossOrigin="anonymous"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
