@@ -66,17 +66,11 @@ test.describe("프로덕션 기본 접근", () => {
     expect(canonical).toBe("https://www.floor05.com/tools/calc/vat");
   });
 
-  test("리다이렉트: non-www → www · /tools/image/heic → heic-to-jpg", async ({ request }, testInfo) => {
-    // apex → www 는 Vercel 도메인 레벨에서 처리됨. 리다이렉트 존재 자체를 검증하고,
-    // 상태 코드는 기록한다 (307이면 대시보드에서 영구(308)로 바꾸는 것을 권장 — BASELINE 참조)
+  test("리다이렉트: non-www → www(308 영구) · /tools/image/heic → heic-to-jpg", async ({ request }) => {
+    // apex → www 는 Vercel 도메인 레벨(redirectStatusCode=308)에서 처리 — 영구 리다이렉트여야 SEO 신호가 통합된다
     const naked = await request.get("https://floor05.com/tools/calc/vat", { maxRedirects: 0 });
-    expect(naked.status(), "apex는 리다이렉트여야 함").toBeGreaterThanOrEqual(300);
-    expect(naked.status()).toBeLessThan(400);
-    expect(naked.headers()["location"]).toContain("www.floor05.com");
-    testInfo.annotations.push({
-      type: "apex-redirect-status",
-      description: `${naked.status()} (308 권장 — Vercel 도메인 설정)`,
-    });
+    expect([301, 308]).toContain(naked.status());
+    expect(naked.headers()["location"]).toContain("https://www.floor05.com/tools/calc/vat");
 
     const heic = await request.get("https://www.floor05.com/tools/image/heic", { maxRedirects: 0 });
     expect([301, 308]).toContain(heic.status());
