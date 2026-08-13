@@ -20,7 +20,7 @@
 | E2E chromium | 106 | 105 PASS + 1 skip(모바일 전용) |
 | E2E mobile-chromium | 106 | 전부 PASS |
 | E2E webkit | 106 | 102 PASS + 3 skip(HEIC·클립보드·모바일 전용) + 간헐 flaky ≤1 (retry로 통과) |
-| Prod smoke | 8 | 7 PASS + 1 FAIL(홈 h1 — 수정 배포 대기, 아래 참조) |
+| Prod smoke | 8 | 전부 PASS (2026-08-13 수정 배포 후 재실행) |
 
 ## 계산 공식 검증 결과 (2026-08-13, 공공 기준 대조)
 
@@ -56,7 +56,7 @@
 |---|------|--------|------|
 | 1 | **AdSense 자동광고가 프로덕션 메인 페이지에 광고 주입** — "메인 페이지 광고 금지" 규칙과 충돌 (코드 배치 슬롯은 0개로 준수) | 중 | AdSense 대시보드 → 자동광고에서 홈 URL 제외 또는 자동광고 비활성 |
 | 2 | **apex(https://floor05.com) → www 리다이렉트가 307(임시)** — SEO상 영구(308) 권장. next.config는 308이나 Vercel 도메인 레벨 리다이렉트가 선행 | 하 | Vercel 대시보드 → Domains → floor05.com 리다이렉트를 permanent로 |
-| 3 | **이번 QA 수정 8건 미배포** — 홈 h1 부재 등이 프로덕션에 남아 있음 (prod smoke 1건 FAIL 상태) | 중 | main push → Vercel 배포 후 `npm run test:e2e:prod` 재실행 (8/8 기대) |
+| ~~3~~ | ~~이번 QA 수정 8건 미배포~~ → **해결**: 2026-08-13 main 배포(`e46bd9a`·`cfa7a87`) 후 prod smoke 8/8 통과 | — | 완료 |
 
 ## 테스트 환경 flaky 메모
 
