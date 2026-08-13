@@ -17,7 +17,12 @@ npm run dev          # 개발 서버 (localhost:3000)
 npm run build        # 프로덕션 빌드 (sitemap 자동 생성)
 npm run lint         # ESLint 실행
 npx tsc --noEmit     # 타입 체크
+npm test             # 단위 테스트 (Vitest — 계산 로직 golden value)
+npm run test:e2e     # E2E (Playwright — build 후 실행, 상세는 docs/qa/README.md)
+npm run test:e2e:prod # 프로덕션 smoke (floor05.com, 비파괴)
 ```
+
+QA 체계(실행 방법·fixture·새 도구 추가 시 테스트 규칙)는 `docs/qa/README.md` 참조.
 
 ## 기술 스택
 

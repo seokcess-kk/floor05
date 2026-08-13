@@ -48,3 +48,8 @@ next-env.d.ts
 
 # SEO audit artifacts (local only)
 floor05.com-audit/
+
+# QA test artifacts
+/test-results/
+/playwright-report/
+/tests/fixtures/generated/
