@@ -207,10 +207,13 @@ function NumField({
   max: number;
   onChange: (v: number) => void;
 }) {
+  // 스크린리더·자동화 도구가 라벨로 입력을 찾을 수 있게 명시적으로 연결한다
+  const id = `lunar-num-${label}`;
   return (
     <div className="space-y-1">
-      <label className="block text-xs text-brand-mid">{label}</label>
+      <label htmlFor={id} className="block text-xs text-brand-mid">{label}</label>
       <input
+        id={id}
         type="number"
         value={value}
         min={min}

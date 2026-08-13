@@ -53,9 +53,13 @@ export interface SalaryResult {
   annualNet: number;
 }
 
-/** 원 단위 절사 (10원 미만 버림) — 보험료·세금은 통상 원/십원 단위로 절사 */
+/**
+ * 원 단위 절사 (10원 미만 버림) — 보험료·세금은 통상 원/십원 단위로 절사.
+ * 부동소수점 오차 보정: 35,700이 35,699.99999…로 계산돼 35,690으로
+ * 한 단계 낮게 절사되는 것을 막기 위해 미세 epsilon을 더한 뒤 버림한다.
+ */
 function floor10(n: number): number {
-  return Math.floor(n / 10) * 10;
+  return Math.floor((n + 0.001) / 10) * 10;
 }
 
 /** 국민연금 (월). 기준소득월액 상·하한 적용 */

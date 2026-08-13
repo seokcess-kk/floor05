@@ -87,16 +87,38 @@ export function isFileSizeValid(file: File, maxSizeMB: number = MAX_FILE_SIZE_MB
 }
 
 /**
+ * 확장자 → MIME 추론표.
+ * 일부 환경(구형 Windows·일부 WebKit)은 흔한 이미지조차 file.type을 빈 문자열로 주므로,
+ * MIME이 비어 있으면 확장자로 유형을 추론해 accept 판정에 사용한다.
+ */
+const EXT_TO_MIME: Record<string, string> = {
+  jpg: "image/jpeg",
+  jpeg: "image/jpeg",
+  png: "image/png",
+  webp: "image/webp",
+  gif: "image/gif",
+  bmp: "image/bmp",
+  avif: "image/avif",
+  svg: "image/svg+xml",
+  heic: "image/heic",
+  heif: "image/heif",
+  pdf: "application/pdf",
+};
+
+/**
  * accept 문자열(예: "image/jpeg,image/png,.heic")에 파일이 부합하는지 검사.
  * - 정확한 MIME(image/png), 와일드카드(image/*), 확장자(.heic) 토큰을 모두 지원
- * - HEIC처럼 브라우저가 MIME을 빈 문자열로 주는 경우 확장자로 폴백 판정
+ * - MIME이 빈 문자열이면(HEIC·일부 환경의 WebP 등) 확장자로 추론해 판정
  */
 export function fileMatchesAccept(file: File, accept: string): boolean {
+  const inferredType =
+    file.type || EXT_TO_MIME[getFileExtension(file.name)] || "";
+
   if (!accept || accept.trim() === "image/*") {
-    return file.type.startsWith("image/");
+    return inferredType.startsWith("image/");
   }
 
-  const type = file.type.toLowerCase();
+  const type = inferredType.toLowerCase();
   const name = file.name.toLowerCase();
   const tokens = accept
     .split(",")

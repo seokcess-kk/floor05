@@ -103,12 +103,7 @@ export default function GradientTool() {
                 className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
               />
             </label>
-            <input
-              type="text"
-              value={s.color}
-              onChange={(e) => { const p = parseColor(e.target.value); if (p) updateStop(s.id, { color: rgbToHex(p) }); }}
-              className="w-28 rounded-lg border border-brand-light bg-brand-white px-2 py-1.5 font-mono text-sm text-brand-black focus:border-brand-accent focus:outline-none"
-            />
+            <StopHexInput color={s.color} onChange={(hex) => updateStop(s.id, { color: hex })} />
             <div className="flex flex-1 items-center gap-2">
               <input
                 type="range"
@@ -156,6 +151,35 @@ export default function GradientTool() {
         조절하세요. 모든 처리는 브라우저에서 이루어집니다.
       </p>
     </div>
+  );
+}
+
+/**
+ * 정지점 HEX 텍스트 입력.
+ * 타이핑 중간값("#8" 등)을 보존하는 로컬 상태 — 완전 제어로 두면
+ * 파싱 실패 시 입력이 되돌아가 글자 단위 타이핑이 불가능하다.
+ */
+function StopHexInput({ color, onChange }: { color: string; onChange: (hex: string) => void }) {
+  const [text, setText] = useState(color);
+  const lastColorRef = useRef(color);
+  if (lastColorRef.current !== color) {
+    lastColorRef.current = color;
+    const parsed = parseColor(text);
+    if (!parsed || rgbToHex(parsed) !== color) setText(color);
+  }
+
+  return (
+    <input
+      type="text"
+      value={text}
+      onChange={(e) => {
+        setText(e.target.value);
+        const p = parseColor(e.target.value);
+        if (p) onChange(rgbToHex(p));
+      }}
+      aria-label="정지점 HEX 코드"
+      className="w-28 rounded-lg border border-brand-light bg-brand-white px-2 py-1.5 font-mono text-sm text-brand-black focus:border-brand-accent focus:outline-none"
+    />
   );
 }
 

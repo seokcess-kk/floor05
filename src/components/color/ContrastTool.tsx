@@ -60,6 +60,16 @@ export default function ContrastTool() {
 }
 
 function ColorField({ label, hex, onChange }: { label: string; hex: string; onChange: (v: RGB) => void }) {
+  // 타이핑 중간값("#7", "77" 등)을 보존하기 위한 로컬 텍스트 상태.
+  // 완전 제어(value={hex})로 두면 파싱 실패 시 입력이 되돌아가 글자 단위 타이핑이 불가능하다.
+  const [text, setText] = useState(hex);
+  const lastHexRef = useRef(hex);
+  // 피커 등 외부에서 색이 바뀌면 텍스트 동기화
+  if (lastHexRef.current !== hex) {
+    lastHexRef.current = hex;
+    if (rgbToHex(parseColor(text) ?? { r: -1, g: -1, b: -1 }) !== hex) setText(hex);
+  }
+
   return (
     <div className="space-y-1.5">
       <label className="block text-sm font-medium text-brand-black">{label}</label>
@@ -78,8 +88,9 @@ function ColorField({ label, hex, onChange }: { label: string; hex: string; onCh
         </label>
         <input
           type="text"
-          value={hex}
+          value={text}
           onChange={(e) => {
+            setText(e.target.value);
             const p = parseColor(e.target.value);
             if (p) onChange(p);
           }}

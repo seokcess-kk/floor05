@@ -71,6 +71,8 @@ export default function PdfSplitTool() {
 
   return (
     <div className="space-y-6">
+      {/* 파일 읽기 실패(깨진 PDF 등)는 file이 null로 돌아가므로 에러를 분기 밖에서 표시한다 */}
+      {!file && error && <p className="text-sm text-red-600">{error}</p>}
       {!file ? (
         <FileDropzone onFilesSelected={onSelect} accept="application/pdf,.pdf" multiple={false} maxFiles={1} />
       ) : (

@@ -124,14 +124,15 @@ export default function Home() {
 
           {/* 브랜드 카피 */}
           <div className="text-center pb-16 px-4">
-            <div className="flex items-end justify-center gap-1 mb-6">
+            {/* h1: 홈의 대표 제목 (시맨틱/SEO — 페이지당 h1 1개) */}
+            <h1 className="flex items-end justify-center gap-1 mb-6">
               <span className="font-mono text-4xl sm:text-5xl font-medium text-brand-paper">
                 floor
               </span>
               <span className="font-mono text-2xl sm:text-3xl font-bold text-brand-accent relative -top-3">
                 05
               </span>
-            </div>
+            </h1>
             <p className="text-brand-light text-lg sm:text-xl max-w-md mx-auto leading-relaxed">
               존재하지 않는 0.5층에서 만듭니다.
             </p>

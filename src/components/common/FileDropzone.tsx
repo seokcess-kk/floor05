@@ -17,23 +17,28 @@ const FORMAT_LABELS: Record<string, string> = {
   "svg+xml": "SVG",
   heic: "HEIC",
   heif: "HEIF",
+  pdf: "PDF",
 };
 
-function formatAcceptLabel(accept: string): string {
-  if (!accept || accept === "image/*") return "JPG, PNG, WebP, HEIC 지원";
-
+/** accept 토큰 → 포맷명 목록 ("JPG, PNG" 등). PDF 도구에서도 자연스럽게 보이도록 MIME 접두사를 모두 벗긴다 */
+function acceptFormatNames(accept: string): string[] {
   const seen = new Set<string>();
   const names: string[] = [];
   for (const token of accept.split(",").map((t) => t.trim()).filter(Boolean)) {
     if (token.startsWith(".")) continue; // 확장자 토큰은 MIME과 중복
-    const key = token.replace("image/", "").toLowerCase();
+    const key = token.replace(/^(image|application)\//, "").toLowerCase();
     const label = FORMAT_LABELS[key] || key.toUpperCase();
     if (!seen.has(label)) {
       seen.add(label);
       names.push(label);
     }
   }
+  return names;
+}
 
+function formatAcceptLabel(accept: string): string {
+  if (!accept || accept === "image/*") return "JPG, PNG, WebP, HEIC 지원";
+  const names = acceptFormatNames(accept);
   return names.length > 0 ? `${names.join(", ")} 지원` : "이미지 파일 지원";
 }
 
@@ -86,7 +91,10 @@ export default function FileDropzone({
 
         // 파일 형식 검증 (accept 목록 기준. HEIC 등 빈 MIME은 확장자로 폴백)
         if (!fileMatchesAccept(file, accept)) {
-          errorMessage = "지원하지 않는 파일 형식입니다. JPG, PNG, WebP, HEIC 파일을 사용해주세요.";
+          const names = acceptFormatNames(accept);
+          errorMessage = `지원하지 않는 파일 형식입니다. ${
+            names.length > 0 ? names.join(", ") : "JPG, PNG, WebP, HEIC"
+          } 파일을 사용해주세요.`;
           continue;
         }
 
@@ -166,7 +174,7 @@ export default function FileDropzone({
       <div
         role="button"
         tabIndex={disabled ? -1 : 0}
-        aria-label={multiple ? `이미지 파일 선택 (최대 ${maxFiles}개)` : "이미지 파일 선택"}
+        aria-label={multiple ? `파일 선택 (최대 ${maxFiles}개)` : "파일 선택"}
         aria-disabled={disabled}
         onClick={handleClick}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleClick(); } }}
